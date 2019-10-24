@@ -1,16 +1,21 @@
 #!/bin/bash -l
 
 # Set SCC project
-$ -P dnn-motion
+#$ -P dnn-motion
 
 # Request 4 CPUs
-$ -pe omp 4
+#$ -pe omp 4
 
 # Request 1 GPU (the number of GPUs needed should be divided by the number of CPUs requested above)
-$ -l gpus=16
+#$ -l gpus=16
 
 # Specify the minimum GPU compute capability 
-$ -l gpu_c=3.5
+#$ -l gpu_c=3.5
+
+#$ -N test-infer-video
+#$ -j y 
+
+#$ -M rooday@bu.edu
 
 
 module load ffmpeg/4.0.3
