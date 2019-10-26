@@ -27,8 +27,9 @@ def main(argv):
     'outtmpl': 'individual/%(title)s.%(ext)s',
     'restrictfilenames': True,
     'writeinfojson': False,
-    'format': 'bestvideo[ext=mp4]+bestaudio[ext=m4a]', 
-    'postprocessor-args': '-strict -2'
+    'postprocessor-args': '-strict -2',
+    'format': 'bestvideo[ext=mp4]+bestaudio[ext=m4a]',
+    'merge-output-format': 'mp4'
   }
 
   with youtube_dl.YoutubeDL(ydl_opts) as ydl:
