@@ -1,0 +1,7 @@
+python3 tools/demo.py --cfg experiments/coco/hrnet/w32_384x288_adam_lr1e-3.yaml --img-file data/test/0.png TEST.MODEL_FILE models/pytorch/pose_coco/pose_hrnet_w32_384x288.pth
+
+python3 tools/infer_video.py --cfg configs/12_2017_baselines/e2e_keypoint_rcnn_R-101-FPN_s1x.yaml --output-dir ../video_output --image-ext mp4 --wts models/model_final.pkl ../video_input
+
+python3 tools/infer_simple.py --cfg configs/12_2017_baselines/e2e_mask_rcnn_R-101-FPN_2x.yaml --output-dir /tmp/detectron-visualizations --image-ext jpg --wts https://dl.fbaipublicfiles.com/detectron/35861858/12_2017_baselines/e2e_mask_rcnn_R-101-FPN_2x.yaml.02_32_51.SgT4y1cO/output/train/coco_2014_train:coco_2014_valminusminival/generalized_rcnn/model_final.pkl demo
+
+qsub -l gpus=4 -l gpu_c=3.5 infer_video.sh
