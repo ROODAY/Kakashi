@@ -16,3 +16,15 @@ Segments:
 - [ ] Create RNN to guess pose for current audio feature
 - [ ] Improve model to use a GAN (look at C-RNN-GAN etc.)
 - [ ] Animate resultant pose matrices for choreography
+
+
+Stuff to tie together to get training data:
+- Run download.py in process-video to get a bunch of videos
+- Cut them to make sure only dancing is in/1 person in the video
+- get MFCC data for all of them 
+- get poses 
+- make sure len of poses == len of mfcc per video
+
+Possible Changes:
+- Use something other than mfcc as representation of the audio
+- perhaps get multi body working with videpose
