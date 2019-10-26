@@ -26,3 +26,4 @@ module load geos/3.7.0
 
 cd /project/dnn-motion/kakashi/detectron/
 python3 tools/infer_video.py --cfg configs/12_2017_baselines/e2e_keypoint_rcnn_R-101-FPN_s1x.yaml --output-dir ../video_output --image-ext mp4 --wts models/model_final.pkl ../video_input
+
