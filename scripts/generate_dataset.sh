@@ -1,8 +1,8 @@
 #!/bin/bash -l
 
 #$ -P dnn-motion
-#$ -pe omp 2
-#$ -l gpus=8
+#$ -pe omp 1
+#$ -l gpus=4
 #$ -l gpu_c=3.5
 #$ -N test-infer-video
 #$ -j y 
@@ -15,4 +15,4 @@ module load pytorch/1.1
 module load geos/3.7.0
 
 cd /project/dnn-motion/kakashi/Kakashi
-python3 tools/generate_dataset.py
+python3 tools/generate_dataset.py --playlist_url ''

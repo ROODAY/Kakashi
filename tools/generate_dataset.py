@@ -57,6 +57,8 @@ if separate_AV:
     folder.rename(Path(folder.parent, str(count).zfill(5)))
     count += 1
 
+# split file here into download videos and generate dataset, that gives opprutunity for cutting of videos (and skipping re download)
+
 # copy videos to tmp directory for pose estimation
 video_paths = Path(download_dir).rglob('*.mp4')
 tmp_input_dir = Path(Path.cwd(), 'tmp_in/')
@@ -77,6 +79,8 @@ dataset_path = Path(Path.cwd(), 'data/data_2d_custom_myvideos.npz')
 # get 3D detections
 for video_path in video_paths:
   command = 'python3 run.py -d custom -k myvideos -arc 3,3,3,3,3 -c checkpoint --evaluate pretrained_h36m_detectron_coco.bin --render --viz-subject {} --viz-action custom --viz-camera 0 --viz-video {} --viz-export {} --viz-size 6'.format(video_path.name, video_path, Path(video_path.parent, video_path.stem + '.keypoints.npy'))
+
+# delete tmp folders
 
 # extract audio features
 os.chdir(os.environ['KAKASHI'])
