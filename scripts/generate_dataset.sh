@@ -1,0 +1,18 @@
+#!/bin/bash -l
+
+#$ -P dnn-motion
+#$ -pe omp 2
+#$ -l gpus=8
+#$ -l gpu_c=3.5
+#$ -N test-infer-video
+#$ -j y 
+#$ -M rooday@bu.edu
+
+module load ffmpeg/4.0.3
+module load python3/3.7.3
+module load cuda/10.1
+module load pytorch/1.1
+module load geos/3.7.0
+
+cd /project/dnn-motion/kakashi/Kakashi
+python3 tools/generate_dataset.py

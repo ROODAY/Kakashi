@@ -28,3 +28,8 @@ Stuff to tie together to get training data:
 Possible Changes:
 - Use something other than mfcc as representation of the audio
 - perhaps get multi body working with videpose
+
+Make sure the following environment variables for directory roots are set:
+- KAKASHI
+- VIDEOPOSE
+- DETECTRON

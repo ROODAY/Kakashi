@@ -4,10 +4,10 @@
 #$ -P dnn-motion
 
 # Request 4 CPUs
-#$ -pe omp 4
+#$ -pe omp 1
 
 # Request 1 GPU (the number of GPUs needed should be divided by the number of CPUs requested above)
-#$ -l gpus=16
+#$ -l gpus=4
 
 # Specify the minimum GPU compute capability 
 #$ -l gpu_c=3.5
