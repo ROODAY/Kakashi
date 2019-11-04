@@ -4,7 +4,7 @@
 #$ -pe omp 1
 #$ -l gpus=4
 #$ -l gpu_c=3.5
-#$ -N test-infer-video
+#$ -N kakashi-generate-dataset
 #$ -j y 
 #$ -M rooday@bu.edu
 
