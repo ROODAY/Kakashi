@@ -15,4 +15,4 @@ module load pytorch/1.1
 module load geos/3.7.0
 
 cd /project/dnn-motion/kakashi/Kakashi
-python3 tools/generate_dataset.py --playlist_url ''
+python3 tools/generate_dataset.py test
