@@ -62,14 +62,16 @@ def main(args):
       audio_data, sample_rate = librosa.load(audio_path, res_type='kaiser_fast')
 
       print('=> Group audio data by frame')
-      audio_by_frame = np.array_split(audio_data, num_frames) # fix this line to get number of frames better
+      keypoints_path = Path(video_path.parent, video_path.stem + '.keypoints.npy')
+      keypoints = np.load(str(keypoints_path), allow_pickle=True)
+      audio_by_frame = np.array_split(audio_data, len(keypoints))
 
       print('=> Get MFCCs per frame')
       mfccs = [np.mean(librosa.feature.mfcc(y=frame).T,axis=0) for frame in tqdm(audio_by_frame)]
 
       print('=> MFCC Length: {}'.format(len(mfccs)))
       print('=> Length of one MFCC: {}'.format(len(mfccs[0])))
-      np.savetxt(Path(video_path.parent, '{}.audio.gz'.format(video_path.stem)), mfccs)
+      np.save(Path(video_path.parent, '{}.audio.npy'.format(video_path.stem)), mfccs)
 
 if __name__ == "__main__":
   parser = argparse.ArgumentParser(description='Generates dataset from video files')
