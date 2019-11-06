@@ -125,3 +125,5 @@ dmypy.json
 .pyre/
 
 data/
+tmp_in/
+tmp_out/
