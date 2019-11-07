@@ -8,37 +8,44 @@ import os
 import argparse
 
 def main(args):
+  2d_dataset_name = args.2d_dataset_name if args.2d_dataset_name else 'kakashi'
+
   # make sure video directory exists
   download_dir = Path(Path.cwd(), 'data/', args.label)
   if not download_dir.exists():
     raise NotADirectoryError('{} does not exist!'.format(str(download_dir)))
 
   # copy videos to tmp directory for pose estimation
-  print('=> Copying videos to tmp directory for pose estimation')
-  video_paths = Path(download_dir).rglob('*.mp4')
+  #print('=> Copying videos to tmp directory for pose estimation')
+  video_paths = list(Path(download_dir).rglob('*.mp4'))
+  video_paths.sort()
   tmp_input_dir = Path(Path.cwd(), 'tmp_in/')
-  tmp_input_dir.mkdir(exist_ok=True) 
+  #tmp_input_dir.mkdir(exist_ok=True) 
   tmp_output_dir = Path(Path.cwd(), 'tmp_out/')
-  tmp_output_dir.mkdir(exist_ok=True) 
-  for video_path in video_paths:
+  #tmp_output_dir.mkdir(exist_ok=True) 
+  '''for video_path in video_paths:
     shutil.copy(str(video_path), str(Path(tmp_input_dir, video_path.name)))
 
   # run 2D detections (SLOW/BOTTLENECK)
   os.chdir(os.environ['DETECTRON'])
   print('=> Running 2D pose detection (this is going to take a while...)')
   command = 'python3 tools/infer_video.py --cfg configs/12_2017_baselines/e2e_keypoint_rcnn_R-101-FPN_s1x.yaml --output-dir {} --image-ext mp4 --wts models/model_final.pkl {}'.format(tmp_output_dir, tmp_input_dir)
-  subprocess.call(command, shell=True)
+  subprocess.call(command, shell=True)'''
 
   # prepare 2D dataset
   os.chdir(os.environ['VIDEOPOSE'])
   print('=> Preparing 2D keypoint dataset')
-  command = 'python3 prepare_data_2d_custom.py -i {} -o myvideos'.format(tmp_output_dir)
-  dataset_path = Path(Path.cwd(), 'data/data_2d_custom_myvideos.npz')
+  command = 'python3 prepare_data_2d_custom.py -i {} -o {}'.format(tmp_output_dir, 2d_dataset_name)
+  subprocess.call(command, shell=True)
+  dataset_path = Path(Path.cwd(), 'data/data_2d_custom_{}.npz'.format(2d_dataset_name))
 
   # get 3D detections
   print('=> Running 3D pose detection')
+  print(video_paths)
   for video_path in video_paths:
-    command = 'python3 run.py -d custom -k myvideos -arc 3,3,3,3,3 -c checkpoint --evaluate pretrained_h36m_detectron_coco.bin --render --viz-subject {} --viz-action custom --viz-camera 0 --viz-video {} --viz-export {} --viz-size 6'.format(video_path.name, video_path, Path(video_path.parent, video_path.stem + '.keypoints.npy'))
+    print('=> Processing: {}'.format(video_path))
+    command = 'python3 run.py -d custom -k {} -arc 3,3,3,3,3 -c checkpoint --evaluate pretrained_h36m_detectron_coco.bin --render --viz-subject {} --viz-action custom --viz-camera 0 --viz-video {} --viz-export {} --viz-size 6'.format(2d_dataset_name, video_path.name, str(video_path), Path(video_path.parent, video_path.stem + '.keypoints.npy'))
+    subprocess.call(command, shell=True)
 
   # delete tmp folders
   #print('=> Deleting tmp folders')
@@ -76,6 +83,8 @@ if __name__ == "__main__":
   parser = argparse.ArgumentParser(description='Generates dataset from video files')
   parser.add_argument('label', type=str,
                       help='Label for the dataset (e.x. Popping)')
+  parser.add_argument('--2d_dataset_name', type=str,
+                      help='Name for VideoPose custom dataset (default: kakashi)')
   parser.add_argument('--skip_extract', action='store_true',
                       help='Skip extracting of audio from video files (if audio was downloaded separately)')
   args = parser.parse_args()
