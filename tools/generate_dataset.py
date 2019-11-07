@@ -16,41 +16,41 @@ def main(args):
     raise NotADirectoryError('{} does not exist!'.format(str(download_dir)))
 
   # copy videos to tmp directory for pose estimation
-  #print('=> Copying videos to tmp directory for pose estimation')
+  print('=> Copying videos to tmp directory for pose estimation')
   video_paths = list(Path(download_dir).rglob('*.mp4'))
   video_paths.sort()
   tmp_input_dir = Path(Path.cwd(), 'tmp_in/')
-  #tmp_input_dir.mkdir(exist_ok=True) 
+  tmp_input_dir.mkdir(exist_ok=True) 
   tmp_output_dir = Path(Path.cwd(), 'tmp_out/')
-  #tmp_output_dir.mkdir(exist_ok=True) 
-  '''for video_path in video_paths:
+  tmp_output_dir.mkdir(exist_ok=True) 
+  for video_path in video_paths:
     shutil.copy(str(video_path), str(Path(tmp_input_dir, video_path.name)))
 
   # run 2D detections (SLOW/BOTTLENECK)
   os.chdir(os.environ['DETECTRON'])
   print('=> Running 2D pose detection (this is going to take a while...)')
   command = 'python3 tools/infer_video.py --cfg configs/12_2017_baselines/e2e_keypoint_rcnn_R-101-FPN_s1x.yaml --output-dir {} --image-ext mp4 --wts models/model_final.pkl {}'.format(tmp_output_dir, tmp_input_dir)
-  subprocess.call(command, shell=True)'''
+  subprocess.call(command, shell=True)
 
   # prepare 2D dataset
-  os.chdir(os.environ['VIDEOPOSE'])
+  os.chdir(Path(os.environ['VIDEOPOSE'], 'data'))
   print('=> Preparing 2D keypoint dataset')
   command = 'python3 prepare_data_2d_custom.py -i {} -o {}'.format(tmp_output_dir, videpose_dataset_name)
   subprocess.call(command, shell=True)
-  dataset_path = Path(Path.cwd(), 'data/data_2d_custom_{}.npz'.format(videpose_dataset_name))
+  dataset_path = Path(Path.cwd(), 'data_2d_custom_{}.npz'.format(videpose_dataset_name))
 
   # get 3D detections
+  os.chdir(os.environ['VIDEOPOSE'])
   print('=> Running 3D pose detection')
-  print(video_paths)
   for video_path in video_paths:
     print('=> Processing: {}'.format(video_path))
     command = 'python3 run.py -d custom -k {} -arc 3,3,3,3,3 -c checkpoint --evaluate pretrained_h36m_detectron_coco.bin --render --viz-subject {} --viz-action custom --viz-camera 0 --viz-video {} --viz-export {} --viz-size 6'.format(videpose_dataset_name, video_path.name, str(video_path), Path(video_path.parent, video_path.stem + '.keypoints.npy'))
     subprocess.call(command, shell=True)
 
   # delete tmp folders
-  #print('=> Deleting tmp folders')
-  #shutil.rmtree(tmp_input_dir)
-  #shutil.rmtree(tmp_output_dir)
+  print('=> Deleting tmp folders')
+  shutil.rmtree(tmp_input_dir)
+  shutil.rmtree(tmp_output_dir)
 
   # extract audio features
   os.chdir(os.environ['KAKASHI'])
@@ -77,7 +77,7 @@ def main(args):
 
       print('=> MFCC Length: {}'.format(len(mfccs)))
       print('=> Length of one MFCC: {}'.format(len(mfccs[0])))
-      np.save(Path(video_path.parent, '{}.audio.npy'.format(video_path.stem)), mfccs)
+      np.save(Path(video_path.parent, '{}.mfcc.npy'.format(video_path.stem)), mfccs)
 
 if __name__ == "__main__":
   parser = argparse.ArgumentParser(description='Generates dataset from video files')
