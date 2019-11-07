@@ -1,4 +1,3 @@
-#from __future__ import unicode_literals
 from pathlib import Path
 from tqdm import tqdm
 import shutil
@@ -17,7 +16,7 @@ def main(args):
   # copy videos to tmp directory for pose estimation
   print('=> Copying videos to tmp directory for pose estimation')
   video_paths = Path(download_dir).rglob('*.mp4')
-  tmp_input_dir = Path(Path.cwd(), 'tmp_in/')
+  '''tmp_input_dir = Path(Path.cwd(), 'tmp_in/')
   tmp_input_dir.mkdir(exist_ok=True) 
   tmp_output_dir = Path(Path.cwd(), 'tmp_out/')
   tmp_output_dir.mkdir(exist_ok=True) 
@@ -42,10 +41,10 @@ def main(args):
     command = 'python3 run.py -d custom -k myvideos -arc 3,3,3,3,3 -c checkpoint --evaluate pretrained_h36m_detectron_coco.bin --render --viz-subject {} --viz-action custom --viz-camera 0 --viz-video {} --viz-export {} --viz-size 6'.format(video_path.name, video_path, Path(video_path.parent, video_path.stem + '.keypoints.npy'))
 
   # delete tmp folders
-  print('=> Deleting tmp folders')
-  shutil.rmtree(tmp_input_dir)
-  shutil.rmtree(tmp_output_dir)
-
+  #print('=> Deleting tmp folders')
+  #shutil.rmtree(tmp_input_dir)
+  #shutil.rmtree(tmp_output_dir)
+'''
   # extract audio features
   os.chdir(os.environ['KAKASHI'])
   print('=> Extracting audio features')

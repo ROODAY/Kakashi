@@ -3,11 +3,11 @@
 #$ -P dnn-motion
 #$ -l gpus=4
 #$ -l gpu_c=3.5
-#$ -N test-infer-video
+#$ -N kakashi-2d-pose
 #$ -j y 
 #$ -M rooday@bu.edu
 
-module load ffmpeg/4.0.3
+module load ffmpeg/4.2.1
 module load python3/3.7.3
 module load cuda/10.1
 module load pytorch/1.1

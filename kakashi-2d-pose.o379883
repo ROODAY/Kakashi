@@ -1,0 +1,1837 @@
+[E init_intrinsics_check.cc:43] CPU feature avx is present on your machine, but the Caffe2 binary is not compiled with it. It means you may not get the full speed of your CPU.
+[E init_intrinsics_check.cc:43] CPU feature avx2 is present on your machine, but the Caffe2 binary is not compiled with it. It means you may not get the full speed of your CPU.
+[E init_intrinsics_check.cc:43] CPU feature fma is present on your machine, but the Caffe2 binary is not compiled with it. It means you may not get the full speed of your CPU.
+Found Detectron ops lib: /share/pkg.7/pytorch/1.1/install/3.7/lib/python3.7/site-packages/torch/lib/libcaffe2_detectron_ops_gpu.so
+WARNING cnn.py:  25: [====DEPRECATE WARNING====]: you are creating an object from CNNModelHelper class which will be deprecated soon. Please use ModelHelper object with brew module. For more information, please refer to caffe2.ai and python/brew.py, python/brew_test.py for more information.
+WARNING model_builder.py: 138: Remapping old function name: head_builder.add_roi_2mlp_head -> fast_rcnn_heads.add_roi_2mlp_head
+INFO net.py:  60: Loading weights from: models/model_final.pkl
+INFO net.py:  96: conv1_w loaded from weights file into gpu_0/conv1_w: (64, 3, 7, 7)
+INFO net.py:  96: res_conv1_bn_s loaded from weights file into gpu_0/res_conv1_bn_s: (64,)
+INFO net.py:  96: res_conv1_bn_b loaded from weights file into gpu_0/res_conv1_bn_b: (64,)
+INFO net.py:  96: res2_0_branch2a_w loaded from weights file into gpu_0/res2_0_branch2a_w: (64, 64, 1, 1)
+INFO net.py:  96: res2_0_branch2a_bn_s loaded from weights file into gpu_0/res2_0_branch2a_bn_s: (64,)
+INFO net.py:  96: res2_0_branch2a_bn_b loaded from weights file into gpu_0/res2_0_branch2a_bn_b: (64,)
+INFO net.py:  96: res2_0_branch2b_w loaded from weights file into gpu_0/res2_0_branch2b_w: (64, 64, 3, 3)
+INFO net.py:  96: res2_0_branch2b_bn_s loaded from weights file into gpu_0/res2_0_branch2b_bn_s: (64,)
+INFO net.py:  96: res2_0_branch2b_bn_b loaded from weights file into gpu_0/res2_0_branch2b_bn_b: (64,)
+INFO net.py:  96: res2_0_branch2c_w loaded from weights file into gpu_0/res2_0_branch2c_w: (256, 64, 1, 1)
+INFO net.py:  96: res2_0_branch2c_bn_s loaded from weights file into gpu_0/res2_0_branch2c_bn_s: (256,)
+INFO net.py:  96: res2_0_branch2c_bn_b loaded from weights file into gpu_0/res2_0_branch2c_bn_b: (256,)
+INFO net.py:  96: res2_0_branch1_w loaded from weights file into gpu_0/res2_0_branch1_w: (256, 64, 1, 1)
+INFO net.py:  96: res2_0_branch1_bn_s loaded from weights file into gpu_0/res2_0_branch1_bn_s: (256,)
+INFO net.py:  96: res2_0_branch1_bn_b loaded from weights file into gpu_0/res2_0_branch1_bn_b: (256,)
+INFO net.py:  96: res2_1_branch2a_w loaded from weights file into gpu_0/res2_1_branch2a_w: (64, 256, 1, 1)
+INFO net.py:  96: res2_1_branch2a_bn_s loaded from weights file into gpu_0/res2_1_branch2a_bn_s: (64,)
+INFO net.py:  96: res2_1_branch2a_bn_b loaded from weights file into gpu_0/res2_1_branch2a_bn_b: (64,)
+INFO net.py:  96: res2_1_branch2b_w loaded from weights file into gpu_0/res2_1_branch2b_w: (64, 64, 3, 3)
+INFO net.py:  96: res2_1_branch2b_bn_s loaded from weights file into gpu_0/res2_1_branch2b_bn_s: (64,)
+INFO net.py:  96: res2_1_branch2b_bn_b loaded from weights file into gpu_0/res2_1_branch2b_bn_b: (64,)
+INFO net.py:  96: res2_1_branch2c_w loaded from weights file into gpu_0/res2_1_branch2c_w: (256, 64, 1, 1)
+INFO net.py:  96: res2_1_branch2c_bn_s loaded from weights file into gpu_0/res2_1_branch2c_bn_s: (256,)
+INFO net.py:  96: res2_1_branch2c_bn_b loaded from weights file into gpu_0/res2_1_branch2c_bn_b: (256,)
+INFO net.py:  96: res2_2_branch2a_w loaded from weights file into gpu_0/res2_2_branch2a_w: (64, 256, 1, 1)
+INFO net.py:  96: res2_2_branch2a_bn_s loaded from weights file into gpu_0/res2_2_branch2a_bn_s: (64,)
+INFO net.py:  96: res2_2_branch2a_bn_b loaded from weights file into gpu_0/res2_2_branch2a_bn_b: (64,)
+INFO net.py:  96: res2_2_branch2b_w loaded from weights file into gpu_0/res2_2_branch2b_w: (64, 64, 3, 3)
+INFO net.py:  96: res2_2_branch2b_bn_s loaded from weights file into gpu_0/res2_2_branch2b_bn_s: (64,)
+INFO net.py:  96: res2_2_branch2b_bn_b loaded from weights file into gpu_0/res2_2_branch2b_bn_b: (64,)
+INFO net.py:  96: res2_2_branch2c_w loaded from weights file into gpu_0/res2_2_branch2c_w: (256, 64, 1, 1)
+INFO net.py:  96: res2_2_branch2c_bn_s loaded from weights file into gpu_0/res2_2_branch2c_bn_s: (256,)
+INFO net.py:  96: res2_2_branch2c_bn_b loaded from weights file into gpu_0/res2_2_branch2c_bn_b: (256,)
+INFO net.py:  96: res3_0_branch2a_w [+ momentum] loaded from weights file into gpu_0/res3_0_branch2a_w: (128, 256, 1, 1)
+INFO net.py:  96: res3_0_branch2a_bn_s loaded from weights file into gpu_0/res3_0_branch2a_bn_s: (128,)
+INFO net.py:  96: res3_0_branch2a_bn_b loaded from weights file into gpu_0/res3_0_branch2a_bn_b: (128,)
+INFO net.py:  96: res3_0_branch2b_w [+ momentum] loaded from weights file into gpu_0/res3_0_branch2b_w: (128, 128, 3, 3)
+INFO net.py:  96: res3_0_branch2b_bn_s loaded from weights file into gpu_0/res3_0_branch2b_bn_s: (128,)
+INFO net.py:  96: res3_0_branch2b_bn_b loaded from weights file into gpu_0/res3_0_branch2b_bn_b: (128,)
+INFO net.py:  96: res3_0_branch2c_w [+ momentum] loaded from weights file into gpu_0/res3_0_branch2c_w: (512, 128, 1, 1)
+INFO net.py:  96: res3_0_branch2c_bn_s loaded from weights file into gpu_0/res3_0_branch2c_bn_s: (512,)
+INFO net.py:  96: res3_0_branch2c_bn_b loaded from weights file into gpu_0/res3_0_branch2c_bn_b: (512,)
+INFO net.py:  96: res3_0_branch1_w [+ momentum] loaded from weights file into gpu_0/res3_0_branch1_w: (512, 256, 1, 1)
+INFO net.py:  96: res3_0_branch1_bn_s loaded from weights file into gpu_0/res3_0_branch1_bn_s: (512,)
+INFO net.py:  96: res3_0_branch1_bn_b loaded from weights file into gpu_0/res3_0_branch1_bn_b: (512,)
+INFO net.py:  96: res3_1_branch2a_w [+ momentum] loaded from weights file into gpu_0/res3_1_branch2a_w: (128, 512, 1, 1)
+INFO net.py:  96: res3_1_branch2a_bn_s loaded from weights file into gpu_0/res3_1_branch2a_bn_s: (128,)
+INFO net.py:  96: res3_1_branch2a_bn_b loaded from weights file into gpu_0/res3_1_branch2a_bn_b: (128,)
+INFO net.py:  96: res3_1_branch2b_w [+ momentum] loaded from weights file into gpu_0/res3_1_branch2b_w: (128, 128, 3, 3)
+INFO net.py:  96: res3_1_branch2b_bn_s loaded from weights file into gpu_0/res3_1_branch2b_bn_s: (128,)
+INFO net.py:  96: res3_1_branch2b_bn_b loaded from weights file into gpu_0/res3_1_branch2b_bn_b: (128,)
+INFO net.py:  96: res3_1_branch2c_w [+ momentum] loaded from weights file into gpu_0/res3_1_branch2c_w: (512, 128, 1, 1)
+INFO net.py:  96: res3_1_branch2c_bn_s loaded from weights file into gpu_0/res3_1_branch2c_bn_s: (512,)
+INFO net.py:  96: res3_1_branch2c_bn_b loaded from weights file into gpu_0/res3_1_branch2c_bn_b: (512,)
+INFO net.py:  96: res3_2_branch2a_w [+ momentum] loaded from weights file into gpu_0/res3_2_branch2a_w: (128, 512, 1, 1)
+INFO net.py:  96: res3_2_branch2a_bn_s loaded from weights file into gpu_0/res3_2_branch2a_bn_s: (128,)
+INFO net.py:  96: res3_2_branch2a_bn_b loaded from weights file into gpu_0/res3_2_branch2a_bn_b: (128,)
+INFO net.py:  96: res3_2_branch2b_w [+ momentum] loaded from weights file into gpu_0/res3_2_branch2b_w: (128, 128, 3, 3)
+INFO net.py:  96: res3_2_branch2b_bn_s loaded from weights file into gpu_0/res3_2_branch2b_bn_s: (128,)
+INFO net.py:  96: res3_2_branch2b_bn_b loaded from weights file into gpu_0/res3_2_branch2b_bn_b: (128,)
+INFO net.py:  96: res3_2_branch2c_w [+ momentum] loaded from weights file into gpu_0/res3_2_branch2c_w: (512, 128, 1, 1)
+INFO net.py:  96: res3_2_branch2c_bn_s loaded from weights file into gpu_0/res3_2_branch2c_bn_s: (512,)
+INFO net.py:  96: res3_2_branch2c_bn_b loaded from weights file into gpu_0/res3_2_branch2c_bn_b: (512,)
+INFO net.py:  96: res3_3_branch2a_w [+ momentum] loaded from weights file into gpu_0/res3_3_branch2a_w: (128, 512, 1, 1)
+INFO net.py:  96: res3_3_branch2a_bn_s loaded from weights file into gpu_0/res3_3_branch2a_bn_s: (128,)
+INFO net.py:  96: res3_3_branch2a_bn_b loaded from weights file into gpu_0/res3_3_branch2a_bn_b: (128,)
+INFO net.py:  96: res3_3_branch2b_w [+ momentum] loaded from weights file into gpu_0/res3_3_branch2b_w: (128, 128, 3, 3)
+INFO net.py:  96: res3_3_branch2b_bn_s loaded from weights file into gpu_0/res3_3_branch2b_bn_s: (128,)
+INFO net.py:  96: res3_3_branch2b_bn_b loaded from weights file into gpu_0/res3_3_branch2b_bn_b: (128,)
+INFO net.py:  96: res3_3_branch2c_w [+ momentum] loaded from weights file into gpu_0/res3_3_branch2c_w: (512, 128, 1, 1)
+INFO net.py:  96: res3_3_branch2c_bn_s loaded from weights file into gpu_0/res3_3_branch2c_bn_s: (512,)
+INFO net.py:  96: res3_3_branch2c_bn_b loaded from weights file into gpu_0/res3_3_branch2c_bn_b: (512,)
+INFO net.py:  96: res4_0_branch2a_w [+ momentum] loaded from weights file into gpu_0/res4_0_branch2a_w: (256, 512, 1, 1)
+INFO net.py:  96: res4_0_branch2a_bn_s loaded from weights file into gpu_0/res4_0_branch2a_bn_s: (256,)
+INFO net.py:  96: res4_0_branch2a_bn_b loaded from weights file into gpu_0/res4_0_branch2a_bn_b: (256,)
+INFO net.py:  96: res4_0_branch2b_w [+ momentum] loaded from weights file into gpu_0/res4_0_branch2b_w: (256, 256, 3, 3)
+INFO net.py:  96: res4_0_branch2b_bn_s loaded from weights file into gpu_0/res4_0_branch2b_bn_s: (256,)
+INFO net.py:  96: res4_0_branch2b_bn_b loaded from weights file into gpu_0/res4_0_branch2b_bn_b: (256,)
+INFO net.py:  96: res4_0_branch2c_w [+ momentum] loaded from weights file into gpu_0/res4_0_branch2c_w: (1024, 256, 1, 1)
+INFO net.py:  96: res4_0_branch2c_bn_s loaded from weights file into gpu_0/res4_0_branch2c_bn_s: (1024,)
+INFO net.py:  96: res4_0_branch2c_bn_b loaded from weights file into gpu_0/res4_0_branch2c_bn_b: (1024,)
+INFO net.py:  96: res4_0_branch1_w [+ momentum] loaded from weights file into gpu_0/res4_0_branch1_w: (1024, 512, 1, 1)
+INFO net.py:  96: res4_0_branch1_bn_s loaded from weights file into gpu_0/res4_0_branch1_bn_s: (1024,)
+INFO net.py:  96: res4_0_branch1_bn_b loaded from weights file into gpu_0/res4_0_branch1_bn_b: (1024,)
+INFO net.py:  96: res4_1_branch2a_w [+ momentum] loaded from weights file into gpu_0/res4_1_branch2a_w: (256, 1024, 1, 1)
+INFO net.py:  96: res4_1_branch2a_bn_s loaded from weights file into gpu_0/res4_1_branch2a_bn_s: (256,)
+INFO net.py:  96: res4_1_branch2a_bn_b loaded from weights file into gpu_0/res4_1_branch2a_bn_b: (256,)
+INFO net.py:  96: res4_1_branch2b_w [+ momentum] loaded from weights file into gpu_0/res4_1_branch2b_w: (256, 256, 3, 3)
+INFO net.py:  96: res4_1_branch2b_bn_s loaded from weights file into gpu_0/res4_1_branch2b_bn_s: (256,)
+INFO net.py:  96: res4_1_branch2b_bn_b loaded from weights file into gpu_0/res4_1_branch2b_bn_b: (256,)
+INFO net.py:  96: res4_1_branch2c_w [+ momentum] loaded from weights file into gpu_0/res4_1_branch2c_w: (1024, 256, 1, 1)
+INFO net.py:  96: res4_1_branch2c_bn_s loaded from weights file into gpu_0/res4_1_branch2c_bn_s: (1024,)
+INFO net.py:  96: res4_1_branch2c_bn_b loaded from weights file into gpu_0/res4_1_branch2c_bn_b: (1024,)
+INFO net.py:  96: res4_2_branch2a_w [+ momentum] loaded from weights file into gpu_0/res4_2_branch2a_w: (256, 1024, 1, 1)
+INFO net.py:  96: res4_2_branch2a_bn_s loaded from weights file into gpu_0/res4_2_branch2a_bn_s: (256,)
+INFO net.py:  96: res4_2_branch2a_bn_b loaded from weights file into gpu_0/res4_2_branch2a_bn_b: (256,)
+INFO net.py:  96: res4_2_branch2b_w [+ momentum] loaded from weights file into gpu_0/res4_2_branch2b_w: (256, 256, 3, 3)
+INFO net.py:  96: res4_2_branch2b_bn_s loaded from weights file into gpu_0/res4_2_branch2b_bn_s: (256,)
+INFO net.py:  96: res4_2_branch2b_bn_b loaded from weights file into gpu_0/res4_2_branch2b_bn_b: (256,)
+INFO net.py:  96: res4_2_branch2c_w [+ momentum] loaded from weights file into gpu_0/res4_2_branch2c_w: (1024, 256, 1, 1)
+INFO net.py:  96: res4_2_branch2c_bn_s loaded from weights file into gpu_0/res4_2_branch2c_bn_s: (1024,)
+INFO net.py:  96: res4_2_branch2c_bn_b loaded from weights file into gpu_0/res4_2_branch2c_bn_b: (1024,)
+INFO net.py:  96: res4_3_branch2a_w [+ momentum] loaded from weights file into gpu_0/res4_3_branch2a_w: (256, 1024, 1, 1)
+INFO net.py:  96: res4_3_branch2a_bn_s loaded from weights file into gpu_0/res4_3_branch2a_bn_s: (256,)
+INFO net.py:  96: res4_3_branch2a_bn_b loaded from weights file into gpu_0/res4_3_branch2a_bn_b: (256,)
+INFO net.py:  96: res4_3_branch2b_w [+ momentum] loaded from weights file into gpu_0/res4_3_branch2b_w: (256, 256, 3, 3)
+INFO net.py:  96: res4_3_branch2b_bn_s loaded from weights file into gpu_0/res4_3_branch2b_bn_s: (256,)
+INFO net.py:  96: res4_3_branch2b_bn_b loaded from weights file into gpu_0/res4_3_branch2b_bn_b: (256,)
+INFO net.py:  96: res4_3_branch2c_w [+ momentum] loaded from weights file into gpu_0/res4_3_branch2c_w: (1024, 256, 1, 1)
+INFO net.py:  96: res4_3_branch2c_bn_s loaded from weights file into gpu_0/res4_3_branch2c_bn_s: (1024,)
+INFO net.py:  96: res4_3_branch2c_bn_b loaded from weights file into gpu_0/res4_3_branch2c_bn_b: (1024,)
+INFO net.py:  96: res4_4_branch2a_w [+ momentum] loaded from weights file into gpu_0/res4_4_branch2a_w: (256, 1024, 1, 1)
+INFO net.py:  96: res4_4_branch2a_bn_s loaded from weights file into gpu_0/res4_4_branch2a_bn_s: (256,)
+INFO net.py:  96: res4_4_branch2a_bn_b loaded from weights file into gpu_0/res4_4_branch2a_bn_b: (256,)
+INFO net.py:  96: res4_4_branch2b_w [+ momentum] loaded from weights file into gpu_0/res4_4_branch2b_w: (256, 256, 3, 3)
+INFO net.py:  96: res4_4_branch2b_bn_s loaded from weights file into gpu_0/res4_4_branch2b_bn_s: (256,)
+INFO net.py:  96: res4_4_branch2b_bn_b loaded from weights file into gpu_0/res4_4_branch2b_bn_b: (256,)
+INFO net.py:  96: res4_4_branch2c_w [+ momentum] loaded from weights file into gpu_0/res4_4_branch2c_w: (1024, 256, 1, 1)
+INFO net.py:  96: res4_4_branch2c_bn_s loaded from weights file into gpu_0/res4_4_branch2c_bn_s: (1024,)
+INFO net.py:  96: res4_4_branch2c_bn_b loaded from weights file into gpu_0/res4_4_branch2c_bn_b: (1024,)
+INFO net.py:  96: res4_5_branch2a_w [+ momentum] loaded from weights file into gpu_0/res4_5_branch2a_w: (256, 1024, 1, 1)
+INFO net.py:  96: res4_5_branch2a_bn_s loaded from weights file into gpu_0/res4_5_branch2a_bn_s: (256,)
+INFO net.py:  96: res4_5_branch2a_bn_b loaded from weights file into gpu_0/res4_5_branch2a_bn_b: (256,)
+INFO net.py:  96: res4_5_branch2b_w [+ momentum] loaded from weights file into gpu_0/res4_5_branch2b_w: (256, 256, 3, 3)
+INFO net.py:  96: res4_5_branch2b_bn_s loaded from weights file into gpu_0/res4_5_branch2b_bn_s: (256,)
+INFO net.py:  96: res4_5_branch2b_bn_b loaded from weights file into gpu_0/res4_5_branch2b_bn_b: (256,)
+INFO net.py:  96: res4_5_branch2c_w [+ momentum] loaded from weights file into gpu_0/res4_5_branch2c_w: (1024, 256, 1, 1)
+INFO net.py:  96: res4_5_branch2c_bn_s loaded from weights file into gpu_0/res4_5_branch2c_bn_s: (1024,)
+INFO net.py:  96: res4_5_branch2c_bn_b loaded from weights file into gpu_0/res4_5_branch2c_bn_b: (1024,)
+INFO net.py:  96: res4_6_branch2a_w [+ momentum] loaded from weights file into gpu_0/res4_6_branch2a_w: (256, 1024, 1, 1)
+INFO net.py:  96: res4_6_branch2a_bn_s loaded from weights file into gpu_0/res4_6_branch2a_bn_s: (256,)
+INFO net.py:  96: res4_6_branch2a_bn_b loaded from weights file into gpu_0/res4_6_branch2a_bn_b: (256,)
+INFO net.py:  96: res4_6_branch2b_w [+ momentum] loaded from weights file into gpu_0/res4_6_branch2b_w: (256, 256, 3, 3)
+INFO net.py:  96: res4_6_branch2b_bn_s loaded from weights file into gpu_0/res4_6_branch2b_bn_s: (256,)
+INFO net.py:  96: res4_6_branch2b_bn_b loaded from weights file into gpu_0/res4_6_branch2b_bn_b: (256,)
+INFO net.py:  96: res4_6_branch2c_w [+ momentum] loaded from weights file into gpu_0/res4_6_branch2c_w: (1024, 256, 1, 1)
+INFO net.py:  96: res4_6_branch2c_bn_s loaded from weights file into gpu_0/res4_6_branch2c_bn_s: (1024,)
+INFO net.py:  96: res4_6_branch2c_bn_b loaded from weights file into gpu_0/res4_6_branch2c_bn_b: (1024,)
+INFO net.py:  96: res4_7_branch2a_w [+ momentum] loaded from weights file into gpu_0/res4_7_branch2a_w: (256, 1024, 1, 1)
+INFO net.py:  96: res4_7_branch2a_bn_s loaded from weights file into gpu_0/res4_7_branch2a_bn_s: (256,)
+INFO net.py:  96: res4_7_branch2a_bn_b loaded from weights file into gpu_0/res4_7_branch2a_bn_b: (256,)
+INFO net.py:  96: res4_7_branch2b_w [+ momentum] loaded from weights file into gpu_0/res4_7_branch2b_w: (256, 256, 3, 3)
+INFO net.py:  96: res4_7_branch2b_bn_s loaded from weights file into gpu_0/res4_7_branch2b_bn_s: (256,)
+INFO net.py:  96: res4_7_branch2b_bn_b loaded from weights file into gpu_0/res4_7_branch2b_bn_b: (256,)
+INFO net.py:  96: res4_7_branch2c_w [+ momentum] loaded from weights file into gpu_0/res4_7_branch2c_w: (1024, 256, 1, 1)
+INFO net.py:  96: res4_7_branch2c_bn_s loaded from weights file into gpu_0/res4_7_branch2c_bn_s: (1024,)
+INFO net.py:  96: res4_7_branch2c_bn_b loaded from weights file into gpu_0/res4_7_branch2c_bn_b: (1024,)
+INFO net.py:  96: res4_8_branch2a_w [+ momentum] loaded from weights file into gpu_0/res4_8_branch2a_w: (256, 1024, 1, 1)
+INFO net.py:  96: res4_8_branch2a_bn_s loaded from weights file into gpu_0/res4_8_branch2a_bn_s: (256,)
+INFO net.py:  96: res4_8_branch2a_bn_b loaded from weights file into gpu_0/res4_8_branch2a_bn_b: (256,)
+INFO net.py:  96: res4_8_branch2b_w [+ momentum] loaded from weights file into gpu_0/res4_8_branch2b_w: (256, 256, 3, 3)
+INFO net.py:  96: res4_8_branch2b_bn_s loaded from weights file into gpu_0/res4_8_branch2b_bn_s: (256,)
+INFO net.py:  96: res4_8_branch2b_bn_b loaded from weights file into gpu_0/res4_8_branch2b_bn_b: (256,)
+INFO net.py:  96: res4_8_branch2c_w [+ momentum] loaded from weights file into gpu_0/res4_8_branch2c_w: (1024, 256, 1, 1)
+INFO net.py:  96: res4_8_branch2c_bn_s loaded from weights file into gpu_0/res4_8_branch2c_bn_s: (1024,)
+INFO net.py:  96: res4_8_branch2c_bn_b loaded from weights file into gpu_0/res4_8_branch2c_bn_b: (1024,)
+INFO net.py:  96: res4_9_branch2a_w [+ momentum] loaded from weights file into gpu_0/res4_9_branch2a_w: (256, 1024, 1, 1)
+INFO net.py:  96: res4_9_branch2a_bn_s loaded from weights file into gpu_0/res4_9_branch2a_bn_s: (256,)
+INFO net.py:  96: res4_9_branch2a_bn_b loaded from weights file into gpu_0/res4_9_branch2a_bn_b: (256,)
+INFO net.py:  96: res4_9_branch2b_w [+ momentum] loaded from weights file into gpu_0/res4_9_branch2b_w: (256, 256, 3, 3)
+INFO net.py:  96: res4_9_branch2b_bn_s loaded from weights file into gpu_0/res4_9_branch2b_bn_s: (256,)
+INFO net.py:  96: res4_9_branch2b_bn_b loaded from weights file into gpu_0/res4_9_branch2b_bn_b: (256,)
+INFO net.py:  96: res4_9_branch2c_w [+ momentum] loaded from weights file into gpu_0/res4_9_branch2c_w: (1024, 256, 1, 1)
+INFO net.py:  96: res4_9_branch2c_bn_s loaded from weights file into gpu_0/res4_9_branch2c_bn_s: (1024,)
+INFO net.py:  96: res4_9_branch2c_bn_b loaded from weights file into gpu_0/res4_9_branch2c_bn_b: (1024,)
+INFO net.py:  96: res4_10_branch2a_w [+ momentum] loaded from weights file into gpu_0/res4_10_branch2a_w: (256, 1024, 1, 1)
+INFO net.py:  96: res4_10_branch2a_bn_s loaded from weights file into gpu_0/res4_10_branch2a_bn_s: (256,)
+INFO net.py:  96: res4_10_branch2a_bn_b loaded from weights file into gpu_0/res4_10_branch2a_bn_b: (256,)
+INFO net.py:  96: res4_10_branch2b_w [+ momentum] loaded from weights file into gpu_0/res4_10_branch2b_w: (256, 256, 3, 3)
+INFO net.py:  96: res4_10_branch2b_bn_s loaded from weights file into gpu_0/res4_10_branch2b_bn_s: (256,)
+INFO net.py:  96: res4_10_branch2b_bn_b loaded from weights file into gpu_0/res4_10_branch2b_bn_b: (256,)
+INFO net.py:  96: res4_10_branch2c_w [+ momentum] loaded from weights file into gpu_0/res4_10_branch2c_w: (1024, 256, 1, 1)
+INFO net.py:  96: res4_10_branch2c_bn_s loaded from weights file into gpu_0/res4_10_branch2c_bn_s: (1024,)
+INFO net.py:  96: res4_10_branch2c_bn_b loaded from weights file into gpu_0/res4_10_branch2c_bn_b: (1024,)
+INFO net.py:  96: res4_11_branch2a_w [+ momentum] loaded from weights file into gpu_0/res4_11_branch2a_w: (256, 1024, 1, 1)
+INFO net.py:  96: res4_11_branch2a_bn_s loaded from weights file into gpu_0/res4_11_branch2a_bn_s: (256,)
+INFO net.py:  96: res4_11_branch2a_bn_b loaded from weights file into gpu_0/res4_11_branch2a_bn_b: (256,)
+INFO net.py:  96: res4_11_branch2b_w [+ momentum] loaded from weights file into gpu_0/res4_11_branch2b_w: (256, 256, 3, 3)
+INFO net.py:  96: res4_11_branch2b_bn_s loaded from weights file into gpu_0/res4_11_branch2b_bn_s: (256,)
+INFO net.py:  96: res4_11_branch2b_bn_b loaded from weights file into gpu_0/res4_11_branch2b_bn_b: (256,)
+INFO net.py:  96: res4_11_branch2c_w [+ momentum] loaded from weights file into gpu_0/res4_11_branch2c_w: (1024, 256, 1, 1)
+INFO net.py:  96: res4_11_branch2c_bn_s loaded from weights file into gpu_0/res4_11_branch2c_bn_s: (1024,)
+INFO net.py:  96: res4_11_branch2c_bn_b loaded from weights file into gpu_0/res4_11_branch2c_bn_b: (1024,)
+INFO net.py:  96: res4_12_branch2a_w [+ momentum] loaded from weights file into gpu_0/res4_12_branch2a_w: (256, 1024, 1, 1)
+INFO net.py:  96: res4_12_branch2a_bn_s loaded from weights file into gpu_0/res4_12_branch2a_bn_s: (256,)
+INFO net.py:  96: res4_12_branch2a_bn_b loaded from weights file into gpu_0/res4_12_branch2a_bn_b: (256,)
+INFO net.py:  96: res4_12_branch2b_w [+ momentum] loaded from weights file into gpu_0/res4_12_branch2b_w: (256, 256, 3, 3)
+INFO net.py:  96: res4_12_branch2b_bn_s loaded from weights file into gpu_0/res4_12_branch2b_bn_s: (256,)
+INFO net.py:  96: res4_12_branch2b_bn_b loaded from weights file into gpu_0/res4_12_branch2b_bn_b: (256,)
+INFO net.py:  96: res4_12_branch2c_w [+ momentum] loaded from weights file into gpu_0/res4_12_branch2c_w: (1024, 256, 1, 1)
+INFO net.py:  96: res4_12_branch2c_bn_s loaded from weights file into gpu_0/res4_12_branch2c_bn_s: (1024,)
+INFO net.py:  96: res4_12_branch2c_bn_b loaded from weights file into gpu_0/res4_12_branch2c_bn_b: (1024,)
+INFO net.py:  96: res4_13_branch2a_w [+ momentum] loaded from weights file into gpu_0/res4_13_branch2a_w: (256, 1024, 1, 1)
+INFO net.py:  96: res4_13_branch2a_bn_s loaded from weights file into gpu_0/res4_13_branch2a_bn_s: (256,)
+INFO net.py:  96: res4_13_branch2a_bn_b loaded from weights file into gpu_0/res4_13_branch2a_bn_b: (256,)
+INFO net.py:  96: res4_13_branch2b_w [+ momentum] loaded from weights file into gpu_0/res4_13_branch2b_w: (256, 256, 3, 3)
+INFO net.py:  96: res4_13_branch2b_bn_s loaded from weights file into gpu_0/res4_13_branch2b_bn_s: (256,)
+INFO net.py:  96: res4_13_branch2b_bn_b loaded from weights file into gpu_0/res4_13_branch2b_bn_b: (256,)
+INFO net.py:  96: res4_13_branch2c_w [+ momentum] loaded from weights file into gpu_0/res4_13_branch2c_w: (1024, 256, 1, 1)
+INFO net.py:  96: res4_13_branch2c_bn_s loaded from weights file into gpu_0/res4_13_branch2c_bn_s: (1024,)
+INFO net.py:  96: res4_13_branch2c_bn_b loaded from weights file into gpu_0/res4_13_branch2c_bn_b: (1024,)
+INFO net.py:  96: res4_14_branch2a_w [+ momentum] loaded from weights file into gpu_0/res4_14_branch2a_w: (256, 1024, 1, 1)
+INFO net.py:  96: res4_14_branch2a_bn_s loaded from weights file into gpu_0/res4_14_branch2a_bn_s: (256,)
+INFO net.py:  96: res4_14_branch2a_bn_b loaded from weights file into gpu_0/res4_14_branch2a_bn_b: (256,)
+INFO net.py:  96: res4_14_branch2b_w [+ momentum] loaded from weights file into gpu_0/res4_14_branch2b_w: (256, 256, 3, 3)
+INFO net.py:  96: res4_14_branch2b_bn_s loaded from weights file into gpu_0/res4_14_branch2b_bn_s: (256,)
+INFO net.py:  96: res4_14_branch2b_bn_b loaded from weights file into gpu_0/res4_14_branch2b_bn_b: (256,)
+INFO net.py:  96: res4_14_branch2c_w [+ momentum] loaded from weights file into gpu_0/res4_14_branch2c_w: (1024, 256, 1, 1)
+INFO net.py:  96: res4_14_branch2c_bn_s loaded from weights file into gpu_0/res4_14_branch2c_bn_s: (1024,)
+INFO net.py:  96: res4_14_branch2c_bn_b loaded from weights file into gpu_0/res4_14_branch2c_bn_b: (1024,)
+INFO net.py:  96: res4_15_branch2a_w [+ momentum] loaded from weights file into gpu_0/res4_15_branch2a_w: (256, 1024, 1, 1)
+INFO net.py:  96: res4_15_branch2a_bn_s loaded from weights file into gpu_0/res4_15_branch2a_bn_s: (256,)
+INFO net.py:  96: res4_15_branch2a_bn_b loaded from weights file into gpu_0/res4_15_branch2a_bn_b: (256,)
+INFO net.py:  96: res4_15_branch2b_w [+ momentum] loaded from weights file into gpu_0/res4_15_branch2b_w: (256, 256, 3, 3)
+INFO net.py:  96: res4_15_branch2b_bn_s loaded from weights file into gpu_0/res4_15_branch2b_bn_s: (256,)
+INFO net.py:  96: res4_15_branch2b_bn_b loaded from weights file into gpu_0/res4_15_branch2b_bn_b: (256,)
+INFO net.py:  96: res4_15_branch2c_w [+ momentum] loaded from weights file into gpu_0/res4_15_branch2c_w: (1024, 256, 1, 1)
+INFO net.py:  96: res4_15_branch2c_bn_s loaded from weights file into gpu_0/res4_15_branch2c_bn_s: (1024,)
+INFO net.py:  96: res4_15_branch2c_bn_b loaded from weights file into gpu_0/res4_15_branch2c_bn_b: (1024,)
+INFO net.py:  96: res4_16_branch2a_w [+ momentum] loaded from weights file into gpu_0/res4_16_branch2a_w: (256, 1024, 1, 1)
+INFO net.py:  96: res4_16_branch2a_bn_s loaded from weights file into gpu_0/res4_16_branch2a_bn_s: (256,)
+INFO net.py:  96: res4_16_branch2a_bn_b loaded from weights file into gpu_0/res4_16_branch2a_bn_b: (256,)
+INFO net.py:  96: res4_16_branch2b_w [+ momentum] loaded from weights file into gpu_0/res4_16_branch2b_w: (256, 256, 3, 3)
+INFO net.py:  96: res4_16_branch2b_bn_s loaded from weights file into gpu_0/res4_16_branch2b_bn_s: (256,)
+INFO net.py:  96: res4_16_branch2b_bn_b loaded from weights file into gpu_0/res4_16_branch2b_bn_b: (256,)
+INFO net.py:  96: res4_16_branch2c_w [+ momentum] loaded from weights file into gpu_0/res4_16_branch2c_w: (1024, 256, 1, 1)
+INFO net.py:  96: res4_16_branch2c_bn_s loaded from weights file into gpu_0/res4_16_branch2c_bn_s: (1024,)
+INFO net.py:  96: res4_16_branch2c_bn_b loaded from weights file into gpu_0/res4_16_branch2c_bn_b: (1024,)
+INFO net.py:  96: res4_17_branch2a_w [+ momentum] loaded from weights file into gpu_0/res4_17_branch2a_w: (256, 1024, 1, 1)
+INFO net.py:  96: res4_17_branch2a_bn_s loaded from weights file into gpu_0/res4_17_branch2a_bn_s: (256,)
+INFO net.py:  96: res4_17_branch2a_bn_b loaded from weights file into gpu_0/res4_17_branch2a_bn_b: (256,)
+INFO net.py:  96: res4_17_branch2b_w [+ momentum] loaded from weights file into gpu_0/res4_17_branch2b_w: (256, 256, 3, 3)
+INFO net.py:  96: res4_17_branch2b_bn_s loaded from weights file into gpu_0/res4_17_branch2b_bn_s: (256,)
+INFO net.py:  96: res4_17_branch2b_bn_b loaded from weights file into gpu_0/res4_17_branch2b_bn_b: (256,)
+INFO net.py:  96: res4_17_branch2c_w [+ momentum] loaded from weights file into gpu_0/res4_17_branch2c_w: (1024, 256, 1, 1)
+INFO net.py:  96: res4_17_branch2c_bn_s loaded from weights file into gpu_0/res4_17_branch2c_bn_s: (1024,)
+INFO net.py:  96: res4_17_branch2c_bn_b loaded from weights file into gpu_0/res4_17_branch2c_bn_b: (1024,)
+INFO net.py:  96: res4_18_branch2a_w [+ momentum] loaded from weights file into gpu_0/res4_18_branch2a_w: (256, 1024, 1, 1)
+INFO net.py:  96: res4_18_branch2a_bn_s loaded from weights file into gpu_0/res4_18_branch2a_bn_s: (256,)
+INFO net.py:  96: res4_18_branch2a_bn_b loaded from weights file into gpu_0/res4_18_branch2a_bn_b: (256,)
+INFO net.py:  96: res4_18_branch2b_w [+ momentum] loaded from weights file into gpu_0/res4_18_branch2b_w: (256, 256, 3, 3)
+INFO net.py:  96: res4_18_branch2b_bn_s loaded from weights file into gpu_0/res4_18_branch2b_bn_s: (256,)
+INFO net.py:  96: res4_18_branch2b_bn_b loaded from weights file into gpu_0/res4_18_branch2b_bn_b: (256,)
+INFO net.py:  96: res4_18_branch2c_w [+ momentum] loaded from weights file into gpu_0/res4_18_branch2c_w: (1024, 256, 1, 1)
+INFO net.py:  96: res4_18_branch2c_bn_s loaded from weights file into gpu_0/res4_18_branch2c_bn_s: (1024,)
+INFO net.py:  96: res4_18_branch2c_bn_b loaded from weights file into gpu_0/res4_18_branch2c_bn_b: (1024,)
+INFO net.py:  96: res4_19_branch2a_w [+ momentum] loaded from weights file into gpu_0/res4_19_branch2a_w: (256, 1024, 1, 1)
+INFO net.py:  96: res4_19_branch2a_bn_s loaded from weights file into gpu_0/res4_19_branch2a_bn_s: (256,)
+INFO net.py:  96: res4_19_branch2a_bn_b loaded from weights file into gpu_0/res4_19_branch2a_bn_b: (256,)
+INFO net.py:  96: res4_19_branch2b_w [+ momentum] loaded from weights file into gpu_0/res4_19_branch2b_w: (256, 256, 3, 3)
+INFO net.py:  96: res4_19_branch2b_bn_s loaded from weights file into gpu_0/res4_19_branch2b_bn_s: (256,)
+INFO net.py:  96: res4_19_branch2b_bn_b loaded from weights file into gpu_0/res4_19_branch2b_bn_b: (256,)
+INFO net.py:  96: res4_19_branch2c_w [+ momentum] loaded from weights file into gpu_0/res4_19_branch2c_w: (1024, 256, 1, 1)
+INFO net.py:  96: res4_19_branch2c_bn_s loaded from weights file into gpu_0/res4_19_branch2c_bn_s: (1024,)
+INFO net.py:  96: res4_19_branch2c_bn_b loaded from weights file into gpu_0/res4_19_branch2c_bn_b: (1024,)
+INFO net.py:  96: res4_20_branch2a_w [+ momentum] loaded from weights file into gpu_0/res4_20_branch2a_w: (256, 1024, 1, 1)
+INFO net.py:  96: res4_20_branch2a_bn_s loaded from weights file into gpu_0/res4_20_branch2a_bn_s: (256,)
+INFO net.py:  96: res4_20_branch2a_bn_b loaded from weights file into gpu_0/res4_20_branch2a_bn_b: (256,)
+INFO net.py:  96: res4_20_branch2b_w [+ momentum] loaded from weights file into gpu_0/res4_20_branch2b_w: (256, 256, 3, 3)
+INFO net.py:  96: res4_20_branch2b_bn_s loaded from weights file into gpu_0/res4_20_branch2b_bn_s: (256,)
+INFO net.py:  96: res4_20_branch2b_bn_b loaded from weights file into gpu_0/res4_20_branch2b_bn_b: (256,)
+INFO net.py:  96: res4_20_branch2c_w [+ momentum] loaded from weights file into gpu_0/res4_20_branch2c_w: (1024, 256, 1, 1)
+INFO net.py:  96: res4_20_branch2c_bn_s loaded from weights file into gpu_0/res4_20_branch2c_bn_s: (1024,)
+INFO net.py:  96: res4_20_branch2c_bn_b loaded from weights file into gpu_0/res4_20_branch2c_bn_b: (1024,)
+INFO net.py:  96: res4_21_branch2a_w [+ momentum] loaded from weights file into gpu_0/res4_21_branch2a_w: (256, 1024, 1, 1)
+INFO net.py:  96: res4_21_branch2a_bn_s loaded from weights file into gpu_0/res4_21_branch2a_bn_s: (256,)
+INFO net.py:  96: res4_21_branch2a_bn_b loaded from weights file into gpu_0/res4_21_branch2a_bn_b: (256,)
+INFO net.py:  96: res4_21_branch2b_w [+ momentum] loaded from weights file into gpu_0/res4_21_branch2b_w: (256, 256, 3, 3)
+INFO net.py:  96: res4_21_branch2b_bn_s loaded from weights file into gpu_0/res4_21_branch2b_bn_s: (256,)
+INFO net.py:  96: res4_21_branch2b_bn_b loaded from weights file into gpu_0/res4_21_branch2b_bn_b: (256,)
+INFO net.py:  96: res4_21_branch2c_w [+ momentum] loaded from weights file into gpu_0/res4_21_branch2c_w: (1024, 256, 1, 1)
+INFO net.py:  96: res4_21_branch2c_bn_s loaded from weights file into gpu_0/res4_21_branch2c_bn_s: (1024,)
+INFO net.py:  96: res4_21_branch2c_bn_b loaded from weights file into gpu_0/res4_21_branch2c_bn_b: (1024,)
+INFO net.py:  96: res4_22_branch2a_w [+ momentum] loaded from weights file into gpu_0/res4_22_branch2a_w: (256, 1024, 1, 1)
+INFO net.py:  96: res4_22_branch2a_bn_s loaded from weights file into gpu_0/res4_22_branch2a_bn_s: (256,)
+INFO net.py:  96: res4_22_branch2a_bn_b loaded from weights file into gpu_0/res4_22_branch2a_bn_b: (256,)
+INFO net.py:  96: res4_22_branch2b_w [+ momentum] loaded from weights file into gpu_0/res4_22_branch2b_w: (256, 256, 3, 3)
+INFO net.py:  96: res4_22_branch2b_bn_s loaded from weights file into gpu_0/res4_22_branch2b_bn_s: (256,)
+INFO net.py:  96: res4_22_branch2b_bn_b loaded from weights file into gpu_0/res4_22_branch2b_bn_b: (256,)
+INFO net.py:  96: res4_22_branch2c_w [+ momentum] loaded from weights file into gpu_0/res4_22_branch2c_w: (1024, 256, 1, 1)
+INFO net.py:  96: res4_22_branch2c_bn_s loaded from weights file into gpu_0/res4_22_branch2c_bn_s: (1024,)
+INFO net.py:  96: res4_22_branch2c_bn_b loaded from weights file into gpu_0/res4_22_branch2c_bn_b: (1024,)
+INFO net.py:  96: res5_0_branch2a_w [+ momentum] loaded from weights file into gpu_0/res5_0_branch2a_w: (512, 1024, 1, 1)
+INFO net.py:  96: res5_0_branch2a_bn_s loaded from weights file into gpu_0/res5_0_branch2a_bn_s: (512,)
+INFO net.py:  96: res5_0_branch2a_bn_b loaded from weights file into gpu_0/res5_0_branch2a_bn_b: (512,)
+INFO net.py:  96: res5_0_branch2b_w [+ momentum] loaded from weights file into gpu_0/res5_0_branch2b_w: (512, 512, 3, 3)
+INFO net.py:  96: res5_0_branch2b_bn_s loaded from weights file into gpu_0/res5_0_branch2b_bn_s: (512,)
+INFO net.py:  96: res5_0_branch2b_bn_b loaded from weights file into gpu_0/res5_0_branch2b_bn_b: (512,)
+INFO net.py:  96: res5_0_branch2c_w [+ momentum] loaded from weights file into gpu_0/res5_0_branch2c_w: (2048, 512, 1, 1)
+INFO net.py:  96: res5_0_branch2c_bn_s loaded from weights file into gpu_0/res5_0_branch2c_bn_s: (2048,)
+INFO net.py:  96: res5_0_branch2c_bn_b loaded from weights file into gpu_0/res5_0_branch2c_bn_b: (2048,)
+INFO net.py:  96: res5_0_branch1_w [+ momentum] loaded from weights file into gpu_0/res5_0_branch1_w: (2048, 1024, 1, 1)
+INFO net.py:  96: res5_0_branch1_bn_s loaded from weights file into gpu_0/res5_0_branch1_bn_s: (2048,)
+INFO net.py:  96: res5_0_branch1_bn_b loaded from weights file into gpu_0/res5_0_branch1_bn_b: (2048,)
+INFO net.py:  96: res5_1_branch2a_w [+ momentum] loaded from weights file into gpu_0/res5_1_branch2a_w: (512, 2048, 1, 1)
+INFO net.py:  96: res5_1_branch2a_bn_s loaded from weights file into gpu_0/res5_1_branch2a_bn_s: (512,)
+INFO net.py:  96: res5_1_branch2a_bn_b loaded from weights file into gpu_0/res5_1_branch2a_bn_b: (512,)
+INFO net.py:  96: res5_1_branch2b_w [+ momentum] loaded from weights file into gpu_0/res5_1_branch2b_w: (512, 512, 3, 3)
+INFO net.py:  96: res5_1_branch2b_bn_s loaded from weights file into gpu_0/res5_1_branch2b_bn_s: (512,)
+INFO net.py:  96: res5_1_branch2b_bn_b loaded from weights file into gpu_0/res5_1_branch2b_bn_b: (512,)
+INFO net.py:  96: res5_1_branch2c_w [+ momentum] loaded from weights file into gpu_0/res5_1_branch2c_w: (2048, 512, 1, 1)
+INFO net.py:  96: res5_1_branch2c_bn_s loaded from weights file into gpu_0/res5_1_branch2c_bn_s: (2048,)
+INFO net.py:  96: res5_1_branch2c_bn_b loaded from weights file into gpu_0/res5_1_branch2c_bn_b: (2048,)
+INFO net.py:  96: res5_2_branch2a_w [+ momentum] loaded from weights file into gpu_0/res5_2_branch2a_w: (512, 2048, 1, 1)
+INFO net.py:  96: res5_2_branch2a_bn_s loaded from weights file into gpu_0/res5_2_branch2a_bn_s: (512,)
+INFO net.py:  96: res5_2_branch2a_bn_b loaded from weights file into gpu_0/res5_2_branch2a_bn_b: (512,)
+INFO net.py:  96: res5_2_branch2b_w [+ momentum] loaded from weights file into gpu_0/res5_2_branch2b_w: (512, 512, 3, 3)
+INFO net.py:  96: res5_2_branch2b_bn_s loaded from weights file into gpu_0/res5_2_branch2b_bn_s: (512,)
+INFO net.py:  96: res5_2_branch2b_bn_b loaded from weights file into gpu_0/res5_2_branch2b_bn_b: (512,)
+INFO net.py:  96: res5_2_branch2c_w [+ momentum] loaded from weights file into gpu_0/res5_2_branch2c_w: (2048, 512, 1, 1)
+INFO net.py:  96: res5_2_branch2c_bn_s loaded from weights file into gpu_0/res5_2_branch2c_bn_s: (2048,)
+INFO net.py:  96: res5_2_branch2c_bn_b loaded from weights file into gpu_0/res5_2_branch2c_bn_b: (2048,)
+INFO net.py:  96: fpn_inner_res5_2_sum_w [+ momentum] loaded from weights file into gpu_0/fpn_inner_res5_2_sum_w: (256, 2048, 1, 1)
+INFO net.py:  96: fpn_inner_res5_2_sum_b [+ momentum] loaded from weights file into gpu_0/fpn_inner_res5_2_sum_b: (256,)
+INFO net.py:  96: fpn_inner_res4_22_sum_lateral_w [+ momentum] loaded from weights file into gpu_0/fpn_inner_res4_22_sum_lateral_w: (256, 1024, 1, 1)
+INFO net.py:  96: fpn_inner_res4_22_sum_lateral_b [+ momentum] loaded from weights file into gpu_0/fpn_inner_res4_22_sum_lateral_b: (256,)
+INFO net.py:  96: fpn_inner_res3_3_sum_lateral_w [+ momentum] loaded from weights file into gpu_0/fpn_inner_res3_3_sum_lateral_w: (256, 512, 1, 1)
+INFO net.py:  96: fpn_inner_res3_3_sum_lateral_b [+ momentum] loaded from weights file into gpu_0/fpn_inner_res3_3_sum_lateral_b: (256,)
+INFO net.py:  96: fpn_inner_res2_2_sum_lateral_w [+ momentum] loaded from weights file into gpu_0/fpn_inner_res2_2_sum_lateral_w: (256, 256, 1, 1)
+INFO net.py:  96: fpn_inner_res2_2_sum_lateral_b [+ momentum] loaded from weights file into gpu_0/fpn_inner_res2_2_sum_lateral_b: (256,)
+INFO net.py:  96: fpn_res5_2_sum_w [+ momentum] loaded from weights file into gpu_0/fpn_res5_2_sum_w: (256, 256, 3, 3)
+INFO net.py:  96: fpn_res5_2_sum_b [+ momentum] loaded from weights file into gpu_0/fpn_res5_2_sum_b: (256,)
+INFO net.py:  96: fpn_res4_22_sum_w [+ momentum] loaded from weights file into gpu_0/fpn_res4_22_sum_w: (256, 256, 3, 3)
+INFO net.py:  96: fpn_res4_22_sum_b [+ momentum] loaded from weights file into gpu_0/fpn_res4_22_sum_b: (256,)
+INFO net.py:  96: fpn_res3_3_sum_w [+ momentum] loaded from weights file into gpu_0/fpn_res3_3_sum_w: (256, 256, 3, 3)
+INFO net.py:  96: fpn_res3_3_sum_b [+ momentum] loaded from weights file into gpu_0/fpn_res3_3_sum_b: (256,)
+INFO net.py:  96: fpn_res2_2_sum_w [+ momentum] loaded from weights file into gpu_0/fpn_res2_2_sum_w: (256, 256, 3, 3)
+INFO net.py:  96: fpn_res2_2_sum_b [+ momentum] loaded from weights file into gpu_0/fpn_res2_2_sum_b: (256,)
+INFO net.py:  96: conv_rpn_fpn2_w [+ momentum] loaded from weights file into gpu_0/conv_rpn_fpn2_w: (256, 256, 3, 3)
+INFO net.py:  96: conv_rpn_fpn2_b [+ momentum] loaded from weights file into gpu_0/conv_rpn_fpn2_b: (256,)
+INFO net.py:  96: rpn_cls_logits_fpn2_w [+ momentum] loaded from weights file into gpu_0/rpn_cls_logits_fpn2_w: (3, 256, 1, 1)
+INFO net.py:  96: rpn_cls_logits_fpn2_b [+ momentum] loaded from weights file into gpu_0/rpn_cls_logits_fpn2_b: (3,)
+INFO net.py:  96: rpn_bbox_pred_fpn2_w [+ momentum] loaded from weights file into gpu_0/rpn_bbox_pred_fpn2_w: (12, 256, 1, 1)
+INFO net.py:  96: rpn_bbox_pred_fpn2_b [+ momentum] loaded from weights file into gpu_0/rpn_bbox_pred_fpn2_b: (12,)
+INFO net.py:  96: fc6_w [+ momentum] loaded from weights file into gpu_0/fc6_w: (1024, 12544)
+INFO net.py:  96: fc6_b [+ momentum] loaded from weights file into gpu_0/fc6_b: (1024,)
+INFO net.py:  96: fc7_w [+ momentum] loaded from weights file into gpu_0/fc7_w: (1024, 1024)
+INFO net.py:  96: fc7_b [+ momentum] loaded from weights file into gpu_0/fc7_b: (1024,)
+INFO net.py:  96: cls_score_w [+ momentum] loaded from weights file into gpu_0/cls_score_w: (2, 1024)
+INFO net.py:  96: cls_score_b [+ momentum] loaded from weights file into gpu_0/cls_score_b: (2,)
+INFO net.py:  96: bbox_pred_w [+ momentum] loaded from weights file into gpu_0/bbox_pred_w: (8, 1024)
+INFO net.py:  96: bbox_pred_b [+ momentum] loaded from weights file into gpu_0/bbox_pred_b: (8,)
+INFO net.py:  96: conv_fcn1_w [+ momentum] loaded from weights file into gpu_0/conv_fcn1_w: (512, 256, 3, 3)
+INFO net.py:  96: conv_fcn1_b [+ momentum] loaded from weights file into gpu_0/conv_fcn1_b: (512,)
+INFO net.py:  96: conv_fcn2_w [+ momentum] loaded from weights file into gpu_0/conv_fcn2_w: (512, 512, 3, 3)
+INFO net.py:  96: conv_fcn2_b [+ momentum] loaded from weights file into gpu_0/conv_fcn2_b: (512,)
+INFO net.py:  96: conv_fcn3_w [+ momentum] loaded from weights file into gpu_0/conv_fcn3_w: (512, 512, 3, 3)
+INFO net.py:  96: conv_fcn3_b [+ momentum] loaded from weights file into gpu_0/conv_fcn3_b: (512,)
+INFO net.py:  96: conv_fcn4_w [+ momentum] loaded from weights file into gpu_0/conv_fcn4_w: (512, 512, 3, 3)
+INFO net.py:  96: conv_fcn4_b [+ momentum] loaded from weights file into gpu_0/conv_fcn4_b: (512,)
+INFO net.py:  96: conv_fcn5_w [+ momentum] loaded from weights file into gpu_0/conv_fcn5_w: (512, 512, 3, 3)
+INFO net.py:  96: conv_fcn5_b [+ momentum] loaded from weights file into gpu_0/conv_fcn5_b: (512,)
+INFO net.py:  96: conv_fcn6_w [+ momentum] loaded from weights file into gpu_0/conv_fcn6_w: (512, 512, 3, 3)
+INFO net.py:  96: conv_fcn6_b [+ momentum] loaded from weights file into gpu_0/conv_fcn6_b: (512,)
+INFO net.py:  96: conv_fcn7_w [+ momentum] loaded from weights file into gpu_0/conv_fcn7_w: (512, 512, 3, 3)
+INFO net.py:  96: conv_fcn7_b [+ momentum] loaded from weights file into gpu_0/conv_fcn7_b: (512,)
+INFO net.py:  96: conv_fcn8_w [+ momentum] loaded from weights file into gpu_0/conv_fcn8_w: (512, 512, 3, 3)
+INFO net.py:  96: conv_fcn8_b [+ momentum] loaded from weights file into gpu_0/conv_fcn8_b: (512,)
+INFO net.py:  96: kps_score_lowres_w [+ momentum] loaded from weights file into gpu_0/kps_score_lowres_w: (512, 17, 4, 4)
+INFO net.py:  96: kps_score_lowres_b [+ momentum] loaded from weights file into gpu_0/kps_score_lowres_b: (17,)
+INFO net.py:  96: kps_score_w loaded from weights file into gpu_0/kps_score_w: (17, 17, 4, 4)
+INFO net.py:  96: kps_score_b loaded from weights file into gpu_0/kps_score_b: (17,)
+INFO net.py: 133: res4_16_branch2a_b preserved in workspace (unused)
+INFO net.py: 133: res5_1_branch2b_b preserved in workspace (unused)
+INFO net.py: 133: res4_16_branch2c_b preserved in workspace (unused)
+INFO net.py: 133: res4_4_branch2b_b preserved in workspace (unused)
+INFO net.py: 133: res4_12_branch2a_b preserved in workspace (unused)
+INFO net.py: 133: res4_12_branch2c_b preserved in workspace (unused)
+INFO net.py: 133: fc1000_b preserved in workspace (unused)
+INFO net.py: 133: fc1000_w preserved in workspace (unused)
+INFO net.py: 133: res3_2_branch2a_b preserved in workspace (unused)
+INFO net.py: 133: res2_1_branch2b_b preserved in workspace (unused)
+INFO net.py: 133: res4_17_branch2a_b preserved in workspace (unused)
+INFO net.py: 133: res4_0_branch2b_b preserved in workspace (unused)
+INFO net.py: 133: res4_2_branch2b_b preserved in workspace (unused)
+INFO net.py: 133: res4_12_branch2b_b preserved in workspace (unused)
+INFO net.py: 133: res4_21_branch2a_b preserved in workspace (unused)
+INFO net.py: 133: res4_10_branch2a_b preserved in workspace (unused)
+INFO net.py: 133: res4_14_branch2c_b preserved in workspace (unused)
+INFO net.py: 133: res4_9_branch2b_b preserved in workspace (unused)
+INFO net.py: 133: res2_0_branch2c_b preserved in workspace (unused)
+INFO net.py: 133: res4_1_branch2c_b preserved in workspace (unused)
+INFO net.py: 133: res4_1_branch2a_b preserved in workspace (unused)
+INFO net.py: 133: res5_2_branch2b_b preserved in workspace (unused)
+INFO net.py: 133: res4_7_branch2a_b preserved in workspace (unused)
+INFO net.py: 133: res4_7_branch2c_b preserved in workspace (unused)
+INFO net.py: 133: res5_1_branch2a_b preserved in workspace (unused)
+INFO net.py: 133: res5_1_branch2c_b preserved in workspace (unused)
+INFO net.py: 133: res4_4_branch2a_b preserved in workspace (unused)
+INFO net.py: 133: res4_16_branch2b_b preserved in workspace (unused)
+INFO net.py: 133: conv1_b preserved in workspace (unused)
+INFO net.py: 133: res4_4_branch2c_b preserved in workspace (unused)
+INFO net.py: 133: res2_0_branch2a_b preserved in workspace (unused)
+INFO net.py: 133: res2_2_branch2a_b preserved in workspace (unused)
+INFO net.py: 133: res4_21_branch2b_b preserved in workspace (unused)
+INFO net.py: 133: res3_2_branch2c_b preserved in workspace (unused)
+INFO net.py: 133: res4_20_branch2a_b preserved in workspace (unused)
+INFO net.py: 133: res4_9_branch2c_b preserved in workspace (unused)
+INFO net.py: 133: res4_9_branch2a_b preserved in workspace (unused)
+INFO net.py: 133: res4_15_branch2b_b preserved in workspace (unused)
+INFO net.py: 133: res4_5_branch2c_b preserved in workspace (unused)
+INFO net.py: 133: res4_20_branch2c_b preserved in workspace (unused)
+INFO net.py: 133: res2_1_branch2c_b preserved in workspace (unused)
+INFO net.py: 133: res4_7_branch2b_b preserved in workspace (unused)
+INFO net.py: 133: res4_22_branch2b_b preserved in workspace (unused)
+INFO net.py: 133: res4_13_branch2b_b preserved in workspace (unused)
+INFO net.py: 133: res4_18_branch2c_b preserved in workspace (unused)
+INFO net.py: 133: res4_14_branch2a_b preserved in workspace (unused)
+INFO net.py: 133: res3_0_branch2a_b preserved in workspace (unused)
+INFO net.py: 133: res3_0_branch2b_b preserved in workspace (unused)
+INFO net.py: 133: res2_2_branch2b_b preserved in workspace (unused)
+INFO net.py: 133: res4_5_branch2a_b preserved in workspace (unused)
+INFO net.py: 133: res5_0_branch2c_b preserved in workspace (unused)
+INFO net.py: 133: res5_2_branch2a_b preserved in workspace (unused)
+INFO net.py: 133: res5_0_branch2a_b preserved in workspace (unused)
+INFO net.py: 133: res5_0_branch1_b preserved in workspace (unused)
+INFO net.py: 133: res4_20_branch2b_b preserved in workspace (unused)
+INFO net.py: 133: res4_14_branch2b_b preserved in workspace (unused)
+INFO net.py: 133: res4_0_branch2c_b preserved in workspace (unused)
+INFO net.py: 133: res4_15_branch2a_b preserved in workspace (unused)
+INFO net.py: 133: res4_21_branch2c_b preserved in workspace (unused)
+INFO net.py: 133: res4_19_branch2a_b preserved in workspace (unused)
+INFO net.py: 133: res4_15_branch2c_b preserved in workspace (unused)
+INFO net.py: 133: res4_13_branch2c_b preserved in workspace (unused)
+INFO net.py: 133: res4_19_branch2c_b preserved in workspace (unused)
+INFO net.py: 133: res4_3_branch2c_b preserved in workspace (unused)
+INFO net.py: 133: res4_18_branch2b_b preserved in workspace (unused)
+INFO net.py: 133: res4_22_branch2c_b preserved in workspace (unused)
+INFO net.py: 133: res2_2_branch2c_b preserved in workspace (unused)
+INFO net.py: 133: res3_3_branch2a_b preserved in workspace (unused)
+INFO net.py: 133: res4_22_branch2a_b preserved in workspace (unused)
+INFO net.py: 133: res4_18_branch2a_b preserved in workspace (unused)
+INFO net.py: 133: res4_10_branch2b_b preserved in workspace (unused)
+INFO net.py: 133: res2_0_branch2b_b preserved in workspace (unused)
+INFO net.py: 133: res4_11_branch2a_b preserved in workspace (unused)
+INFO net.py: 133: res4_8_branch2c_b preserved in workspace (unused)
+INFO net.py: 133: res4_13_branch2a_b preserved in workspace (unused)
+INFO net.py: 133: res4_6_branch2b_b preserved in workspace (unused)
+INFO net.py: 133: res4_2_branch2a_b preserved in workspace (unused)
+INFO net.py: 133: res4_11_branch2b_b preserved in workspace (unused)
+INFO net.py: 133: res5_2_branch2c_b preserved in workspace (unused)
+INFO net.py: 133: res3_0_branch2c_b preserved in workspace (unused)
+INFO net.py: 133: res3_1_branch2b_b preserved in workspace (unused)
+INFO net.py: 133: res4_2_branch2c_b preserved in workspace (unused)
+INFO net.py: 133: res4_19_branch2b_b preserved in workspace (unused)
+INFO net.py: 133: res3_3_branch2c_b preserved in workspace (unused)
+INFO net.py: 133: res4_11_branch2c_b preserved in workspace (unused)
+INFO net.py: 133: res4_3_branch2b_b preserved in workspace (unused)
+INFO net.py: 133: res2_0_branch1_b preserved in workspace (unused)
+INFO net.py: 133: res4_17_branch2c_b preserved in workspace (unused)
+INFO net.py: 133: res5_0_branch2b_b preserved in workspace (unused)
+INFO net.py: 133: res4_10_branch2c_b preserved in workspace (unused)
+INFO net.py: 133: res3_0_branch1_b preserved in workspace (unused)
+INFO net.py: 133: res4_1_branch2b_b preserved in workspace (unused)
+INFO net.py: 133: res4_8_branch2b_b preserved in workspace (unused)
+INFO net.py: 133: res2_1_branch2a_b preserved in workspace (unused)
+INFO net.py: 133: res4_0_branch1_b preserved in workspace (unused)
+INFO net.py: 133: res4_3_branch2a_b preserved in workspace (unused)
+INFO net.py: 133: res3_2_branch2b_b preserved in workspace (unused)
+INFO net.py: 133: res4_6_branch2c_b preserved in workspace (unused)
+INFO net.py: 133: res4_5_branch2b_b preserved in workspace (unused)
+INFO net.py: 133: res4_6_branch2a_b preserved in workspace (unused)
+INFO net.py: 133: res4_0_branch2a_b preserved in workspace (unused)
+INFO net.py: 133: res3_1_branch2c_b preserved in workspace (unused)
+INFO net.py: 133: res3_1_branch2a_b preserved in workspace (unused)
+INFO net.py: 133: res4_8_branch2a_b preserved in workspace (unused)
+INFO net.py: 133: res3_3_branch2b_b preserved in workspace (unused)
+INFO net.py: 133: res4_17_branch2b_b preserved in workspace (unused)
+[I net_dag_utils.cc:102] Operator graph pruning prior to chain compute took: 0.000132593 secs
+[I net_dag_utils.cc:102] Operator graph pruning prior to chain compute took: 0.000121624 secs
+[I net_dag_utils.cc:102] Operator graph pruning prior to chain compute took: 1.2415e-05 secs
+ffmpeg version 4.2.1 Copyright (c) 2000-2019 the FFmpeg developers
+  built with gcc 8.3.0 (GCC)
+  configuration: --prefix=/share/pkg.7/ffmpeg/4.2.1/install --disable-stripping --enable-libx264 --enable-libfreetype --enable-shared --enable-nonfree --enable-pic --enable-gpl
+  libavutil      56. 31.100 / 56. 31.100
+  libavcodec     58. 54.100 / 58. 54.100
+  libavformat    58. 29.100 / 58. 29.100
+  libavdevice    58.  8.100 / 58.  8.100
+  libavfilter     7. 57.100 /  7. 57.100
+  libswscale      5.  5.100 /  5.  5.100
+  libswresample   3.  5.100 /  3.  5.100
+  libpostproc    55.  5.100 / 55.  5.100
+Input #0, mov,mp4,m4a,3gp,3g2,mj2, from '/project/dnn-motion/kakashi/Kakashi/tmp_in/00002.mp4':
+  Metadata:
+    major_brand     : isom
+    minor_version   : 512
+    compatible_brands: isomiso2avc1mp41
+    encoder         : Lavf58.29.100
+  Duration: 00:01:29.44, start: 0.000000, bitrate: 1792 kb/s
+    Stream #0:0(und): Video: h264 (Main) (avc1 / 0x31637661), yuv420p(tv, bt709), 1280x720 [SAR 1:1 DAR 16:9], 1659 kb/s, 30 fps, 30 tbr, 90k tbn, 60 tbc (default)
+    Metadata:
+      handler_name    : VideoHandler
+    Stream #0:1(fra): Audio: aac (LC) (mp4a / 0x6134706D), 44100 Hz, stereo, fltp, 125 kb/s (default)
+    Metadata:
+      handler_name    : SoundHandler
+Stream mapping:
+  Stream #0:0 -> #0:0 (h264 (native) -> rawvideo (native))
+Press [q] to stop, [?] for help
+Output #0, image2pipe, to 'pipe:':
+  Metadata:
+    major_brand     : isom
+    minor_version   : 512
+    compatible_brands: isomiso2avc1mp41
+    encoder         : Lavf58.29.100
+    Stream #0:0(und): Video: rawvideo (BGR[24] / 0x18524742), bgr24, 1280x720 [SAR 1:1 DAR 16:9], q=2-31, 663552 kb/s, 30 fps, 30 tbn, 30 tbc (default)
+    Metadata:
+      handler_name    : VideoHandler
+      encoder         : Lavc58.54.100 rawvideo
+Processing /project/dnn-motion/kakashi/Kakashi/tmp_in/00002.mp4
+INFO infer_video.py:  71: Frame 0
+[I net_async_base.h:205] Using specified CPU pool size: 4; device id: -1
+[I net_async_base.h:210] Created new CPU pool, size: 4; device id: -1
+[I net_async_base.h:205] Using specified CPU pool size: 4; device id: -1
+[I net_async_base.h:210] Created new CPU pool, size: 4; device id: -1
+INFO infer_video.py:  78: Inference time: 0.583s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.560s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  80:  | im_detect_keypoints: 0.011s
+INFO infer_video.py:  80:  | misc_keypoints: 0.012s
+INFO infer_video.py:  71: Frame 1
+INFO infer_video.py:  78: Inference time: 0.507s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.506s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=    3 fps=0.0 q=-0.0 size=    8100kB time=00:00:00.10 bitrate=663552.0kbits/s speed=0.162x    INFO infer_video.py:  71: Frame 2
+INFO infer_video.py:  78: Inference time: 0.507s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.507s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=    4 fps=3.6 q=-0.0 size=   10800kB time=00:00:00.13 bitrate=663553.7kbits/s speed=0.118x    INFO infer_video.py:  71: Frame 3
+INFO infer_video.py:  78: Inference time: 0.503s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.503s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=    5 fps=3.1 q=-0.0 size=   13500kB time=00:00:00.16 bitrate=663550.7kbits/s speed=0.102x    INFO infer_video.py:  71: Frame 4
+INFO infer_video.py:  78: Inference time: 0.505s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.505s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=    6 fps=2.8 q=-0.0 size=   16200kB time=00:00:00.20 bitrate=663552.0kbits/s speed=0.0935x    INFO infer_video.py:  71: Frame 5
+INFO infer_video.py:  78: Inference time: 0.501s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.501s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=    7 fps=2.6 q=-0.0 size=   18900kB time=00:00:00.23 bitrate=663552.9kbits/s speed=0.0882x    INFO infer_video.py:  71: Frame 6
+INFO infer_video.py:  78: Inference time: 0.496s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.495s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=    8 fps=2.5 q=-0.0 size=   21600kB time=00:00:00.26 bitrate=663551.2kbits/s speed=0.0847x    INFO infer_video.py:  71: Frame 7
+INFO infer_video.py:  78: Inference time: 0.498s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.498s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  71: Frame 8
+INFO infer_video.py:  78: Inference time: 0.502s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.501s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=   10 fps=2.4 q=-0.0 size=   27000kB time=00:00:00.33 bitrate=663552.7kbits/s speed=0.0804x    INFO infer_video.py:  71: Frame 9
+INFO infer_video.py:  78: Inference time: 0.503s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.502s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=   11 fps=2.4 q=-0.0 size=   29700kB time=00:00:00.36 bitrate=663551.4kbits/s speed=0.0789x    INFO infer_video.py:  71: Frame 10
+INFO infer_video.py:  78: Inference time: 0.526s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.526s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=   12 fps=2.3 q=-0.0 size=   32400kB time=00:00:00.40 bitrate=663552.0kbits/s speed=0.0776x    INFO infer_video.py:  71: Frame 11
+INFO infer_video.py:  78: Inference time: 0.504s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.503s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=   13 fps=2.3 q=-0.0 size=   35100kB time=00:00:00.43 bitrate=663552.5kbits/s speed=0.0762x    INFO infer_video.py:  71: Frame 12
+INFO infer_video.py:  78: Inference time: 0.495s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.494s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=   14 fps=2.3 q=-0.0 size=   37800kB time=00:00:00.46 bitrate=663551.5kbits/s speed=0.0754x    INFO infer_video.py:  71: Frame 13
+INFO infer_video.py:  78: Inference time: 0.498s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.497s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  71: Frame 14
+INFO infer_video.py:  78: Inference time: 0.504s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.504s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=   16 fps=2.2 q=-0.0 size=   43200kB time=00:00:00.53 bitrate=663552.4kbits/s speed=0.0742x    INFO infer_video.py:  71: Frame 15
+INFO infer_video.py:  78: Inference time: 0.495s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.495s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=   17 fps=2.2 q=-0.0 size=   45900kB time=00:00:00.56 bitrate=663551.6kbits/s speed=0.0736x    INFO infer_video.py:  71: Frame 16
+INFO infer_video.py:  78: Inference time: 0.495s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.494s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  71: Frame 17
+INFO infer_video.py:  78: Inference time: 0.498s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.498s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=   19 fps=2.2 q=-0.0 size=   51300kB time=00:00:00.63 bitrate=663552.3kbits/s speed=0.0729x    INFO infer_video.py:  71: Frame 18
+INFO infer_video.py:  78: Inference time: 0.500s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.499s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  71: Frame 19
+INFO infer_video.py:  78: Inference time: 0.502s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.502s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=   21 fps=2.2 q=-0.0 size=   56700kB time=00:00:00.70 bitrate=663552.0kbits/s speed=0.0722x    INFO infer_video.py:  71: Frame 20
+INFO infer_video.py:  78: Inference time: 0.508s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.507s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=   22 fps=2.2 q=-0.0 size=   59400kB time=00:00:00.73 bitrate=663552.3kbits/s speed=0.0719x    INFO infer_video.py:  71: Frame 21
+INFO infer_video.py:  78: Inference time: 0.508s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.508s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=   23 fps=2.1 q=-0.0 size=   62100kB time=00:00:00.76 bitrate=663551.7kbits/s speed=0.0716x    INFO infer_video.py:  71: Frame 22
+INFO infer_video.py:  78: Inference time: 0.502s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.502s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=   24 fps=2.1 q=-0.0 size=   64800kB time=00:00:00.80 bitrate=663552.0kbits/s speed=0.0713x    INFO infer_video.py:  71: Frame 23
+INFO infer_video.py:  78: Inference time: 0.501s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.501s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=   25 fps=2.1 q=-0.0 size=   67500kB time=00:00:00.83 bitrate=663552.3kbits/s speed=0.0711x    INFO infer_video.py:  71: Frame 24
+INFO infer_video.py:  78: Inference time: 0.499s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.499s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=   26 fps=2.1 q=-0.0 size=   70200kB time=00:00:00.86 bitrate=663551.7kbits/s speed=0.0709x    INFO infer_video.py:  71: Frame 25
+INFO infer_video.py:  78: Inference time: 0.499s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.499s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=   27 fps=2.1 q=-0.0 size=   72900kB time=00:00:00.90 bitrate=663552.0kbits/s speed=0.0707x    INFO infer_video.py:  71: Frame 26
+INFO infer_video.py:  78: Inference time: 0.502s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.501s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=   28 fps=2.1 q=-0.0 size=   75600kB time=00:00:00.93 bitrate=663552.2kbits/s speed=0.0706x    INFO infer_video.py:  71: Frame 27
+INFO infer_video.py:  78: Inference time: 0.502s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.501s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=   29 fps=2.1 q=-0.0 size=   78300kB time=00:00:00.96 bitrate=663551.8kbits/s speed=0.0704x    INFO infer_video.py:  71: Frame 28
+INFO infer_video.py:  78: Inference time: 0.500s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.500s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=   30 fps=2.1 q=-0.0 size=   81000kB time=00:00:01.00 bitrate=663552.0kbits/s speed=0.0703x    INFO infer_video.py:  71: Frame 29
+INFO infer_video.py:  78: Inference time: 0.499s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.499s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=   31 fps=2.1 q=-0.0 size=   83700kB time=00:00:01.03 bitrate=663552.2kbits/s speed=0.0701x    INFO infer_video.py:  71: Frame 30
+INFO infer_video.py:  78: Inference time: 0.500s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.500s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=   32 fps=2.1 q=-0.0 size=   86400kB time=00:00:01.06 bitrate=663551.8kbits/s speed=0.07x    INFO infer_video.py:  71: Frame 31
+INFO infer_video.py:  78: Inference time: 0.496s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.496s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=   33 fps=2.1 q=-0.0 size=   89100kB time=00:00:01.10 bitrate=663552.0kbits/s speed=0.0699x    INFO infer_video.py:  71: Frame 32
+INFO infer_video.py:  78: Inference time: 0.498s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.498s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  71: Frame 33
+INFO infer_video.py:  78: Inference time: 0.499s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.499s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=   35 fps=2.1 q=-0.0 size=   94500kB time=00:00:01.16 bitrate=663551.8kbits/s speed=0.0697x    INFO infer_video.py:  71: Frame 34
+INFO infer_video.py:  78: Inference time: 0.504s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.503s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=   36 fps=2.1 q=-0.0 size=   97200kB time=00:00:01.20 bitrate=663552.0kbits/s speed=0.0696x    INFO infer_video.py:  71: Frame 35
+INFO infer_video.py:  78: Inference time: 0.515s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.514s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=   37 fps=2.1 q=-0.0 size=   99900kB time=00:00:01.23 bitrate=663552.2kbits/s speed=0.0695x    INFO infer_video.py:  71: Frame 36
+INFO infer_video.py:  78: Inference time: 0.509s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.508s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=   38 fps=2.1 q=-0.0 size=  102600kB time=00:00:01.26 bitrate=663551.8kbits/s speed=0.0694x    INFO infer_video.py:  71: Frame 37
+INFO infer_video.py:  78: Inference time: 0.496s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.495s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=   39 fps=2.1 q=-0.0 size=  105300kB time=00:00:01.30 bitrate=663552.0kbits/s speed=0.0693x    INFO infer_video.py:  71: Frame 38
+INFO infer_video.py:  78: Inference time: 0.495s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.494s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  71: Frame 39
+INFO infer_video.py:  78: Inference time: 0.499s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.499s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=   41 fps=2.1 q=-0.0 size=  110700kB time=00:00:01.36 bitrate=663551.8kbits/s speed=0.0691x    INFO infer_video.py:  71: Frame 40
+INFO infer_video.py:  78: Inference time: 0.500s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.499s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=   42 fps=2.1 q=-0.0 size=  113400kB time=00:00:01.40 bitrate=663552.0kbits/s speed=0.0691x    INFO infer_video.py:  71: Frame 41
+INFO infer_video.py:  78: Inference time: 0.500s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.500s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=   43 fps=2.1 q=-0.0 size=  116100kB time=00:00:01.43 bitrate=663552.2kbits/s speed=0.069x    INFO infer_video.py:  71: Frame 42
+INFO infer_video.py:  78: Inference time: 0.500s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.499s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=   44 fps=2.1 q=-0.0 size=  118800kB time=00:00:01.46 bitrate=663551.8kbits/s speed=0.069x    INFO infer_video.py:  71: Frame 43
+INFO infer_video.py:  78: Inference time: 0.500s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.500s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=   45 fps=2.1 q=-0.0 size=  121500kB time=00:00:01.50 bitrate=663552.0kbits/s speed=0.0689x    INFO infer_video.py:  71: Frame 44
+INFO infer_video.py:  78: Inference time: 0.500s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.500s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=   46 fps=2.1 q=-0.0 size=  124200kB time=00:00:01.53 bitrate=663552.1kbits/s speed=0.0688x    INFO infer_video.py:  71: Frame 45
+INFO infer_video.py:  78: Inference time: 0.501s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.501s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=   47 fps=2.1 q=-0.0 size=  126900kB time=00:00:01.56 bitrate=663551.9kbits/s speed=0.0688x    INFO infer_video.py:  71: Frame 46
+INFO infer_video.py:  78: Inference time: 0.496s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.496s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=   48 fps=2.1 q=-0.0 size=  129600kB time=00:00:01.60 bitrate=663552.0kbits/s speed=0.0687x    INFO infer_video.py:  71: Frame 47
+INFO infer_video.py:  78: Inference time: 0.499s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.499s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  71: Frame 48
+INFO infer_video.py:  78: Inference time: 0.498s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.498s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=   50 fps=2.1 q=-0.0 size=  135000kB time=00:00:01.66 bitrate=663551.9kbits/s speed=0.0687x    INFO infer_video.py:  71: Frame 49
+INFO infer_video.py:  78: Inference time: 0.498s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.498s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  71: Frame 50
+INFO infer_video.py:  78: Inference time: 0.498s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.498s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=   52 fps=2.1 q=-0.0 size=  140400kB time=00:00:01.73 bitrate=663552.1kbits/s speed=0.0686x    INFO infer_video.py:  71: Frame 51
+INFO infer_video.py:  78: Inference time: 0.495s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.495s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  71: Frame 52
+INFO infer_video.py:  78: Inference time: 0.498s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.498s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=   54 fps=2.1 q=-0.0 size=  145800kB time=00:00:01.80 bitrate=663552.0kbits/s speed=0.0685x    INFO infer_video.py:  71: Frame 53
+INFO infer_video.py:  78: Inference time: 0.496s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.496s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  71: Frame 54
+INFO infer_video.py:  78: Inference time: 0.496s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.496s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=   56 fps=2.1 q=-0.0 size=  151200kB time=00:00:01.86 bitrate=663551.9kbits/s speed=0.0685x    INFO infer_video.py:  71: Frame 55
+INFO infer_video.py:  78: Inference time: 0.495s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.494s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  71: Frame 56
+INFO infer_video.py:  78: Inference time: 0.499s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.499s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=   58 fps=2.1 q=-0.0 size=  156600kB time=00:00:01.93 bitrate=663552.1kbits/s speed=0.0684x    INFO infer_video.py:  71: Frame 57
+INFO infer_video.py:  78: Inference time: 0.500s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.499s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=   59 fps=2.1 q=-0.0 size=  159300kB time=00:00:01.96 bitrate=663551.9kbits/s speed=0.0684x    INFO infer_video.py:  71: Frame 58
+INFO infer_video.py:  78: Inference time: 0.500s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.500s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=   60 fps=2.1 q=-0.0 size=  162000kB time=00:00:02.00 bitrate=663552.0kbits/s speed=0.0683x    INFO infer_video.py:  71: Frame 59
+INFO infer_video.py:  78: Inference time: 0.499s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.499s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=   61 fps=2.0 q=-0.0 size=  164700kB time=00:00:02.03 bitrate=663552.1kbits/s speed=0.0683x    INFO infer_video.py:  71: Frame 60
+INFO infer_video.py:  78: Inference time: 0.503s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.503s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=   62 fps=2.0 q=-0.0 size=  167400kB time=00:00:02.06 bitrate=663551.9kbits/s speed=0.0683x    INFO infer_video.py:  71: Frame 61
+INFO infer_video.py:  78: Inference time: 0.504s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.504s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=   63 fps=2.0 q=-0.0 size=  170100kB time=00:00:02.10 bitrate=663552.0kbits/s speed=0.0682x    INFO infer_video.py:  71: Frame 62
+INFO infer_video.py:  78: Inference time: 0.498s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.498s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=   64 fps=2.0 q=-0.0 size=  172800kB time=00:00:02.13 bitrate=663552.1kbits/s speed=0.0682x    INFO infer_video.py:  71: Frame 63
+INFO infer_video.py:  78: Inference time: 0.497s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.497s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  71: Frame 64
+INFO infer_video.py:  78: Inference time: 0.495s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.495s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=   66 fps=2.0 q=-0.0 size=  178200kB time=00:00:02.20 bitrate=663552.0kbits/s speed=0.0682x    INFO infer_video.py:  71: Frame 65
+INFO infer_video.py:  78: Inference time: 0.499s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.498s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  71: Frame 66
+INFO infer_video.py:  78: Inference time: 0.494s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.494s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=   68 fps=2.0 q=-0.0 size=  183600kB time=00:00:02.26 bitrate=663551.9kbits/s speed=0.0681x    INFO infer_video.py:  71: Frame 67
+INFO infer_video.py:  78: Inference time: 0.496s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.495s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  71: Frame 68
+INFO infer_video.py:  78: Inference time: 0.497s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.496s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=   70 fps=2.0 q=-0.0 size=  189000kB time=00:00:02.33 bitrate=663552.1kbits/s speed=0.0681x    INFO infer_video.py:  71: Frame 69
+INFO infer_video.py:  78: Inference time: 0.499s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.499s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  71: Frame 70
+INFO infer_video.py:  78: Inference time: 0.495s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.495s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=   72 fps=2.0 q=-0.0 size=  194400kB time=00:00:02.40 bitrate=663552.0kbits/s speed=0.068x    INFO infer_video.py:  71: Frame 71
+INFO infer_video.py:  78: Inference time: 0.497s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.496s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  71: Frame 72
+INFO infer_video.py:  78: Inference time: 0.503s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.502s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=   74 fps=2.0 q=-0.0 size=  199800kB time=00:00:02.46 bitrate=663551.9kbits/s speed=0.068x    INFO infer_video.py:  71: Frame 73
+INFO infer_video.py:  78: Inference time: 0.504s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.503s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=   75 fps=2.0 q=-0.0 size=  202500kB time=00:00:02.50 bitrate=663552.0kbits/s speed=0.068x    INFO infer_video.py:  71: Frame 74
+INFO infer_video.py:  78: Inference time: 0.500s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.500s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=   76 fps=2.0 q=-0.0 size=  205200kB time=00:00:02.53 bitrate=663552.1kbits/s speed=0.068x    INFO infer_video.py:  71: Frame 75
+INFO infer_video.py:  78: Inference time: 0.498s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.498s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=   77 fps=2.0 q=-0.0 size=  207900kB time=00:00:02.56 bitrate=663551.9kbits/s speed=0.0679x    INFO infer_video.py:  71: Frame 76
+INFO infer_video.py:  78: Inference time: 0.497s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.497s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  71: Frame 77
+INFO infer_video.py:  78: Inference time: 0.496s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.496s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=   79 fps=2.0 q=-0.0 size=  213300kB time=00:00:02.63 bitrate=663552.1kbits/s speed=0.0679x    INFO infer_video.py:  71: Frame 78
+INFO infer_video.py:  78: Inference time: 0.496s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.495s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  71: Frame 79
+INFO infer_video.py:  78: Inference time: 0.498s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.498s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=   81 fps=2.0 q=-0.0 size=  218700kB time=00:00:02.70 bitrate=663552.0kbits/s speed=0.0679x    INFO infer_video.py:  71: Frame 80
+INFO infer_video.py:  78: Inference time: 0.496s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.496s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  71: Frame 81
+INFO infer_video.py:  78: Inference time: 0.496s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.495s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=   83 fps=2.0 q=-0.0 size=  224100kB time=00:00:02.76 bitrate=663551.9kbits/s speed=0.0679x    INFO infer_video.py:  71: Frame 82
+INFO infer_video.py:  78: Inference time: 0.503s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.502s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  71: Frame 83
+INFO infer_video.py:  78: Inference time: 0.494s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.494s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=   85 fps=2.0 q=-0.0 size=  229500kB time=00:00:02.83 bitrate=663552.1kbits/s speed=0.0678x    INFO infer_video.py:  71: Frame 84
+INFO infer_video.py:  78: Inference time: 0.496s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.495s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  71: Frame 85
+INFO infer_video.py:  78: Inference time: 0.499s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.499s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=   87 fps=2.0 q=-0.0 size=  234900kB time=00:00:02.90 bitrate=663552.0kbits/s speed=0.0678x    INFO infer_video.py:  71: Frame 86
+INFO infer_video.py:  78: Inference time: 0.495s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.495s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=   88 fps=2.0 q=-0.0 size=  237600kB time=00:00:02.93 bitrate=663552.1kbits/s speed=0.0678x    INFO infer_video.py:  71: Frame 87
+INFO infer_video.py:  78: Inference time: 0.496s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.496s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  71: Frame 88
+INFO infer_video.py:  78: Inference time: 0.497s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.497s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=   90 fps=2.0 q=-0.0 size=  243000kB time=00:00:03.00 bitrate=663552.0kbits/s speed=0.0678x    INFO infer_video.py:  71: Frame 89
+INFO infer_video.py:  78: Inference time: 0.495s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.495s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  71: Frame 90
+INFO infer_video.py:  78: Inference time: 0.502s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.501s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=   92 fps=2.0 q=-0.0 size=  248400kB time=00:00:03.06 bitrate=663551.9kbits/s speed=0.0678x    INFO infer_video.py:  71: Frame 91
+INFO infer_video.py:  78: Inference time: 0.501s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.501s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=   93 fps=2.0 q=-0.0 size=  251100kB time=00:00:03.10 bitrate=663552.0kbits/s speed=0.0677x    INFO infer_video.py:  71: Frame 92
+INFO infer_video.py:  78: Inference time: 0.500s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.500s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=   94 fps=2.0 q=-0.0 size=  253800kB time=00:00:03.13 bitrate=663552.1kbits/s speed=0.0677x    INFO infer_video.py:  71: Frame 93
+INFO infer_video.py:  78: Inference time: 0.500s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.500s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=   95 fps=2.0 q=-0.0 size=  256500kB time=00:00:03.16 bitrate=663551.9kbits/s speed=0.0677x    INFO infer_video.py:  71: Frame 94
+INFO infer_video.py:  78: Inference time: 0.500s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.500s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=   96 fps=2.0 q=-0.0 size=  259200kB time=00:00:03.20 bitrate=663552.0kbits/s speed=0.0677x    INFO infer_video.py:  71: Frame 95
+INFO infer_video.py:  78: Inference time: 0.495s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.495s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=   97 fps=2.0 q=-0.0 size=  261900kB time=00:00:03.23 bitrate=663552.1kbits/s speed=0.0677x    INFO infer_video.py:  71: Frame 96
+INFO infer_video.py:  78: Inference time: 0.498s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.497s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  71: Frame 97
+INFO infer_video.py:  78: Inference time: 0.500s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.499s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=   99 fps=2.0 q=-0.0 size=  267300kB time=00:00:03.30 bitrate=663552.0kbits/s speed=0.0677x    INFO infer_video.py:  71: Frame 98
+INFO infer_video.py:  78: Inference time: 0.496s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.496s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=  100 fps=2.0 q=-0.0 size=  270000kB time=00:00:03.33 bitrate=663552.1kbits/s speed=0.0677x    INFO infer_video.py:  71: Frame 99
+INFO infer_video.py:  78: Inference time: 0.498s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.498s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  71: Frame 100
+INFO infer_video.py:  78: Inference time: 0.500s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.499s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=  102 fps=2.0 q=-0.0 size=  275400kB time=00:00:03.40 bitrate=663552.0kbits/s speed=0.0676x    INFO infer_video.py:  71: Frame 101
+INFO infer_video.py:  78: Inference time: 0.494s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.493s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=  103 fps=2.0 q=-0.0 size=  278100kB time=00:00:03.43 bitrate=663552.1kbits/s speed=0.0676x    INFO infer_video.py:  71: Frame 102
+INFO infer_video.py:  78: Inference time: 0.497s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.496s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  71: Frame 103
+INFO infer_video.py:  78: Inference time: 0.494s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.493s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=  105 fps=2.0 q=-0.0 size=  283500kB time=00:00:03.50 bitrate=663552.0kbits/s speed=0.0676x    INFO infer_video.py:  71: Frame 104
+INFO infer_video.py:  78: Inference time: 0.495s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.494s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  71: Frame 105
+INFO infer_video.py:  78: Inference time: 0.494s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.494s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=  107 fps=2.0 q=-0.0 size=  288900kB time=00:00:03.56 bitrate=663551.9kbits/s speed=0.0676x    INFO infer_video.py:  71: Frame 106
+INFO infer_video.py:  78: Inference time: 0.495s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.495s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  71: Frame 107
+INFO infer_video.py:  78: Inference time: 0.496s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.496s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=  109 fps=2.0 q=-0.0 size=  294300kB time=00:00:03.63 bitrate=663552.1kbits/s speed=0.0676x    INFO infer_video.py:  71: Frame 108
+INFO infer_video.py:  78: Inference time: 0.494s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.494s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  71: Frame 109
+INFO infer_video.py:  78: Inference time: 0.496s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.495s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=  111 fps=2.0 q=-0.0 size=  299700kB time=00:00:03.70 bitrate=663552.0kbits/s speed=0.0676x    INFO infer_video.py:  71: Frame 110
+INFO infer_video.py:  78: Inference time: 0.497s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.497s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  71: Frame 111
+INFO infer_video.py:  78: Inference time: 0.499s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.499s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=  113 fps=2.0 q=-0.0 size=  305100kB time=00:00:03.76 bitrate=663551.9kbits/s speed=0.0676x    INFO infer_video.py:  71: Frame 112
+INFO infer_video.py:  78: Inference time: 0.505s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.505s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=  114 fps=2.0 q=-0.0 size=  307800kB time=00:00:03.80 bitrate=663552.0kbits/s speed=0.0676x    INFO infer_video.py:  71: Frame 113
+INFO infer_video.py:  78: Inference time: 0.494s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.494s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=  115 fps=2.0 q=-0.0 size=  310500kB time=00:00:03.83 bitrate=663552.1kbits/s speed=0.0676x    INFO infer_video.py:  71: Frame 114
+INFO infer_video.py:  78: Inference time: 0.500s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.499s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  71: Frame 115
+INFO infer_video.py:  78: Inference time: 0.493s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.492s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=  117 fps=2.0 q=-0.0 size=  315900kB time=00:00:03.90 bitrate=663552.0kbits/s speed=0.0675x    INFO infer_video.py:  71: Frame 116
+INFO infer_video.py:  78: Inference time: 0.496s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.495s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  71: Frame 117
+INFO infer_video.py:  78: Inference time: 0.496s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.495s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=  119 fps=2.0 q=-0.0 size=  321300kB time=00:00:03.96 bitrate=663551.9kbits/s speed=0.0675x    INFO infer_video.py:  71: Frame 118
+INFO infer_video.py:  78: Inference time: 0.498s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.498s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  71: Frame 119
+INFO infer_video.py:  78: Inference time: 0.498s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.498s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=  121 fps=2.0 q=-0.0 size=  326700kB time=00:00:04.03 bitrate=663552.1kbits/s speed=0.0675x    INFO infer_video.py:  71: Frame 120
+INFO infer_video.py:  78: Inference time: 0.495s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.494s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  71: Frame 121
+INFO infer_video.py:  78: Inference time: 0.494s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.494s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=  123 fps=2.0 q=-0.0 size=  332100kB time=00:00:04.10 bitrate=663552.0kbits/s speed=0.0675x    INFO infer_video.py:  71: Frame 122
+INFO infer_video.py:  78: Inference time: 0.497s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.496s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  71: Frame 123
+INFO infer_video.py:  78: Inference time: 0.495s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.495s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=  125 fps=2.0 q=-0.0 size=  337500kB time=00:00:04.16 bitrate=663551.9kbits/s speed=0.0675x    INFO infer_video.py:  71: Frame 124
+INFO infer_video.py:  78: Inference time: 0.498s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.497s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  71: Frame 125
+INFO infer_video.py:  78: Inference time: 0.500s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.500s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=  127 fps=2.0 q=-0.0 size=  342900kB time=00:00:04.23 bitrate=663552.1kbits/s speed=0.0675x    INFO infer_video.py:  71: Frame 126
+INFO infer_video.py:  78: Inference time: 0.497s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.497s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=  128 fps=2.0 q=-0.0 size=  345600kB time=00:00:04.26 bitrate=663551.9kbits/s speed=0.0675x    INFO infer_video.py:  71: Frame 127
+INFO infer_video.py:  78: Inference time: 0.501s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.501s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  71: Frame 128
+INFO infer_video.py:  78: Inference time: 0.498s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.497s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=  130 fps=2.0 q=-0.0 size=  351000kB time=00:00:04.33 bitrate=663552.1kbits/s speed=0.0675x    INFO infer_video.py:  71: Frame 129
+INFO infer_video.py:  78: Inference time: 0.495s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.494s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  71: Frame 130
+INFO infer_video.py:  78: Inference time: 0.499s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.499s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=  132 fps=2.0 q=-0.0 size=  356400kB time=00:00:04.40 bitrate=663552.0kbits/s speed=0.0675x    INFO infer_video.py:  71: Frame 131
+INFO infer_video.py:  78: Inference time: 0.497s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.497s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=  133 fps=2.0 q=-0.0 size=  359100kB time=00:00:04.43 bitrate=663552.0kbits/s speed=0.0675x    INFO infer_video.py:  71: Frame 132
+INFO infer_video.py:  78: Inference time: 0.495s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.494s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  71: Frame 133
+INFO infer_video.py:  78: Inference time: 0.495s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.495s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=  135 fps=2.0 q=-0.0 size=  364500kB time=00:00:04.50 bitrate=663552.0kbits/s speed=0.0675x    INFO infer_video.py:  71: Frame 134
+INFO infer_video.py:  78: Inference time: 0.495s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.495s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  71: Frame 135
+INFO infer_video.py:  78: Inference time: 0.496s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.496s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=  137 fps=2.0 q=-0.0 size=  369900kB time=00:00:04.56 bitrate=663552.0kbits/s speed=0.0675x    INFO infer_video.py:  71: Frame 136
+INFO infer_video.py:  78: Inference time: 0.499s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.499s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  71: Frame 137
+INFO infer_video.py:  78: Inference time: 0.497s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.497s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=  139 fps=2.0 q=-0.0 size=  375300kB time=00:00:04.63 bitrate=663552.0kbits/s speed=0.0674x    INFO infer_video.py:  71: Frame 138
+INFO infer_video.py:  78: Inference time: 0.497s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.496s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  71: Frame 139
+INFO infer_video.py:  78: Inference time: 0.498s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.498s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=  141 fps=2.0 q=-0.0 size=  380700kB time=00:00:04.70 bitrate=663552.0kbits/s speed=0.0674x    INFO infer_video.py:  71: Frame 140
+INFO infer_video.py:  78: Inference time: 0.495s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.494s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  71: Frame 141
+INFO infer_video.py:  78: Inference time: 0.496s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.495s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=  143 fps=2.0 q=-0.0 size=  386100kB time=00:00:04.76 bitrate=663552.0kbits/s speed=0.0674x    INFO infer_video.py:  71: Frame 142
+INFO infer_video.py:  78: Inference time: 0.496s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.496s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  71: Frame 143
+INFO infer_video.py:  78: Inference time: 0.496s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.496s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=  145 fps=2.0 q=-0.0 size=  391500kB time=00:00:04.83 bitrate=663552.0kbits/s speed=0.0674x    INFO infer_video.py:  71: Frame 144
+INFO infer_video.py:  78: Inference time: 0.494s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.494s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  71: Frame 145
+INFO infer_video.py:  78: Inference time: 0.495s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.495s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=  147 fps=2.0 q=-0.0 size=  396900kB time=00:00:04.90 bitrate=663552.0kbits/s speed=0.0674x    INFO infer_video.py:  71: Frame 146
+INFO infer_video.py:  78: Inference time: 0.495s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.495s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  71: Frame 147
+INFO infer_video.py:  78: Inference time: 0.498s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.498s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=  149 fps=2.0 q=-0.0 size=  402300kB time=00:00:04.96 bitrate=663552.0kbits/s speed=0.0674x    INFO infer_video.py:  71: Frame 148
+INFO infer_video.py:  78: Inference time: 0.495s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.494s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=  150 fps=2.0 q=-0.0 size=  405000kB time=00:00:05.00 bitrate=663552.0kbits/s speed=0.0674x    INFO infer_video.py:  71: Frame 149
+INFO infer_video.py:  78: Inference time: 0.498s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.497s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  71: Frame 150
+INFO infer_video.py:  78: Inference time: 0.501s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.500s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=  152 fps=2.0 q=-0.0 size=  410400kB time=00:00:05.06 bitrate=663552.0kbits/s speed=0.0674x    INFO infer_video.py:  71: Frame 151
+INFO infer_video.py:  78: Inference time: 0.497s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.497s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=  153 fps=2.0 q=-0.0 size=  413100kB time=00:00:05.10 bitrate=663552.0kbits/s speed=0.0674x    INFO infer_video.py:  71: Frame 152
+INFO infer_video.py:  78: Inference time: 0.503s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.502s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  71: Frame 153
+INFO infer_video.py:  78: Inference time: 0.500s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.499s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=  155 fps=2.0 q=-0.0 size=  418500kB time=00:00:05.16 bitrate=663552.0kbits/s speed=0.0674x    INFO infer_video.py:  71: Frame 154
+INFO infer_video.py:  78: Inference time: 0.493s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.493s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=  156 fps=2.0 q=-0.0 size=  421200kB time=00:00:05.20 bitrate=663552.0kbits/s speed=0.0674x    INFO infer_video.py:  71: Frame 155
+INFO infer_video.py:  78: Inference time: 0.496s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.496s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  71: Frame 156
+INFO infer_video.py:  78: Inference time: 0.495s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.495s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=  158 fps=2.0 q=-0.0 size=  426600kB time=00:00:05.26 bitrate=663552.0kbits/s speed=0.0674x    INFO infer_video.py:  71: Frame 157
+INFO infer_video.py:  78: Inference time: 0.496s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.495s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  71: Frame 158
+INFO infer_video.py:  78: Inference time: 0.499s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.499s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=  160 fps=2.0 q=-0.0 size=  432000kB time=00:00:05.33 bitrate=663552.0kbits/s speed=0.0674x    INFO infer_video.py:  71: Frame 159
+INFO infer_video.py:  78: Inference time: 0.497s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.497s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=  161 fps=2.0 q=-0.0 size=  434700kB time=00:00:05.36 bitrate=663552.0kbits/s speed=0.0674x    INFO infer_video.py:  71: Frame 160
+INFO infer_video.py:  78: Inference time: 0.499s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.498s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  71: Frame 161
+INFO infer_video.py:  78: Inference time: 0.495s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.494s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=  163 fps=2.0 q=-0.0 size=  440100kB time=00:00:05.43 bitrate=663552.0kbits/s speed=0.0674x    INFO infer_video.py:  71: Frame 162
+INFO infer_video.py:  78: Inference time: 0.496s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.495s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  71: Frame 163
+INFO infer_video.py:  78: Inference time: 0.496s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.495s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=  165 fps=2.0 q=-0.0 size=  445500kB time=00:00:05.50 bitrate=663552.0kbits/s speed=0.0674x    INFO infer_video.py:  71: Frame 164
+INFO infer_video.py:  78: Inference time: 0.496s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.495s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  71: Frame 165
+INFO infer_video.py:  78: Inference time: 0.494s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.493s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=  167 fps=2.0 q=-0.0 size=  450900kB time=00:00:05.56 bitrate=663552.0kbits/s speed=0.0673x    INFO infer_video.py:  71: Frame 166
+INFO infer_video.py:  78: Inference time: 0.498s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.497s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  71: Frame 167
+INFO infer_video.py:  78: Inference time: 0.498s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.497s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=  169 fps=2.0 q=-0.0 size=  456300kB time=00:00:05.63 bitrate=663552.0kbits/s speed=0.0673x    INFO infer_video.py:  71: Frame 168
+INFO infer_video.py:  78: Inference time: 0.500s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.499s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  71: Frame 169
+INFO infer_video.py:  78: Inference time: 0.497s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.496s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=  171 fps=2.0 q=-0.0 size=  461700kB time=00:00:05.70 bitrate=663552.0kbits/s speed=0.0673x    INFO infer_video.py:  71: Frame 170
+INFO infer_video.py:  78: Inference time: 0.495s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.495s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  71: Frame 171
+INFO infer_video.py:  78: Inference time: 0.495s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.495s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=  173 fps=2.0 q=-0.0 size=  467100kB time=00:00:05.76 bitrate=663552.0kbits/s speed=0.0673x    INFO infer_video.py:  71: Frame 172
+INFO infer_video.py:  78: Inference time: 0.496s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.495s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  71: Frame 173
+INFO infer_video.py:  78: Inference time: 0.494s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.494s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=  175 fps=2.0 q=-0.0 size=  472500kB time=00:00:05.83 bitrate=663552.0kbits/s speed=0.0673x    INFO infer_video.py:  71: Frame 174
+INFO infer_video.py:  78: Inference time: 0.498s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.498s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  71: Frame 175
+INFO infer_video.py:  78: Inference time: 0.494s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.494s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=  177 fps=2.0 q=-0.0 size=  477900kB time=00:00:05.90 bitrate=663552.0kbits/s speed=0.0673x    INFO infer_video.py:  71: Frame 176
+INFO infer_video.py:  78: Inference time: 0.495s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.495s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  71: Frame 177
+INFO infer_video.py:  78: Inference time: 0.496s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.496s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=  179 fps=2.0 q=-0.0 size=  483300kB time=00:00:05.96 bitrate=663552.0kbits/s speed=0.0673x    INFO infer_video.py:  71: Frame 178
+INFO infer_video.py:  78: Inference time: 0.496s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.496s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  71: Frame 179
+INFO infer_video.py:  78: Inference time: 0.498s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.498s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=  181 fps=2.0 q=-0.0 size=  488700kB time=00:00:06.03 bitrate=663552.0kbits/s speed=0.0673x    INFO infer_video.py:  71: Frame 180
+INFO infer_video.py:  78: Inference time: 0.500s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.500s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  71: Frame 181
+INFO infer_video.py:  78: Inference time: 0.498s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.498s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=  183 fps=2.0 q=-0.0 size=  494100kB time=00:00:06.10 bitrate=663552.0kbits/s speed=0.0673x    INFO infer_video.py:  71: Frame 182
+INFO infer_video.py:  78: Inference time: 0.495s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.494s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=  184 fps=2.0 q=-0.0 size=  496800kB time=00:00:06.13 bitrate=663552.0kbits/s speed=0.0673x    INFO infer_video.py:  71: Frame 183
+INFO infer_video.py:  78: Inference time: 0.496s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.496s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  71: Frame 184
+INFO infer_video.py:  78: Inference time: 0.498s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.498s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=  186 fps=2.0 q=-0.0 size=  502200kB time=00:00:06.20 bitrate=663552.0kbits/s speed=0.0673x    INFO infer_video.py:  71: Frame 185
+INFO infer_video.py:  78: Inference time: 0.496s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.495s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=  187 fps=2.0 q=-0.0 size=  504900kB time=00:00:06.23 bitrate=663552.0kbits/s speed=0.0673x    INFO infer_video.py:  71: Frame 186
+INFO infer_video.py:  78: Inference time: 0.496s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.496s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  71: Frame 187
+INFO infer_video.py:  78: Inference time: 0.502s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.501s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=  189 fps=2.0 q=-0.0 size=  510300kB time=00:00:06.30 bitrate=663552.0kbits/s speed=0.0673x    INFO infer_video.py:  71: Frame 188
+INFO infer_video.py:  78: Inference time: 0.501s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.500s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=  190 fps=2.0 q=-0.0 size=  513000kB time=00:00:06.33 bitrate=663552.0kbits/s speed=0.0673x    INFO infer_video.py:  71: Frame 189
+INFO infer_video.py:  78: Inference time: 0.497s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.496s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=  191 fps=2.0 q=-0.0 size=  515700kB time=00:00:06.36 bitrate=663552.0kbits/s speed=0.0673x    INFO infer_video.py:  71: Frame 190
+INFO infer_video.py:  78: Inference time: 0.497s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.497s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  71: Frame 191
+INFO infer_video.py:  78: Inference time: 0.497s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.496s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=  193 fps=2.0 q=-0.0 size=  521100kB time=00:00:06.43 bitrate=663552.0kbits/s speed=0.0673x    INFO infer_video.py:  71: Frame 192
+INFO infer_video.py:  78: Inference time: 0.495s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.495s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  71: Frame 193
+INFO infer_video.py:  78: Inference time: 0.497s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.497s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=  195 fps=2.0 q=-0.0 size=  526500kB time=00:00:06.50 bitrate=663552.0kbits/s speed=0.0673x    INFO infer_video.py:  71: Frame 194
+INFO infer_video.py:  78: Inference time: 0.495s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.495s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  71: Frame 195
+INFO infer_video.py:  78: Inference time: 0.496s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.496s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=  197 fps=2.0 q=-0.0 size=  531900kB time=00:00:06.56 bitrate=663552.0kbits/s speed=0.0673x    INFO infer_video.py:  71: Frame 196
+INFO infer_video.py:  78: Inference time: 0.496s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.496s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  71: Frame 197
+INFO infer_video.py:  78: Inference time: 0.498s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.498s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=  199 fps=2.0 q=-0.0 size=  537300kB time=00:00:06.63 bitrate=663552.0kbits/s speed=0.0673x    INFO infer_video.py:  71: Frame 198
+INFO infer_video.py:  78: Inference time: 0.497s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.497s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=  200 fps=2.0 q=-0.0 size=  540000kB time=00:00:06.66 bitrate=663552.0kbits/s speed=0.0673x    INFO infer_video.py:  71: Frame 199
+INFO infer_video.py:  78: Inference time: 0.496s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.495s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  71: Frame 200
+INFO infer_video.py:  78: Inference time: 0.497s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.497s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=  202 fps=2.0 q=-0.0 size=  545400kB time=00:00:06.73 bitrate=663552.0kbits/s speed=0.0673x    INFO infer_video.py:  71: Frame 201
+INFO infer_video.py:  78: Inference time: 0.493s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.493s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  71: Frame 202
+INFO infer_video.py:  78: Inference time: 0.493s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.493s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=  204 fps=2.0 q=-0.0 size=  550800kB time=00:00:06.80 bitrate=663552.0kbits/s speed=0.0673x    INFO infer_video.py:  71: Frame 203
+INFO infer_video.py:  78: Inference time: 0.496s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.495s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  71: Frame 204
+INFO infer_video.py:  78: Inference time: 0.495s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.495s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=  206 fps=2.0 q=-0.0 size=  556200kB time=00:00:06.86 bitrate=663552.0kbits/s speed=0.0673x    INFO infer_video.py:  71: Frame 205
+INFO infer_video.py:  78: Inference time: 0.497s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.496s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  71: Frame 206
+INFO infer_video.py:  78: Inference time: 0.496s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.496s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=  208 fps=2.0 q=-0.0 size=  561600kB time=00:00:06.93 bitrate=663552.0kbits/s speed=0.0673x    INFO infer_video.py:  71: Frame 207
+INFO infer_video.py:  78: Inference time: 0.500s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.500s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  71: Frame 208
+INFO infer_video.py:  78: Inference time: 0.495s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.495s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=  210 fps=2.0 q=-0.0 size=  567000kB time=00:00:07.00 bitrate=663552.0kbits/s speed=0.0673x    INFO infer_video.py:  71: Frame 209
+INFO infer_video.py:  78: Inference time: 0.498s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.497s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  71: Frame 210
+INFO infer_video.py:  78: Inference time: 0.496s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.495s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=  212 fps=2.0 q=-0.0 size=  572400kB time=00:00:07.06 bitrate=663552.0kbits/s speed=0.0673x    INFO infer_video.py:  71: Frame 211
+INFO infer_video.py:  78: Inference time: 0.493s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.493s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  71: Frame 212
+INFO infer_video.py:  78: Inference time: 0.499s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.498s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=  214 fps=2.0 q=-0.0 size=  577800kB time=00:00:07.13 bitrate=663552.0kbits/s speed=0.0673x    INFO infer_video.py:  71: Frame 213
+INFO infer_video.py:  78: Inference time: 0.494s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.494s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=  215 fps=2.0 q=-0.0 size=  580500kB time=00:00:07.16 bitrate=663552.0kbits/s speed=0.0672x    INFO infer_video.py:  71: Frame 214
+INFO infer_video.py:  78: Inference time: 0.495s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.495s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  71: Frame 215
+INFO infer_video.py:  78: Inference time: 0.496s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.495s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=  217 fps=2.0 q=-0.0 size=  585900kB time=00:00:07.23 bitrate=663552.0kbits/s speed=0.0672x    INFO infer_video.py:  71: Frame 216
+INFO infer_video.py:  78: Inference time: 0.496s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.496s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  71: Frame 217
+INFO infer_video.py:  78: Inference time: 0.495s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.494s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=  219 fps=2.0 q=-0.0 size=  591300kB time=00:00:07.30 bitrate=663552.0kbits/s speed=0.0672x    INFO infer_video.py:  71: Frame 218
+INFO infer_video.py:  78: Inference time: 0.497s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.497s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  71: Frame 219
+INFO infer_video.py:  78: Inference time: 0.496s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.496s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=  221 fps=2.0 q=-0.0 size=  596700kB time=00:00:07.36 bitrate=663552.0kbits/s speed=0.0672x    INFO infer_video.py:  71: Frame 220
+INFO infer_video.py:  78: Inference time: 0.498s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.497s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  71: Frame 221
+INFO infer_video.py:  78: Inference time: 0.497s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.496s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=  223 fps=2.0 q=-0.0 size=  602100kB time=00:00:07.43 bitrate=663552.0kbits/s speed=0.0672x    INFO infer_video.py:  71: Frame 222
+INFO infer_video.py:  78: Inference time: 0.495s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.494s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  71: Frame 223
+INFO infer_video.py:  78: Inference time: 0.501s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.501s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=  225 fps=2.0 q=-0.0 size=  607500kB time=00:00:07.50 bitrate=663552.0kbits/s speed=0.0672x    INFO infer_video.py:  71: Frame 224
+INFO infer_video.py:  78: Inference time: 0.501s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.501s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=  226 fps=2.0 q=-0.0 size=  610200kB time=00:00:07.53 bitrate=663552.0kbits/s speed=0.0672x    INFO infer_video.py:  71: Frame 225
+INFO infer_video.py:  78: Inference time: 0.502s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.502s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=  227 fps=2.0 q=-0.0 size=  612900kB time=00:00:07.56 bitrate=663552.0kbits/s speed=0.0672x    INFO infer_video.py:  71: Frame 226
+INFO infer_video.py:  78: Inference time: 0.495s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.495s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=  228 fps=2.0 q=-0.0 size=  615600kB time=00:00:07.60 bitrate=663552.0kbits/s speed=0.0672x    INFO infer_video.py:  71: Frame 227
+INFO infer_video.py:  78: Inference time: 0.502s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.501s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  71: Frame 228
+INFO infer_video.py:  78: Inference time: 0.497s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.497s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=  230 fps=2.0 q=-0.0 size=  621000kB time=00:00:07.66 bitrate=663552.0kbits/s speed=0.0672x    INFO infer_video.py:  71: Frame 229
+INFO infer_video.py:  78: Inference time: 0.497s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.497s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  71: Frame 230
+INFO infer_video.py:  78: Inference time: 0.496s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.495s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=  232 fps=2.0 q=-0.0 size=  626400kB time=00:00:07.73 bitrate=663552.0kbits/s speed=0.0672x    INFO infer_video.py:  71: Frame 231
+INFO infer_video.py:  78: Inference time: 0.504s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.504s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  71: Frame 232
+INFO infer_video.py:  78: Inference time: 0.497s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.496s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=  234 fps=2.0 q=-0.0 size=  631800kB time=00:00:07.80 bitrate=663552.0kbits/s speed=0.0672x    INFO infer_video.py:  71: Frame 233
+INFO infer_video.py:  78: Inference time: 0.512s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.496s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  80:  | im_detect_keypoints: 0.010s
+INFO infer_video.py:  80:  | misc_keypoints: 0.006s
+INFO infer_video.py:  71: Frame 234
+INFO infer_video.py:  78: Inference time: 0.495s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.495s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=  236 fps=2.0 q=-0.0 size=  637200kB time=00:00:07.86 bitrate=663552.0kbits/s speed=0.0672x    INFO infer_video.py:  71: Frame 235
+INFO infer_video.py:  78: Inference time: 0.515s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.501s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  80:  | im_detect_keypoints: 0.010s
+INFO infer_video.py:  80:  | misc_keypoints: 0.004s
+INFO infer_video.py:  71: Frame 236
+INFO infer_video.py:  78: Inference time: 0.497s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.496s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=  238 fps=2.0 q=-0.0 size=  642600kB time=00:00:07.93 bitrate=663552.0kbits/s speed=0.0672x    INFO infer_video.py:  71: Frame 237
+INFO infer_video.py:  78: Inference time: 0.510s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.495s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  80:  | im_detect_keypoints: 0.009s
+INFO infer_video.py:  80:  | misc_keypoints: 0.005s
+INFO infer_video.py:  71: Frame 238
+INFO infer_video.py:  78: Inference time: 0.496s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.495s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=  240 fps=2.0 q=-0.0 size=  648000kB time=00:00:08.00 bitrate=663552.0kbits/s speed=0.0672x    INFO infer_video.py:  71: Frame 239
+INFO infer_video.py:  78: Inference time: 0.526s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.499s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  80:  | im_detect_keypoints: 0.019s
+INFO infer_video.py:  80:  | misc_keypoints: 0.008s
+INFO infer_video.py:  71: Frame 240
+INFO infer_video.py:  78: Inference time: 0.508s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.494s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  80:  | im_detect_keypoints: 0.009s
+INFO infer_video.py:  80:  | misc_keypoints: 0.004s
+frame=  242 fps=2.0 q=-0.0 size=  653400kB time=00:00:08.06 bitrate=663552.0kbits/s speed=0.0672x    INFO infer_video.py:  71: Frame 241
+INFO infer_video.py:  78: Inference time: 0.494s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.494s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=  243 fps=2.0 q=-0.0 size=  656100kB time=00:00:08.10 bitrate=663552.0kbits/s speed=0.0671x    INFO infer_video.py:  71: Frame 242
+INFO infer_video.py:  78: Inference time: 0.493s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.493s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  71: Frame 243
+INFO infer_video.py:  78: Inference time: 0.495s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.495s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=  245 fps=2.0 q=-0.0 size=  661500kB time=00:00:08.16 bitrate=663552.0kbits/s speed=0.0672x    INFO infer_video.py:  71: Frame 244
+INFO infer_video.py:  78: Inference time: 0.497s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.497s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  71: Frame 245
+INFO infer_video.py:  78: Inference time: 0.493s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.493s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=  247 fps=2.0 q=-0.0 size=  666900kB time=00:00:08.23 bitrate=663552.0kbits/s speed=0.0671x    INFO infer_video.py:  71: Frame 246
+INFO infer_video.py:  78: Inference time: 0.496s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.496s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  71: Frame 247
+INFO infer_video.py:  78: Inference time: 0.494s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.494s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+frame=  249 fps=2.0 q=-0.0 size=  672300kB time=00:00:08.30 bitrate=663552.0kbits/s speed=0.0671x    INFO infer_video.py:  71: Frame 248
+INFO infer_video.py:  78: Inference time: 0.514s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.495s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  80:  | im_detect_keypoints: 0.009s
+INFO infer_video.py:  80:  | misc_keypoints: 0.010s
+INFO infer_video.py:  71: Frame 249
+INFO infer_video.py:  78: Inference time: 0.524s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.498s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  80:  | im_detect_keypoints: 0.009s
+INFO infer_video.py:  80:  | misc_keypoints: 0.016s
+frame=  251 fps=2.0 q=-0.0 size=  677700kB time=00:00:08.36 bitrate=663552.0kbits/s speed=0.0671x    INFO infer_video.py:  71: Frame 250
+INFO infer_video.py:  78: Inference time: 0.529s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.499s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  80:  | im_detect_keypoints: 0.009s
+INFO infer_video.py:  80:  | misc_keypoints: 0.020s
+frame=  252 fps=2.0 q=-0.0 size=  680400kB time=00:00:08.40 bitrate=663552.0kbits/s speed=0.0671x    INFO infer_video.py:  71: Frame 251
+INFO infer_video.py:  78: Inference time: 0.528s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.497s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  80:  | im_detect_keypoints: 0.009s
+INFO infer_video.py:  80:  | misc_keypoints: 0.021s
+frame=  253 fps=2.0 q=-0.0 size=  683100kB time=00:00:08.43 bitrate=663552.0kbits/s speed=0.0671x    INFO infer_video.py:  71: Frame 252
+INFO infer_video.py:  78: Inference time: 0.534s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.493s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  80:  | im_detect_keypoints: 0.014s
+INFO infer_video.py:  80:  | misc_keypoints: 0.026s
+frame=  254 fps=2.0 q=-0.0 size=  685800kB time=00:00:08.46 bitrate=663552.0kbits/s speed=0.0671x    INFO infer_video.py:  71: Frame 253
+INFO infer_video.py:  78: Inference time: 0.533s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.497s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  80:  | im_detect_keypoints: 0.009s
+INFO infer_video.py:  80:  | misc_keypoints: 0.026s
+frame=  255 fps=2.0 q=-0.0 size=  688500kB time=00:00:08.50 bitrate=663552.0kbits/s speed=0.0671x    INFO infer_video.py:  71: Frame 254
+INFO infer_video.py:  78: Inference time: 0.540s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.493s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  80:  | im_detect_keypoints: 0.014s
+INFO infer_video.py:  80:  | misc_keypoints: 0.033s
+frame=  256 fps=2.0 q=-0.0 size=  691200kB time=00:00:08.53 bitrate=663552.0kbits/s speed=0.067x    INFO infer_video.py:  71: Frame 255
+INFO infer_video.py:  78: Inference time: 0.546s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.498s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  80:  | im_detect_keypoints: 0.009s
+INFO infer_video.py:  80:  | misc_keypoints: 0.038s
+frame=  257 fps=2.0 q=-0.0 size=  693900kB time=00:00:08.56 bitrate=663552.0kbits/s speed=0.067x    INFO infer_video.py:  71: Frame 256
+INFO infer_video.py:  78: Inference time: 0.544s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.495s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  80:  | im_detect_keypoints: 0.009s
+INFO infer_video.py:  80:  | misc_keypoints: 0.040s
+frame=  258 fps=2.0 q=-0.0 size=  696600kB time=00:00:08.60 bitrate=663552.0kbits/s speed=0.067x    INFO infer_video.py:  71: Frame 257
+INFO infer_video.py:  78: Inference time: 0.552s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.495s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  80:  | im_detect_keypoints: 0.009s
+INFO infer_video.py:  80:  | misc_keypoints: 0.047s
+frame=  259 fps=2.0 q=-0.0 size=  699300kB time=00:00:08.63 bitrate=663552.0kbits/s speed=0.067x    INFO infer_video.py:  71: Frame 258
+INFO infer_video.py:  78: Inference time: 0.556s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.493s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  80:  | im_detect_keypoints: 0.009s
+INFO infer_video.py:  80:  | misc_keypoints: 0.053s
+frame=  260 fps=2.0 q=-0.0 size=  702000kB time=00:00:08.66 bitrate=663552.0kbits/s speed=0.0669x    INFO infer_video.py:  71: Frame 259
+INFO infer_video.py:  78: Inference time: 0.557s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.496s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  80:  | im_detect_keypoints: 0.009s
+INFO infer_video.py:  80:  | misc_keypoints: 0.051s
+frame=  261 fps=2.0 q=-0.0 size=  704700kB time=00:00:08.70 bitrate=663552.0kbits/s speed=0.0669x    INFO infer_video.py:  71: Frame 260
+INFO infer_video.py:  78: Inference time: 0.561s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.497s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  80:  | im_detect_keypoints: 0.009s
+INFO infer_video.py:  80:  | misc_keypoints: 0.054s
+frame=  262 fps=2.0 q=-0.0 size=  707400kB time=00:00:08.73 bitrate=663552.0kbits/s speed=0.0669x    INFO infer_video.py:  71: Frame 261
+INFO infer_video.py:  78: Inference time: 0.568s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.499s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  80:  | im_detect_keypoints: 0.009s
+INFO infer_video.py:  80:  | misc_keypoints: 0.060s
+frame=  263 fps=2.0 q=-0.0 size=  710100kB time=00:00:08.76 bitrate=663552.0kbits/s speed=0.0669x    INFO infer_video.py:  71: Frame 262
+INFO infer_video.py:  78: Inference time: 0.581s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.496s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  80:  | im_detect_keypoints: 0.014s
+INFO infer_video.py:  80:  | misc_keypoints: 0.070s
+frame=  264 fps=2.0 q=-0.0 size=  712800kB time=00:00:08.80 bitrate=663552.0kbits/s speed=0.0668x    INFO infer_video.py:  71: Frame 263
+INFO infer_video.py:  78: Inference time: 0.562s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.495s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  80:  | im_detect_keypoints: 0.009s
+INFO infer_video.py:  80:  | misc_keypoints: 0.058s
+frame=  265 fps=2.0 q=-0.0 size=  715500kB time=00:00:08.83 bitrate=663552.0kbits/s speed=0.0668x    INFO infer_video.py:  71: Frame 264
+INFO infer_video.py:  78: Inference time: 0.559s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.494s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  80:  | im_detect_keypoints: 0.009s
+INFO infer_video.py:  80:  | misc_keypoints: 0.056s
+frame=  266 fps=2.0 q=-0.0 size=  718200kB time=00:00:08.86 bitrate=663552.0kbits/s speed=0.0667x    INFO infer_video.py:  71: Frame 265
+INFO infer_video.py:  78: Inference time: 0.557s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.494s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  80:  | im_detect_keypoints: 0.009s
+INFO infer_video.py:  80:  | misc_keypoints: 0.053s
+frame=  267 fps=2.0 q=-0.0 size=  720900kB time=00:00:08.90 bitrate=663552.0kbits/s speed=0.0667x    INFO infer_video.py:  71: Frame 266
+INFO infer_video.py:  78: Inference time: 0.589s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.496s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  80:  | im_detect_keypoints: 0.015s
+INFO infer_video.py:  80:  | misc_keypoints: 0.078s
+frame=  268 fps=2.0 q=-0.0 size=  723600kB time=00:00:08.93 bitrate=663552.0kbits/s speed=0.0667x    INFO infer_video.py:  71: Frame 267
+INFO infer_video.py:  78: Inference time: 0.560s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.496s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  80:  | im_detect_keypoints: 0.009s
+INFO infer_video.py:  80:  | misc_keypoints: 0.054s
+frame=  269 fps=2.0 q=-0.0 size=  726300kB time=00:00:08.96 bitrate=663552.0kbits/s speed=0.0666x    INFO infer_video.py:  71: Frame 268
+INFO infer_video.py:  78: Inference time: 0.554s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.496s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  80:  | im_detect_keypoints: 0.009s
+INFO infer_video.py:  80:  | misc_keypoints: 0.048s
+frame=  270 fps=2.0 q=-0.0 size=  729000kB time=00:00:09.00 bitrate=663552.0kbits/s speed=0.0666x    INFO infer_video.py:  71: Frame 269
+INFO infer_video.py:  78: Inference time: 0.547s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.493s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  80:  | im_detect_keypoints: 0.009s
+INFO infer_video.py:  80:  | misc_keypoints: 0.045s
+frame=  271 fps=2.0 q=-0.0 size=  731700kB time=00:00:09.03 bitrate=663552.0kbits/s speed=0.0666x    INFO infer_video.py:  71: Frame 270
+INFO infer_video.py:  78: Inference time: 0.548s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.495s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  80:  | im_detect_keypoints: 0.009s
+INFO infer_video.py:  80:  | misc_keypoints: 0.043s
+frame=  272 fps=2.0 q=-0.0 size=  734400kB time=00:00:09.06 bitrate=663552.0kbits/s speed=0.0666x    INFO infer_video.py:  71: Frame 271
+INFO infer_video.py:  78: Inference time: 0.550s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.498s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  80:  | im_detect_keypoints: 0.009s
+INFO infer_video.py:  80:  | misc_keypoints: 0.043s
+frame=  273 fps=2.0 q=-0.0 size=  737100kB time=00:00:09.10 bitrate=663552.0kbits/s speed=0.0665x    INFO infer_video.py:  71: Frame 272
+INFO infer_video.py:  78: Inference time: 0.547s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.497s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  80:  | im_detect_keypoints: 0.009s
+INFO infer_video.py:  80:  | misc_keypoints: 0.040s
+frame=  274 fps=2.0 q=-0.0 size=  739800kB time=00:00:09.13 bitrate=663552.0kbits/s speed=0.0665x    INFO infer_video.py:  71: Frame 273
+INFO infer_video.py:  78: Inference time: 0.540s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.494s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  80:  | im_detect_keypoints: 0.009s
+INFO infer_video.py:  80:  | misc_keypoints: 0.037s
+frame=  275 fps=2.0 q=-0.0 size=  742500kB time=00:00:09.16 bitrate=663552.0kbits/s speed=0.0665x    INFO infer_video.py:  71: Frame 274
+INFO infer_video.py:  78: Inference time: 0.539s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.494s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  80:  | im_detect_keypoints: 0.009s
+INFO infer_video.py:  80:  | misc_keypoints: 0.036s
+frame=  276 fps=2.0 q=-0.0 size=  745200kB time=00:00:09.20 bitrate=663552.0kbits/s speed=0.0665x    INFO infer_video.py:  71: Frame 275
+INFO infer_video.py:  78: Inference time: 0.538s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.493s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  80:  | im_detect_keypoints: 0.009s
+INFO infer_video.py:  80:  | misc_keypoints: 0.035s
+frame=  277 fps=2.0 q=-0.0 size=  747900kB time=00:00:09.23 bitrate=663552.0kbits/s speed=0.0664x    INFO infer_video.py:  71: Frame 276
+INFO infer_video.py:  78: Inference time: 0.534s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.496s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  80:  | im_detect_keypoints: 0.009s
+INFO infer_video.py:  80:  | misc_keypoints: 0.029s
+frame=  278 fps=2.0 q=-0.0 size=  750600kB time=00:00:09.26 bitrate=663552.0kbits/s speed=0.0664x    INFO infer_video.py:  71: Frame 277
+INFO infer_video.py:  78: Inference time: 0.538s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.496s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  80:  | im_detect_keypoints: 0.009s
+INFO infer_video.py:  80:  | misc_keypoints: 0.032s
+frame=  279 fps=2.0 q=-0.0 size=  753300kB time=00:00:09.30 bitrate=663552.0kbits/s speed=0.0664x    INFO infer_video.py:  71: Frame 278
+INFO infer_video.py:  78: Inference time: 0.536s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.495s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  80:  | im_detect_keypoints: 0.009s
+INFO infer_video.py:  80:  | misc_keypoints: 0.031s
+frame=  280 fps=2.0 q=-0.0 size=  756000kB time=00:00:09.33 bitrate=663552.0kbits/s speed=0.0664x    INFO infer_video.py:  71: Frame 279
+INFO infer_video.py:  78: Inference time: 0.534s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.495s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  80:  | im_detect_keypoints: 0.009s
+INFO infer_video.py:  80:  | misc_keypoints: 0.028s
+frame=  281 fps=2.0 q=-0.0 size=  758700kB time=00:00:09.36 bitrate=663552.0kbits/s speed=0.0664x    INFO infer_video.py:  71: Frame 280
+INFO infer_video.py:  78: Inference time: 0.535s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.495s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  80:  | im_detect_keypoints: 0.009s
+INFO infer_video.py:  80:  | misc_keypoints: 0.031s
+frame=  282 fps=2.0 q=-0.0 size=  761400kB time=00:00:09.40 bitrate=663552.0kbits/s speed=0.0664x    INFO infer_video.py:  71: Frame 281
+INFO infer_video.py:  78: Inference time: 0.536s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.499s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  80:  | im_detect_keypoints: 0.009s
+INFO infer_video.py:  80:  | misc_keypoints: 0.027s
+frame=  283 fps=2.0 q=-0.0 size=  764100kB time=00:00:09.43 bitrate=663552.0kbits/s speed=0.0663x    INFO infer_video.py:  71: Frame 282
+INFO infer_video.py:  78: Inference time: 0.533s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.496s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  80:  | im_detect_keypoints: 0.009s
+INFO infer_video.py:  80:  | misc_keypoints: 0.027s
+frame=  284 fps=2.0 q=-0.0 size=  766800kB time=00:00:09.46 bitrate=663552.0kbits/s speed=0.0663x    INFO infer_video.py:  71: Frame 283
+INFO infer_video.py:  78: Inference time: 0.531s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.495s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  80:  | im_detect_keypoints: 0.009s
+INFO infer_video.py:  80:  | misc_keypoints: 0.026s
+frame=  285 fps=2.0 q=-0.0 size=  769500kB time=00:00:09.50 bitrate=663552.0kbits/s speed=0.0663x    INFO infer_video.py:  71: Frame 284
+INFO infer_video.py:  78: Inference time: 0.532s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.497s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  80:  | im_detect_keypoints: 0.009s
+INFO infer_video.py:  80:  | misc_keypoints: 0.025s
+frame=  286 fps=2.0 q=-0.0 size=  772200kB time=00:00:09.53 bitrate=663552.0kbits/s speed=0.0663x    INFO infer_video.py:  71: Frame 285
+INFO infer_video.py:  78: Inference time: 0.534s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.500s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  80:  | im_detect_keypoints: 0.009s
+INFO infer_video.py:  80:  | misc_keypoints: 0.025s
+frame=  287 fps=2.0 q=-0.0 size=  774900kB time=00:00:09.56 bitrate=663552.0kbits/s speed=0.0663x    INFO infer_video.py:  71: Frame 286
+INFO infer_video.py:  78: Inference time: 0.531s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.497s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  80:  | im_detect_keypoints: 0.009s
+INFO infer_video.py:  80:  | misc_keypoints: 0.024s
+frame=  288 fps=2.0 q=-0.0 size=  777600kB time=00:00:09.60 bitrate=663552.0kbits/s speed=0.0663x    INFO infer_video.py:  71: Frame 287
+INFO infer_video.py:  78: Inference time: 0.541s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.497s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  80:  | im_detect_keypoints: 0.014s
+INFO infer_video.py:  80:  | misc_keypoints: 0.030s
+frame=  289 fps=2.0 q=-0.0 size=  780300kB time=00:00:09.63 bitrate=663552.0kbits/s speed=0.0663x    INFO infer_video.py:  71: Frame 288
+INFO infer_video.py:  78: Inference time: 0.539s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.493s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  80:  | im_detect_keypoints: 0.014s
+INFO infer_video.py:  80:  | misc_keypoints: 0.032s
+frame=  290 fps=2.0 q=-0.0 size=  783000kB time=00:00:09.66 bitrate=663552.0kbits/s speed=0.0662x    INFO infer_video.py:  71: Frame 289
+INFO infer_video.py:  78: Inference time: 0.542s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.496s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  80:  | im_detect_keypoints: 0.014s
+INFO infer_video.py:  80:  | misc_keypoints: 0.031s
+frame=  291 fps=2.0 q=-0.0 size=  785700kB time=00:00:09.70 bitrate=663552.0kbits/s speed=0.0662x    INFO infer_video.py:  71: Frame 290
+INFO infer_video.py:  78: Inference time: 0.551s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.499s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  80:  | im_detect_keypoints: 0.014s
+INFO infer_video.py:  80:  | misc_keypoints: 0.037s
+frame=  292 fps=2.0 q=-0.0 size=  788400kB time=00:00:09.73 bitrate=663552.0kbits/s speed=0.0662x    INFO infer_video.py:  71: Frame 291
+INFO infer_video.py:  78: Inference time: 0.552s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.499s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  80:  | im_detect_keypoints: 0.015s
+INFO infer_video.py:  80:  | misc_keypoints: 0.038s
+frame=  293 fps=2.0 q=-0.0 size=  791100kB time=00:00:09.76 bitrate=663552.0kbits/s speed=0.0662x    INFO infer_video.py:  71: Frame 292
+INFO infer_video.py:  78: Inference time: 0.555s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.499s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  80:  | im_detect_keypoints: 0.014s
+INFO infer_video.py:  80:  | misc_keypoints: 0.041s
+frame=  294 fps=2.0 q=-0.0 size=  793800kB time=00:00:09.80 bitrate=663552.0kbits/s speed=0.0662x    INFO infer_video.py:  71: Frame 293
+INFO infer_video.py:  78: Inference time: 0.545s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.495s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  80:  | im_detect_keypoints: 0.014s
+INFO infer_video.py:  80:  | misc_keypoints: 0.036s
+frame=  295 fps=2.0 q=-0.0 size=  796500kB time=00:00:09.83 bitrate=663552.0kbits/s speed=0.0661x    INFO infer_video.py:  71: Frame 294
+INFO infer_video.py:  78: Inference time: 0.550s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.494s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  80:  | im_detect_keypoints: 0.014s
+INFO infer_video.py:  80:  | misc_keypoints: 0.041s
+frame=  296 fps=2.0 q=-0.0 size=  799200kB time=00:00:09.86 bitrate=663552.0kbits/s speed=0.0661x    INFO infer_video.py:  71: Frame 295
+INFO infer_video.py:  78: Inference time: 0.551s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.496s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  80:  | im_detect_keypoints: 0.014s
+INFO infer_video.py:  80:  | misc_keypoints: 0.041s
+frame=  297 fps=2.0 q=-0.0 size=  801900kB time=00:00:09.90 bitrate=663552.0kbits/s speed=0.0661x    INFO infer_video.py:  71: Frame 296
+INFO infer_video.py:  78: Inference time: 0.552s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.497s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  80:  | im_detect_keypoints: 0.014s
+INFO infer_video.py:  80:  | misc_keypoints: 0.041s
+frame=  298 fps=2.0 q=-0.0 size=  804600kB time=00:00:09.93 bitrate=663552.0kbits/s speed=0.0661x    INFO infer_video.py:  71: Frame 297
+INFO infer_video.py:  78: Inference time: 0.550s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.497s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  80:  | im_detect_keypoints: 0.014s
+INFO infer_video.py:  80:  | misc_keypoints: 0.038s
+frame=  299 fps=2.0 q=-0.0 size=  807300kB time=00:00:09.96 bitrate=663552.0kbits/s speed=0.0661x    INFO infer_video.py:  71: Frame 298
+INFO infer_video.py:  78: Inference time: 0.549s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.495s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  80:  | im_detect_keypoints: 0.014s
+INFO infer_video.py:  80:  | misc_keypoints: 0.039s
+frame=  300 fps=2.0 q=-0.0 size=  810000kB time=00:00:10.00 bitrate=663552.0kbits/s speed=0.066x    INFO infer_video.py:  71: Frame 299
+INFO infer_video.py:  78: Inference time: 0.549s
+INFO infer_video.py:  80:  | im_detect_bbox: 0.497s
+INFO infer_video.py:  80:  | misc_bbox: 0.000s
+INFO infer_video.py:  80:  | im_detect_keypoints: 0.014s
+INFO infer_video.py:  80:  | misc_keypoints: 0.038s
+frame=  301 fps=2.0 q=-0.0 size=  812700kB time=00:00:10.03 bitrate=663552.0kbits/s speed=0.066x    INFO infer_video.py:  71: Frame 300
