@@ -8,7 +8,7 @@ import os
 import argparse
 
 def main(args):
-  2d_dataset_name = args.2d_dataset_name if args.2d_dataset_name else 'kakashi'
+  videpose_dataset_name = args.videpose_dataset_name if args.videpose_dataset_name else 'kakashi'
 
   # make sure video directory exists
   download_dir = Path(Path.cwd(), 'data/', args.label)
@@ -35,16 +35,16 @@ def main(args):
   # prepare 2D dataset
   os.chdir(os.environ['VIDEOPOSE'])
   print('=> Preparing 2D keypoint dataset')
-  command = 'python3 prepare_data_2d_custom.py -i {} -o {}'.format(tmp_output_dir, 2d_dataset_name)
+  command = 'python3 prepare_data_2d_custom.py -i {} -o {}'.format(tmp_output_dir, videpose_dataset_name)
   subprocess.call(command, shell=True)
-  dataset_path = Path(Path.cwd(), 'data/data_2d_custom_{}.npz'.format(2d_dataset_name))
+  dataset_path = Path(Path.cwd(), 'data/data_2d_custom_{}.npz'.format(videpose_dataset_name))
 
   # get 3D detections
   print('=> Running 3D pose detection')
   print(video_paths)
   for video_path in video_paths:
     print('=> Processing: {}'.format(video_path))
-    command = 'python3 run.py -d custom -k {} -arc 3,3,3,3,3 -c checkpoint --evaluate pretrained_h36m_detectron_coco.bin --render --viz-subject {} --viz-action custom --viz-camera 0 --viz-video {} --viz-export {} --viz-size 6'.format(2d_dataset_name, video_path.name, str(video_path), Path(video_path.parent, video_path.stem + '.keypoints.npy'))
+    command = 'python3 run.py -d custom -k {} -arc 3,3,3,3,3 -c checkpoint --evaluate pretrained_h36m_detectron_coco.bin --render --viz-subject {} --viz-action custom --viz-camera 0 --viz-video {} --viz-export {} --viz-size 6'.format(videpose_dataset_name, video_path.name, str(video_path), Path(video_path.parent, video_path.stem + '.keypoints.npy'))
     subprocess.call(command, shell=True)
 
   # delete tmp folders
@@ -83,7 +83,7 @@ if __name__ == "__main__":
   parser = argparse.ArgumentParser(description='Generates dataset from video files')
   parser.add_argument('label', type=str,
                       help='Label for the dataset (e.x. Popping)')
-  parser.add_argument('--2d_dataset_name', type=str,
+  parser.add_argument('--videpose_dataset_name', type=str,
                       help='Name for VideoPose custom dataset (default: kakashi)')
   parser.add_argument('--skip_extract', action='store_true',
                       help='Skip extracting of audio from video files (if audio was downloaded separately)')
