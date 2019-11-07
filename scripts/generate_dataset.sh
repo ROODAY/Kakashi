@@ -6,9 +6,15 @@
 #$ -N kakashi-generate-dataset
 #$ -m ae
 #$ -M rooday@bu.edu
+#$ -j y
 #$ -o generate-dataset-output.txt
-#$ -e generate-dataset-error.txt
 #$ -V
+
+echo "=========================================================="
+echo "Start date : $(date)"
+echo "Job name : $JOB_NAME"
+echo "Job ID : $JOB_ID  $SGE_TASK_ID"
+echo "=========================================================="
 
 module load ffmpeg/4.2.1
 module load python3/3.7.3
