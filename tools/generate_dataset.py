@@ -26,7 +26,7 @@ def main(args):
   # run 2D detections (SLOW/BOTTLENECK)
   os.chdir(os.environ['DETECTRON'])
   print('=> Running 2D pose detection (this is going to take a while...)')
-  command = 'python3 tools/infer_video.py --cfg configs/12_2017_baselines/e2e_keypoint_rcnn_R-101-FPN_s1x.yaml --output-dir {} --image-ext mp4 --wts https://dl.fbaipublicfiles.com/detectron/37698009/12_2017_baselines/e2e_keypoint_rcnn_R-101-FPN_s1x.yaml.08_45_57.YkrJgP6O/output/train/keypoints_coco_2014_train:keypoints_coco_2014_valminusminival/generalized_rcnn/model_final.pkl {}'.format(tmp_output_dir, tmp_input_dir)
+  command = 'python3 tools/infer_video.py --cfg configs/12_2017_baselines/e2e_keypoint_rcnn_R-101-FPN_s1x.yaml --output-dir {} --image-ext mp4 --wts models/model_final.pkl {}'.format(tmp_output_dir, tmp_input_dir)
   subprocess.call(command, shell=True)
 
   # prepare 2D dataset
