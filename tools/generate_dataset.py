@@ -16,7 +16,7 @@ def main(args):
   # copy videos to tmp directory for pose estimation
   print('=> Copying videos to tmp directory for pose estimation')
   video_paths = Path(download_dir).rglob('*.mp4')
-  '''tmp_input_dir = Path(Path.cwd(), 'tmp_in/')
+  tmp_input_dir = Path(Path.cwd(), 'tmp_in/')
   tmp_input_dir.mkdir(exist_ok=True) 
   tmp_output_dir = Path(Path.cwd(), 'tmp_out/')
   tmp_output_dir.mkdir(exist_ok=True) 
@@ -44,7 +44,7 @@ def main(args):
   #print('=> Deleting tmp folders')
   #shutil.rmtree(tmp_input_dir)
   #shutil.rmtree(tmp_output_dir)
-'''
+
   # extract audio features
   os.chdir(os.environ['KAKASHI'])
   print('=> Extracting audio features')
