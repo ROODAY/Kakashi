@@ -1,14 +1,22 @@
 #!/bin/bash -l
 
 #$ -P dnn-motion
-#$ -pe omp 1
 #$ -l gpus=4
 #$ -l gpu_c=3.5
 #$ -N kakashi-generate-dataset
-#$ -j y 
+#$ -m ae
 #$ -M rooday@bu.edu
+#$ -j y
+#$ -o generate-dataset-output.txt
+#$ -V
 
-module load ffmpeg/4.0.3
+echo "=========================================================="
+echo "Start date : $(date)"
+echo "Job name : $JOB_NAME"
+echo "Job ID : $JOB_ID  $SGE_TASK_ID"
+echo "=========================================================="
+
+module load ffmpeg/4.2.1
 module load python3/3.7.3
 module load cuda/10.1
 module load pytorch/1.1
