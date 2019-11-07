@@ -10,3 +10,7 @@ python3 run.py -d custom -k myvideos -arc 3,3,3,3,3 -c checkpoint --evaluate pre
 
 
 python3 tools/infer_video.py --cfg configs/12_2017_baselines/e2e_keypoint_rcnn_R-101-FPN_s1x.yaml --output-dir {} --image-ext mp4 --wts https://dl.fbaipublicfiles.com/detectron/37698009/12_2017_baselines/e2e_keypoint_rcnn_R-101-FPN_s1x.yaml.08_45_57.YkrJgP6O/output/train/keypoints_coco_2014_train:keypoints_coco_2014_valminusminival/generalized_rcnn/model_final.pkl {}
+
+qstat -u rooday
+qacct -d 7 -o rooday -j 
+qacct -j 382480

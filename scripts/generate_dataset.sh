@@ -4,10 +4,10 @@
 #$ -l gpus=4
 #$ -l gpu_c=3.5
 #$ -N kakashi-generate-dataset
+#$ -m ae
 #$ -M rooday@bu.edu
 #$ -o generate-dataset-output.txt
 #$ -e generate-dataset-error.txt
-#$ -m a
 #$ -V
 
 module load ffmpeg/4.2.1
