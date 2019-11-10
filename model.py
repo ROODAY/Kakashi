@@ -1,11 +1,18 @@
 import torch
 from torch import nn
 import numpy as np
+import functools 
 
 #make sure batches for rnn are of same length (within the batch)
 
 # load the data
 # split pose frames by beats, 
+#batched = np.array_split(pose, len(mfcc))
+#avg = [functools.reduce(lambda x,y:x+y,batch) / len(batch) for batch in batched]
+#combined = [np.hstack((a, m[:, np.newaxis])) for a,m in zip(avg, mfcc)] this has shape (n, 17, 4)
+# combined is kind of a weird representation, but ok for testing. look into other options
+# combined is our hidden state
+# mfcc is our X, avg is our Y, at each step we want to do a hstack tho 
 
 input_seq = torch.from_numpy(input_seq) #music + prev pose
 target_seq = torch.Tensor(target_seq) #pose

@@ -90,8 +90,6 @@ def main(args):
     mfccs = [np.mean(librosa.feature.mfcc(y=beat, n_mfcc=17).T,axis=0) for beat in tqdm(audio_by_beat)]
     np.save(Path(audio_path.parent, '{}.mfcc.npy'.format(audio_path.stem)), mfccs)
 
-    #group poses by beat, use beat timestamps to guess frames and then split accordingly
-
 if __name__ == "__main__":
   parser = argparse.ArgumentParser(description='Generates dataset from video files')
   parser.add_argument('label', type=str,
