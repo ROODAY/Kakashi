@@ -87,7 +87,7 @@ def main(args):
     audio_by_beat = [audio_data[start:stop] for (start, stop) in indices]
 
     print('=> Get MFCCs per beat')
-    mfccs = [np.mean(librosa.feature.mfcc(y=beat, n_mfcc=17).T,axis=0) for beat in tqdm(audio_by_beat)]
+    mfccs = [np.mean(librosa.feature.mfcc(y=beat).T,axis=0) for beat in tqdm(audio_by_beat)]
     np.save(Path(audio_path.parent, '{}.mfcc.npy'.format(audio_path.stem)), mfccs)
 
 if __name__ == "__main__":

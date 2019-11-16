@@ -2,10 +2,11 @@
 import torch
 import torch.nn as nn
 import torch.optim as optim
-
+import numpy as np
 import random
 import math
 import time
+from pathlib import Path
 
 SEED = 1234
 
@@ -21,7 +22,7 @@ class Encoder(nn.Module):
     
     self.hid_dim = hid_dim
     self.n_layers = n_layers
-    
+    self.input_dim = input_dim
     self.rnn = nn.LSTM(input_dim, hid_dim, n_layers, dropout = dropout)
     self.dropout = nn.Dropout(dropout)
       
@@ -29,7 +30,7 @@ class Encoder(nn.Module):
     dropped = self.dropout(src)
   
     #dropped = [src sent len, batch size]
-    
+    print("need: {}, got: {}".format(self.input_dim, dropped.shape)) 
     outputs, (hidden, cell) = self.rnn(dropped)
     
     #outputs = [src sent len, batch size, hid dim * n directions]
@@ -141,8 +142,8 @@ class Seq2Seq(nn.Module):
     
     return outputs
 
-INPUT_DIM = (20,)
-OUTPUT_DIM = (17, 3)
+INPUT_DIM = (1, 20)
+OUTPUT_DIM = (1, 17, 3)
 HID_DIM = 512
 N_LAYERS = 2
 ENC_DROPOUT = 0.5
@@ -168,8 +169,8 @@ def train(model, iterator, optimizer, criterion, clip):
   epoch_loss = 0
   
   for i, batch in enumerate(iterator):
-    src = batch.src
-    trg = batch.trg
+    src = batch['src']
+    trg = batch['trg']
     
     optimizer.zero_grad()
     
@@ -203,8 +204,8 @@ def evaluate(model, iterator, criterion):
   
   with torch.no_grad():  
     for i, batch in enumerate(iterator):
-      src = batch.src
-      trg = batch.trg
+      src = batch['src']
+      trg = batch['trg']
 
       output = model(src, trg, 0) #turn off teacher forcing
 
@@ -235,27 +236,28 @@ CLIP = 1
 
 best_valid_loss = float('inf')
 
-input_sos = np.full(INPUT_DIM, '<sos>')
-input_eos = np.full(INPUT_DIM, '<eos>')
-output_sos = np.full(OUTPUT_DIM, '<sos>')
-output_eos = np.full(OUTPUT_DIM, '<eos>')
+input_sos = np.full((1,20), -1)
+input_eos = np.full((1,20), np.inf)
+output_sos = np.full((1, 17, 3), -1)
+output_eos = np.full((1, 17, 3), np.inf)
 
-data_dir = Path(Path.cwd(), 'data/', args.label)
+data_dir = Path(Path.cwd(), 'data/', 'test')
 mfccs = sorted(list(data_dir.rglob('*.mfcc.npy')))
 keypoints = sorted(list(data_dir.rglob('*.keypoints.npy')))
 data_pairs = list(zip(mfccs, keypoints))
 
-it = [{ 'src': np.append(np.insert(np.load(mfcc), 0, np.zeros(INPUT_DIM), axis=0), input_eos), 'trg': np.append(np.insert(np.load(kp), 0, output_sos, axis=0), output_eos)} for mfcc, kp in zip(mfccs, keypoints)]
+it = [{ 'src': torch.tensor(np.append(np.insert(np.load(mfcc), 0, np.zeros(INPUT_DIM), axis=0), input_eos, axis=0)), 'trg': torch.tensor(np.append(np.insert(np.load(kp), 0, output_sos, axis=0), output_eos, axis=0))} for mfcc, kp in zip(mfccs, keypoints)]
 
 for x in it:
-  print(it)
-exit()
+ # print(x) 
+ print('src shape: {}, trg shape: {}'.format(x['src'].shape, x['trg'].shape))
+#exit()
 
 for epoch in range(N_EPOCHS):  
   start_time = time.time()
   
-  train_loss = train(model, train_iterator, optimizer, criterion, CLIP)
-  valid_loss = evaluate(model, valid_iterator, criterion)
+  train_loss = train(model, it, optimizer, criterion, CLIP)
+  valid_loss = evaluate(model, it, criterion)
   
   end_time = time.time()
   
