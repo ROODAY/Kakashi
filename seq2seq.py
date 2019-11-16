@@ -14,15 +14,15 @@ class Encoder(nn.Module):
     
     self.hid_dim = hid_dim
     self.n_layers = n_layers
-    self.input_dim = input_dim
-    self.rnn = nn.LSTM(input_dim, hid_dim, n_layers, dropout = dropout)
+    
+    self.rnn = nn.LSTM(input_dim, hid_dim, n_layers, dropout=dropout, batch_first=True)
     self.dropout = nn.Dropout(dropout)
       
   def forward(self, src):
     dropped = self.dropout(src)
-  
+    #print(dropped)
     #dropped = [src sent len, batch size]
-    print("need: {}, got: {}".format(self.input_dim, dropped.shape)) 
+    #print("need: {}, got: {}".format(self.input_dim, dropped.shape)) 
     outputs, (hidden, cell) = self.rnn(dropped)
     
     #outputs = [src sent len, batch size, hid dim * n directions]
@@ -229,15 +229,19 @@ input_eos = np.full((1,20), np.inf)
 output_sos = np.full((1, 17, 3), -1)
 output_eos = np.full((1, 17, 3), np.inf)
 
-it = [{ 'src': torch.tensor(np.append(np.insert(mfcc, 0, np.zeros((20,)), axis=0), input_eos, axis=0)), 'trg': torch.tensor(np.append(np.insert(kp, 0, output_sos, axis=0), output_eos, axis=0))} for mfcc, kp in zip(mfccs, keypoints)]
+#it = [{ 'src': torch.tensor(np.append(np.insert(mfcc, 0, np.zeros((20,)), axis=0), input_eos, axis=0)), 'trg': torch.tensor(np.append(np.insert(kp, 0, output_sos, axis=0), output_eos, axis=0))} for mfcc, kp in zip(mfccs, keypoints)]
+
+batch_mfccs = torch.tensor([np.append(np.insert(mfcc, 0, np.zeros((20,)), axis=0), input_eos, axis=0) for mfcc in mfccs])
+batch_kps   = torch.tensor([np.append(np.insert(kp, 0, output_sos, axis=0), output_eos, axis=0) for kp in keypoints])
+it = [{'src': batch_mfccs, 'trg': batch_kps}]
 
 for x in it:
  # print(x) 
  print('src shape: {}, trg shape: {}'.format(x['src'].shape, x['trg'].shape))
-exit()
+#exit()
 
-INPUT_DIM = (max_mfcc_len,1,20)
-OUTPUT_DIM = (max_kp_len,1,17)
+INPUT_DIM = 20
+OUTPUT_DIM = 17
 HID_DIM = 512
 N_LAYERS = 2
 ENC_DROPOUT = 0.5
