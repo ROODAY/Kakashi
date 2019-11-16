@@ -213,11 +213,18 @@ torch.backends.cudnn.deterministic = True
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 data_dir = Path(Path.cwd(), 'data/', 'test')
-mfccs = [np.load(path) for path in sorted(list(data_dir.rglob('*.mfcc.npy')))]
-keypoints = [np.load(path) for path in sorted(list(data_dir.rglob('*.keypoints.npy')))]
-data_pairs = list(zip(mfccs, keypoints))
 
-print(mfccs)
+mfccs = [np.load(path) for path in sorted(list(data_dir.rglob('*.mfcc.npy')))]
+max_mfcc_len = max([mfcc.shape[0] for mfcc in mfccs])
+mfccs = [np.pad(mfcc, [(max_mfcc_len-len(mfcc), 0), (0,0)]) for mfcc in mfccs]
+
+keypoints = [np.load(path) for path in sorted(list(data_dir.rglob('*.keypoints.npy')))]
+max_kp_len = max([kp.shape[0] for kp in keypoints])
+keypoints = [np.pad(kp, [(max_kp_len-len(kp), 0), (0,0), (0,0)]) for kp in keypoints]
+
+
+print([mfcc.shape for mfcc in mfccs])
+print([kp.shape for kp in keypoints])
 exit()
 
 input_sos = np.full((1,20), -1)
