@@ -18,14 +18,7 @@ input_seq = torch.from_numpy(input_seq) #music + prev pose
 target_seq = torch.Tensor(target_seq) #pose
 
 # If we have a GPU available, we'll set our device to GPU. We'll use this device variable later in our code.
-if torch.cuda.is_available():
-  device = torch.device("cuda")
-  print("GPU is available")
-else:
-  device = torch.device("cpu")
-  print("GPU not available, CPU used")
-
-# in future make cuda a requirement
+device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
 class Model(nn.Module):
   def __init__(self, input_size, output_size, hidden_dim, n_layers):
@@ -64,6 +57,10 @@ class Model(nn.Module):
 
 # Instantiate the model with hyperparameters
 model = Model(input_size=dict_size, output_size=dict_size, hidden_dim=12, n_layers=1)
+if torch.cuda.device_count() > 1:
+  print("Let's use", torch.cuda.device_count(), "GPUs!")
+  model = nn.DataParallel(model)
+
 # We'll also set the model to the device that we defined earlier (default is CPU)
 model.to(device)
 
@@ -74,6 +71,8 @@ lr=0.01
 # Define Loss, Optimizer
 criterion = nn.CrossEntropyLoss()
 optimizer = torch.optim.Adam(model.parameters(), lr=lr)
+
+# test before traininig to make sure everything works
 
 # Training Run
 for epoch in range(1, n_epochs + 1):
@@ -87,3 +86,8 @@ for epoch in range(1, n_epochs + 1):
   if epoch%10 == 0:
     print('Epoch: {}/{}.............'.format(epoch, n_epochs), end=' ')
     print("Loss: {:.4f}".format(loss.item()))
+
+
+# torch.save(the_model.state_dict(), PATH)
+#the_model = TheModelClass(*args, **kwargs)
+#the_model.load_state_dict(torch.load(PATH))
