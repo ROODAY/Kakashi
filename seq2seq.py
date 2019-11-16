@@ -231,8 +231,8 @@ output_eos = np.full((1, 17, 3), np.inf)
 
 #it = [{ 'src': torch.tensor(np.append(np.insert(mfcc, 0, np.zeros((20,)), axis=0), input_eos, axis=0)), 'trg': torch.tensor(np.append(np.insert(kp, 0, output_sos, axis=0), output_eos, axis=0))} for mfcc, kp in zip(mfccs, keypoints)]
 
-batch_mfccs = torch.tensor([np.append(np.insert(mfcc, 0, np.zeros((20,)), axis=0), input_eos, axis=0) for mfcc in mfccs])
-batch_kps   = torch.tensor([np.append(np.insert(kp, 0, output_sos, axis=0), output_eos, axis=0) for kp in keypoints])
+batch_mfccs = torch.tensor([np.append(np.insert(mfcc, 0, np.zeros((20,)), axis=0), input_eos, axis=0) for mfcc in mfccs]).float()
+batch_kps   = torch.tensor([np.append(np.insert(kp, 0, output_sos, axis=0), output_eos, axis=0) for kp in keypoints]).float()
 it = [{'src': batch_mfccs, 'trg': batch_kps}]
 
 for x in it:
