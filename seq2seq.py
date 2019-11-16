@@ -62,7 +62,7 @@ class Decoder(nn.Module):
     dropped = self.dropout(input)
     
     #dropped = [1, batch size]
-            
+    dropped = dropped.view(len(input), len(input[0]), len(input[0][0]))         
     output, (hidden, cell) = self.rnn(dropped, (hidden, cell))
     
     #output = [sent len, batch size, hid dim * n directions]
