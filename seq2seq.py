@@ -222,25 +222,22 @@ keypoints = [np.load(path) for path in sorted(list(data_dir.rglob('*.keypoints.n
 max_kp_len = max([kp.shape[0] for kp in keypoints])
 keypoints = [np.pad(kp, [(max_kp_len-len(kp), 0), (0,0), (0,0)]) for kp in keypoints]
 
+np.insert(mfccs[0], 0, np.full((20,), -1), axis=0).shape
 
-print([mfcc.shape for mfcc in mfccs])
-print([kp.shape for kp in keypoints])
-exit()
-
-input_sos = np.full((1,20), -1)
+input_sos = np.full((20,), -1)
 input_eos = np.full((1,20), np.inf)
 output_sos = np.full((1, 17, 3), -1)
 output_eos = np.full((1, 17, 3), np.inf)
 
-it = [{ 'src': torch.tensor(np.append(np.insert(np.load(mfcc), 0, np.zeros(INPUT_DIM), axis=0), input_eos, axis=0)), 'trg': torch.tensor(np.append(np.insert(np.load(kp), 0, output_sos, axis=0), output_eos, axis=0))} for mfcc, kp in zip(mfccs, keypoints)]
+it = [{ 'src': torch.tensor(np.append(np.insert(mfcc, 0, np.zeros((20,)), axis=0), input_eos, axis=0)), 'trg': torch.tensor(np.append(np.insert(kp, 0, output_sos, axis=0), output_eos, axis=0))} for mfcc, kp in zip(mfccs, keypoints)]
 
 for x in it:
  # print(x) 
  print('src shape: {}, trg shape: {}'.format(x['src'].shape, x['trg'].shape))
-#exit()
+exit()
 
-INPUT_DIM = (1, 20)
-OUTPUT_DIM = (1, 17, 3)
+INPUT_DIM = (max_mfcc_len,1,20)
+OUTPUT_DIM = (max_kp_len,1,17)
 HID_DIM = 512
 N_LAYERS = 2
 ENC_DROPOUT = 0.5
