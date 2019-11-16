@@ -150,7 +150,7 @@ def train(model, iterator, optimizer, criterion, clip):
     
     optimizer.zero_grad()
    
-    print('\n=> Predicting output...') 
+    print('=> Predicting output...') 
     output = model(src, trg)
     #trg = [trg sent len, batch size]
     #output = [trg sent len, batch size, output dim]
@@ -186,7 +186,7 @@ def evaluate(model, iterator, criterion):
       src = batch['src']
       trg = batch['trg']
 
-      print('\n=> Predicting output...')
+      print('=> Predicting output...')
       output = model(src, trg, 0) #turn off teacher forcing
 
       #trg = [trg sent len, batch size]
@@ -236,7 +236,7 @@ input_eos = np.full((1,20), 0.01)
 output_sos = np.full((1, 17, 3), -0.01)
 output_eos = np.full((1, 17, 3), 0.01)
 
-it = [{ 'src': torch.tensor(np.append(np.insert(mfcc, 0, input_sos, axis=0), input_eos, axis=0)).float(), 'trg': torch.tensor(np.append(np.insert(kp, 0, output_sos, axis=0), output_eos, axis=0)).float()} for mfcc, kp in zip(mfccs, keypoints)]
+it = [{ 'src': torch.tensor(np.append(np.insert(mfcc, 0, input_sos, axis=0), input_eos, axis=0)).float().to(device), 'trg': torch.tensor(np.append(np.insert(kp, 0, output_sos, axis=0), output_eos, axis=0)).float().to(device)} for mfcc, kp in zip(mfccs, keypoints)]
 
 batch_mfccs = torch.tensor([np.append(np.insert(mfcc, 0, np.zeros((20,)), axis=0), input_eos, axis=0) for mfcc in mfccs]).float()
 batch_kps   = torch.tensor([np.append(np.insert(kp, 0, output_sos, axis=0), output_eos, axis=0) for kp in keypoints]).float()
@@ -271,9 +271,9 @@ best_valid_loss = float('inf')
 for epoch in range(N_EPOCHS):  
   start_time = time.time()
   
-  print('=> Training epoch {}\n========'.format(epoch))
+  print('\n=> Training epoch {}\n========'.format(epoch+1))
   train_loss = train(model, it, optimizer, criterion, CLIP)
-  print('=> Evaluating epoch {}\n========'.format(epoch))
+  print('\n=> Evaluating epoch {}\n========'.format(epoch+1))
   valid_loss = evaluate(model, it, criterion)
   
   end_time = time.time()
@@ -289,5 +289,5 @@ for epoch in range(N_EPOCHS):
   print(f'\t Val. Loss: {valid_loss:.3f} |  Val. PPL: {math.exp(valid_loss):7.3f}')
 
 model.load_state_dict(torch.load('tut1-model.pt'))
-test_loss = evaluate(model, test_iterator, criterion)
+test_loss = evaluate(model, it, criterion)
 print(f'| Test Loss: {test_loss:.3f} | Test PPL: {math.exp(test_loss):7.3f} |')
