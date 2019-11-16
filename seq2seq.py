@@ -8,14 +8,6 @@ import math
 import time
 from pathlib import Path
 
-SEED = 1234
-
-random.seed(SEED)
-torch.manual_seed(SEED)
-torch.backends.cudnn.deterministic = True
-
-device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-
 class Encoder(nn.Module):
   def __init__(self, input_dim, hid_dim, n_layers, dropout):
     super().__init__()
@@ -142,26 +134,9 @@ class Seq2Seq(nn.Module):
     
     return outputs
 
-INPUT_DIM = (1, 20)
-OUTPUT_DIM = (1, 17, 3)
-HID_DIM = 512
-N_LAYERS = 2
-ENC_DROPOUT = 0.5
-DEC_DROPOUT = 0.5
-
-enc = Encoder(INPUT_DIM, HID_DIM, N_LAYERS, ENC_DROPOUT)
-dec = Decoder(OUTPUT_DIM, HID_DIM, N_LAYERS, DEC_DROPOUT)
-
-model = Seq2Seq(enc, dec, device).to(device)
-
 def init_weights(m):
-    for name, param in m.named_parameters():
-        nn.init.uniform_(param.data, -0.08, 0.08)
-        
-model.apply(init_weights)
-
-optimizer = optim.Adam(model.parameters())
-criterion = nn.CrossEntropyLoss()
+  for name, param in m.named_parameters():
+    nn.init.uniform_(param.data, -0.08, 0.08)
 
 def train(model, iterator, optimizer, criterion, clip):
   model.train()
@@ -230,21 +205,25 @@ def epoch_time(start_time, end_time):
   elapsed_secs = int(elapsed_time - (elapsed_mins * 60))
   return elapsed_mins, elapsed_secs
 
+SEED = 1234
+random.seed(SEED)
+torch.manual_seed(SEED)
+torch.backends.cudnn.deterministic = True
 
-N_EPOCHS = 10
-CLIP = 1
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
-best_valid_loss = float('inf')
+data_dir = Path(Path.cwd(), 'data/', 'test')
+mfccs = [np.load(path) for path in sorted(list(data_dir.rglob('*.mfcc.npy')))]
+keypoints = [np.load(path) for path in sorted(list(data_dir.rglob('*.keypoints.npy')))]
+data_pairs = list(zip(mfccs, keypoints))
+
+print(mfccs)
+exit()
 
 input_sos = np.full((1,20), -1)
 input_eos = np.full((1,20), np.inf)
 output_sos = np.full((1, 17, 3), -1)
 output_eos = np.full((1, 17, 3), np.inf)
-
-data_dir = Path(Path.cwd(), 'data/', 'test')
-mfccs = sorted(list(data_dir.rglob('*.mfcc.npy')))
-keypoints = sorted(list(data_dir.rglob('*.keypoints.npy')))
-data_pairs = list(zip(mfccs, keypoints))
 
 it = [{ 'src': torch.tensor(np.append(np.insert(np.load(mfcc), 0, np.zeros(INPUT_DIM), axis=0), input_eos, axis=0)), 'trg': torch.tensor(np.append(np.insert(np.load(kp), 0, output_sos, axis=0), output_eos, axis=0))} for mfcc, kp in zip(mfccs, keypoints)]
 
@@ -252,6 +231,27 @@ for x in it:
  # print(x) 
  print('src shape: {}, trg shape: {}'.format(x['src'].shape, x['trg'].shape))
 #exit()
+
+INPUT_DIM = (1, 20)
+OUTPUT_DIM = (1, 17, 3)
+HID_DIM = 512
+N_LAYERS = 2
+ENC_DROPOUT = 0.5
+DEC_DROPOUT = 0.5
+
+enc = Encoder(INPUT_DIM, HID_DIM, N_LAYERS, ENC_DROPOUT)
+dec = Decoder(OUTPUT_DIM, HID_DIM, N_LAYERS, DEC_DROPOUT)
+model = Seq2Seq(enc, dec, device).to(device)
+        
+model.apply(init_weights)
+
+optimizer = optim.Adam(model.parameters())
+criterion = nn.CrossEntropyLoss()
+
+N_EPOCHS = 10
+CLIP = 1
+
+best_valid_loss = float('inf')
 
 for epoch in range(N_EPOCHS):  
   start_time = time.time()
