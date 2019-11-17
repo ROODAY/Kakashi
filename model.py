@@ -35,10 +35,10 @@ class Decoder(nn.Module):
     
     self.rnn = nn.LSTM(output_dim, hid_dim, n_layers, dropout = dropout, batch_first=True)
     self.out = nn.Linear(hid_dim, output_dim)
-    self.dropout = nn.Dropout(dropout)
+    self.dropout = nn.Dropout2d(dropout)
       
   def forward(self, input, hidden, cell):
-    input = input.unsqueeze(0)
+    #input = input.unsqueeze(0)
     dropped = self.dropout(input)
     dropped = dropped.view(-1).view(1,1,51) 
     output, (hidden, cell) = self.rnn(dropped, (hidden, cell))
@@ -145,24 +145,29 @@ def main(args):
 
   device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
+  print('=> Loading Data')
   data_dir = Path(Path.cwd(), 'data/', args.label)
 
   INPUT_FEATURE = args.input_feature if args.input_feature else 'mfcc'
   inputs = [np.load(path) for path in sorted(list(data_dir.rglob('*.{}.npy'.format(INPUT_FEATURE))))]
   max_inp_len = max([inp.shape[0] for inp in inputs])
-  inputs = [np.pad(inp, [(max_inp_len-len(inp), 0), (0,0)]) for inp in inputs]
+  #inputs = [np.pad(inp, [(max_inp_len-len(inp), 0), (0,0)]) for inp in inputs]
 
   keypoints = [np.load(path) for path in sorted(list(data_dir.rglob('*.keypoints.npy')))]
   max_kp_len = max([kp.shape[0] for kp in keypoints])
-  keypoints = [np.pad(kp, [(max_kp_len-len(kp), 0), (0,0), (0,0)]) for kp in keypoints]
+  #keypoints = [np.pad(kp, [(max_kp_len-len(kp), 0), (0,0), (0,0)]) for kp in keypoints]
 
   input_sos = np.full((20,), -0.01)
   input_eos = np.full((1,20), 0.01)
   output_sos = np.full((1, 17, 3), -0.01)
   output_eos = np.full((1, 17, 3), 0.01)
 
-  it = [{ 'src': torch.tensor(np.append(np.insert(inp, 0, input_sos, axis=0), input_eos, axis=0)).float().to(device), 'trg': torch.tensor(np.append(np.insert(kp, 0, output_sos, axis=0), output_eos, axis=0)).float().to(device)} for inp, kp in zip(inputs, keypoints)]
+  it = [{ 
+    'src': torch.tensor(np.append(np.insert(inp, 0, inp[:1], axis=0), inp[-1:], axis=0), requires_grad=True).float().to(device), 
+    'trg': torch.tensor(np.append(np.insert(kp, 0, kp[:1], axis=0), kp[-1:], axis=0)).float().to(device)
+  } for inp, kp in zip(inputs, keypoints)]
 
+  print('=> Initializing Model')
   INPUT_DIM = 20
   OUTPUT_DIM = 51
   HID_DIM = 512
@@ -177,8 +182,8 @@ def main(args):
           
   model.apply(init_weights)
 
-  optimizer = optim.Adam(model.parameters())
-  criterion = nn.MSELoss()
+  optimizer = optim.SGD(model.parameters(), lr=0.01, momentum=0.9)
+  criterion = nn.SmoothL1Loss()#MSELoss()
 
   output_dir = Path(Path.cwd(),'out')
   output_dir.mkdir(exist_ok=True)
