@@ -125,6 +125,7 @@ dmypy.json
 .pyre/
 
 *.mp4
+*.pt
 data/
 tmp_in/
 tmp_out/
