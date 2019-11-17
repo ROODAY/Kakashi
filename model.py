@@ -119,7 +119,7 @@ def evaluate(model, iterator, criterion, output_dir):
       print('=> Predicting output...')
       output = model(src, trg, 0)
       output = output[1:-1]
-      np.save(Path(output_dir, '{}.keypoints.npy'.format(str(i+1).zfill(5))), output)
+      np.save(Path(output_dir, '{}.keypoints.npy'.format(str(i+1).zfill(5))), output.cpu().numpy())
       output = output.reshape(output.shape[0], model.decoder.output_dim)
       trg = trg[1:-1]
       trg = trg.reshape(trg.shape[0], model.decoder.output_dim)
