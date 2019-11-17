@@ -222,5 +222,7 @@ if __name__ == "__main__":
                       help='Skip training phase')
   parser.add_argument('--model_name', type=str,
                       help='Extension of audio files to use for feature extraction (default: .wav)')
+  parser.add_argument('--input_feature', type=str,
+                      help='Feature set to use for model input')
   args = parser.parse_args()
   main(args)
