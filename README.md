@@ -36,3 +36,30 @@ Make sure the following environment variables for directory roots are set:
 
 
 need train, validation, and test set
+
+
+figure out why data is converging
+
+get good dataset
+make sure input is differentiable - done
+
+
+try removing dropout - slight improvement, tried putting back in with dropout2d for decoder
+
+possibly due to eos and sos - didn't do much, made loss a bit worse
+
+try removing padding since batch size of 1 - didn't do much, but keep this as it  makes sense
+get rid of gradient clip - didn't do much, put back in
+reverse src - doesn't do much, removed as it doesnt make sense here
+
+mseloss borke? - no
+
+try other loss function - huber
+another optimizer - sgd
+try batching - need more data first
+keep pose in flattenend form - don't think this will do anything
+
+get song length before feature extraction, then stop inference when length is reached (length * 30)
+perhaps just need more data, look into flipping
+
+python3 animate.py -d custom -k kakashi -arc 3,3,3,3,3 -c checkpoint --evaluate pretrained_h36m_detectron_coco.bin --render --viz-subject 00001.mp4 --viz-action custom --viz-camera 0 --viz-video /project/dnn-motion/kakashi/Kakashi/data/test/00001/00001.mp4 --viz-output 00001.test.mp4 --viz-size 6
