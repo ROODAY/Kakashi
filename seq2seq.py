@@ -193,6 +193,7 @@ def evaluate(model, iterator, criterion):
       #output = [trg sent len, batch size, output dim]
 
       output = output[1:-1]#.view(-1, output.shape[-1])
+      np.save(Path(Path.cwd(),'out', '{}.keypoints.npy'.format(str(i+1).zfill(5))), output)
       output = output.reshape(output.shape[0], model.decoder.output_dim)
       trg = trg[1:-1]#.view(-1)
       trg = trg.reshape(trg.shape[0], model.decoder.output_dim)
@@ -271,7 +272,7 @@ best_valid_loss = float('inf')
 for epoch in range(N_EPOCHS):  
   start_time = time.time()
   
-  print('\n=> Training epoch {}\n========'.format(epoch+1))
+  print('=> Training epoch {}\n========'.format(epoch+1))
   train_loss = train(model, it, optimizer, criterion, CLIP)
   print('\n=> Evaluating epoch {}\n========'.format(epoch+1))
   valid_loss = evaluate(model, it, criterion)
@@ -286,8 +287,9 @@ for epoch in range(N_EPOCHS):
   
   print(f'Epoch: {epoch+1:02} | Time: {epoch_mins}m {epoch_secs}s')
   print(f'\tTrain Loss: {train_loss:.3f} | Train PPL: {math.exp(train_loss):7.3f}')
-  print(f'\t Val. Loss: {valid_loss:.3f} |  Val. PPL: {math.exp(valid_loss):7.3f}')
+  print(f'\t Val. Loss: {valid_loss:.3f} |  Val. PPL: {math.exp(valid_loss):7.3f}\n')
 
 model.load_state_dict(torch.load('tut1-model.pt'))
+print('=> Testing model\n========')
 test_loss = evaluate(model, it, criterion)
 print(f'| Test Loss: {test_loss:.3f} | Test PPL: {math.exp(test_loss):7.3f} |')
