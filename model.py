@@ -107,7 +107,7 @@ def train(model, iterator, optimizer, criterion, clip):
       
   return epoch_loss / len(iterator)
 
-def evaluate(model, iterator, criterion):  
+def evaluate(model, iterator, criterion, output_dir):  
   model.eval()
   
   epoch_loss = 0
@@ -119,7 +119,7 @@ def evaluate(model, iterator, criterion):
       print('=> Predicting output...')
       output = model(src, trg, 0)
       output = output[1:-1]
-      np.save(Path(Path.cwd(),'out', '{}.keypoints.npy'.format(str(i+1).zfill(5))), output)
+      np.save(Path(output_dir, '{}.keypoints.npy'.format(str(i+1).zfill(5))), output)
       output = output.reshape(output.shape[0], model.decoder.output_dim)
       trg = trg[1:-1]
       trg = trg.reshape(trg.shape[0], model.decoder.output_dim)
@@ -180,6 +180,8 @@ def main(args):
   optimizer = optim.Adam(model.parameters())
   criterion = nn.MSELoss()
 
+  output_dir = Path(Path.cwd(),'out')
+  output_dir.mkdir(exist_ok=True)
   run_training = not args.skip_training
   if run_training:
     N_EPOCHS = 10
@@ -191,7 +193,7 @@ def main(args):
       print('=> Training epoch {}\n========'.format(epoch+1))
       train_loss = train(model, it, optimizer, criterion, CLIP)
       print('\n=> Evaluating epoch {}\n========'.format(epoch+1))
-      valid_loss = evaluate(model, it, criterion)
+      valid_loss = evaluate(model, it, criterion, output_dir)
       
       end_time = time.time()
       
@@ -207,7 +209,7 @@ def main(args):
 
   model.load_state_dict(torch.load('{}.pt'.format(MODEL_NAME)))
   print('=> Testing model\n========')
-  test_loss = evaluate(model, it, criterion)
+  test_loss = evaluate(model, it, criterion, output_dir)
   print(f'| Test Loss: {test_loss:.3f} | Test PPL: {math.exp(test_loss):7.3f} |')
 
 if __name__ == "__main__":
