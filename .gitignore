@@ -124,6 +124,8 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
+*.mp4
 data/
 tmp_in/
 tmp_out/
+out/
