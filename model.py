@@ -1,93 +1,226 @@
 import torch
-from torch import nn
+import torch.nn as nn
+import torch.optim as optim
 import numpy as np
-import functools 
+import random
+import math
+import time
+import argparse
+from pathlib import Path
 
-#make sure batches for rnn are of same length (within the batch)
-
-# load the data
-# split pose frames by beats, 
-#batched = np.array_split(pose, len(mfcc))
-#avg = [functools.reduce(lambda x,y:x+y,batch) / len(batch) for batch in batched]
-#combined = [np.hstack((a, m[:, np.newaxis])) for a,m in zip(avg, mfcc)] this has shape (n, 17, 4)
-# combined is kind of a weird representation, but ok for testing. look into other options
-# combined is our hidden state
-# mfcc is our X, avg is our Y, at each step we want to do a hstack tho 
-
-input_seq = torch.from_numpy(input_seq) #music + prev pose
-target_seq = torch.Tensor(target_seq) #pose
-
-# If we have a GPU available, we'll set our device to GPU. We'll use this device variable later in our code.
-device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-
-class Model(nn.Module):
-  def __init__(self, input_size, output_size, hidden_dim, n_layers):
-    super(Model, self).__init__()
-
-    # Defining some parameters
-    self.hidden_dim = hidden_dim
+class Encoder(nn.Module):
+  def __init__(self, input_dim, hid_dim, n_layers, dropout):
+    super().__init__()
+    
+    self.hid_dim = hid_dim
     self.n_layers = n_layers
-
-    #Defining the layers
-    # RNN Layer
-    self.rnn = nn.RNN(input_size, hidden_dim, n_layers, batch_first=True)   
-    # Fully connected layer
-    self.fc = nn.Linear(hidden_dim, output_size)
     
-  def forward(self, x):
-    batch_size = x.size(0)
+    self.rnn = nn.LSTM(input_dim, hid_dim, n_layers, dropout=dropout, batch_first=True)
+    self.dropout = nn.Dropout(dropout)
+      
+  def forward(self, src):
+    dropped = self.dropout(src)
+    dropped = dropped.view(1, dropped.shape[0], dropped.shape[1])
+    outputs, (hidden, cell) = self.rnn(dropped)
 
-    # Initializing hidden state for first input using method defined below
-    hidden = self.init_hidden(batch_size)
+    return hidden, cell
 
-    # Passing in the input and hidden state into the model and obtaining outputs
-    out, hidden = self.rnn(x, hidden)
+class Decoder(nn.Module):
+  def __init__(self, output_dim, hid_dim, n_layers, dropout):
+    super().__init__()
     
-    # Reshaping the outputs such that it can be fit into the fully connected layer
-    out = out.contiguous().view(-1, self.hidden_dim)
-    out = self.fc(out)
+    self.output_dim = output_dim
+    self.hid_dim = hid_dim
+    self.n_layers = n_layers
     
-    return out, hidden
+    self.rnn = nn.LSTM(output_dim, hid_dim, n_layers, dropout = dropout, batch_first=True)
+    self.out = nn.Linear(hid_dim, output_dim)
+    self.dropout = nn.Dropout(dropout)
+      
+  def forward(self, input, hidden, cell):
+    input = input.unsqueeze(0)
+    dropped = self.dropout(input)
+    dropped = dropped.view(-1).view(1,1,51) 
+    output, (hidden, cell) = self.rnn(dropped, (hidden, cell))
+    prediction = self.out(output.squeeze(0)).reshape((17,3))
+    
+    return prediction, hidden, cell
+
+class Seq2Seq(nn.Module):
+  def __init__(self, encoder, decoder, device):
+    super().__init__()
+    
+    self.encoder = encoder
+    self.decoder = decoder
+    self.device = device
+    
+    assert encoder.hid_dim == decoder.hid_dim, \
+      "Hidden dimensions of encoder and decoder must be equal!"
+    assert encoder.n_layers == decoder.n_layers, \
+      "Encoder and decoder must have equal number of layers!"
+      
+  def forward(self, src, trg, teacher_forcing_ratio = 0.5):
+    batch_size = trg.shape[1]
+    max_len = trg.shape[0]
+    trg_vocab_size = self.decoder.output_dim
+    outputs = torch.zeros(trg.shape).to(self.device)
+    hidden, cell = self.encoder(src)
+    input = trg[0,:]
+    
+    for t in range(1, max_len):
+      output, hidden, cell = self.decoder(input, hidden, cell)
+      outputs[t] = output
+      teacher_force = random.random() < teacher_forcing_ratio
+      input = trg[t] if teacher_force else output
+    
+    return outputs
+
+def init_weights(m):
+  for name, param in m.named_parameters():
+    nn.init.uniform_(param.data, -0.08, 0.08)
+
+def train(model, iterator, optimizer, criterion, clip):
+  model.train()
   
-  def init_hidden(self, batch_size):
-    # This method generates the first hidden state of zeros which we'll use in the forward pass
-    # We'll send the tensor holding the hidden state to the device we specified earlier as well
-    hidden = torch.zeros(self.n_layers, batch_size, self.hidden_dim)
-    return hidden
+  epoch_loss = 0
+  for i, batch in enumerate(iterator):
+    src = batch['src']
+    trg = batch['trg']
+    
+    optimizer.zero_grad()
+   
+    print('=> Predicting output...') 
+    output = model(src, trg)
+    output = output[1:-1]
+    output = output.reshape(output.shape[0], model.decoder.output_dim)
+    trg = trg[1:-1]
+    trg = trg.reshape(trg.shape[0], model.decoder.output_dim)
 
-# Instantiate the model with hyperparameters
-model = Model(input_size=dict_size, output_size=dict_size, hidden_dim=12, n_layers=1)
-if torch.cuda.device_count() > 1:
-  print("Let's use", torch.cuda.device_count(), "GPUs!")
-  model = nn.DataParallel(model)
+    print('=> Calculating loss...')
+    loss = criterion(output, trg)
+    print('=> Backpropagating...')
+    loss.backward()
+    print('=> Clipping gradients...')
+    torch.nn.utils.clip_grad_norm_(model.parameters(), clip)
+    optimizer.step()
+    epoch_loss += loss.item()
+      
+  return epoch_loss / len(iterator)
 
-# We'll also set the model to the device that we defined earlier (default is CPU)
-model.to(device)
-
-# Define hyperparameters
-n_epochs = 100
-lr=0.01
-
-# Define Loss, Optimizer
-criterion = nn.CrossEntropyLoss()
-optimizer = torch.optim.Adam(model.parameters(), lr=lr)
-
-# test before traininig to make sure everything works
-
-# Training Run
-for epoch in range(1, n_epochs + 1):
-  optimizer.zero_grad() # Clears existing gradients from previous epoch
-  input_seq.to(device)
-  output, hidden = model(input_seq)
-  loss = criterion(output, target_seq.view(-1).long())
-  loss.backward() # Does backpropagation and calculates gradients
-  optimizer.step() # Updates the weights accordingly
+def evaluate(model, iterator, criterion):  
+  model.eval()
   
-  if epoch%10 == 0:
-    print('Epoch: {}/{}.............'.format(epoch, n_epochs), end=' ')
-    print("Loss: {:.4f}".format(loss.item()))
+  epoch_loss = 0
+  with torch.no_grad():  
+    for i, batch in enumerate(iterator):
+      src = batch['src']
+      trg = batch['trg']
 
+      print('=> Predicting output...')
+      output = model(src, trg, 0)
+      output = output[1:-1]
+      np.save(Path(Path.cwd(),'out', '{}.keypoints.npy'.format(str(i+1).zfill(5))), output)
+      output = output.reshape(output.shape[0], model.decoder.output_dim)
+      trg = trg[1:-1]
+      trg = trg.reshape(trg.shape[0], model.decoder.output_dim)
 
-# torch.save(the_model.state_dict(), PATH)
-#the_model = TheModelClass(*args, **kwargs)
-#the_model.load_state_dict(torch.load(PATH))
+      print('=> Calculating loss...')
+      loss = criterion(output, trg)
+      epoch_loss += loss.item()
+      
+  return epoch_loss / len(iterator)
+
+def epoch_time(start_time, end_time):
+  elapsed_time = end_time - start_time
+  elapsed_mins = int(elapsed_time / 60)
+  elapsed_secs = int(elapsed_time - (elapsed_mins * 60))
+  return elapsed_mins, elapsed_secs
+
+def main(args):
+  if args.deterministic:
+    SEED = args.seed if args.seed else 1234
+    random.seed(SEED)
+    torch.manual_seed(SEED)
+    torch.backends.cudnn.deterministic = True
+
+  device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+
+  data_dir = Path(Path.cwd(), 'data/', args.label)
+
+  INPUT_FEATURE = args.input_feature if args.input_feature else 'mfcc'
+  inputs = [np.load(path) for path in sorted(list(data_dir.rglob('*.{}.npy'.format(INPUT_FEATURE))))]
+  max_inp_len = max([inp.shape[0] for inp in inputs])
+  inputs = [np.pad(inp, [(max_inp_len-len(inp), 0), (0,0)]) for inp in inputs]
+
+  keypoints = [np.load(path) for path in sorted(list(data_dir.rglob('*.keypoints.npy')))]
+  max_kp_len = max([kp.shape[0] for kp in keypoints])
+  keypoints = [np.pad(kp, [(max_kp_len-len(kp), 0), (0,0), (0,0)]) for kp in keypoints]
+
+  input_sos = np.full((20,), -0.01)
+  input_eos = np.full((1,20), 0.01)
+  output_sos = np.full((1, 17, 3), -0.01)
+  output_eos = np.full((1, 17, 3), 0.01)
+
+  it = [{ 'src': torch.tensor(np.append(np.insert(inp, 0, input_sos, axis=0), input_eos, axis=0)).float().to(device), 'trg': torch.tensor(np.append(np.insert(kp, 0, output_sos, axis=0), output_eos, axis=0)).float().to(device)} for inp, kp in zip(inputs, keypoints)]
+
+  INPUT_DIM = 20
+  OUTPUT_DIM = 51
+  HID_DIM = 512
+  N_LAYERS = 2
+  ENC_DROPOUT = 0.5
+  DEC_DROPOUT = 0.5
+  MODEL_NAME = args.model_name if args.model_name else 'kakashi'
+
+  enc = Encoder(INPUT_DIM, HID_DIM, N_LAYERS, ENC_DROPOUT)
+  dec = Decoder(OUTPUT_DIM, HID_DIM, N_LAYERS, DEC_DROPOUT)
+  model = Seq2Seq(enc, dec, device).to(device)
+          
+  model.apply(init_weights)
+
+  optimizer = optim.Adam(model.parameters())
+  criterion = nn.MSELoss()
+
+  run_training = not args.skip_training
+  if run_training:
+    N_EPOCHS = 10
+    CLIP = 1
+    best_valid_loss = float('inf')
+    for epoch in range(N_EPOCHS):  
+      start_time = time.time()
+      
+      print('=> Training epoch {}\n========'.format(epoch+1))
+      train_loss = train(model, it, optimizer, criterion, CLIP)
+      print('\n=> Evaluating epoch {}\n========'.format(epoch+1))
+      valid_loss = evaluate(model, it, criterion)
+      
+      end_time = time.time()
+      
+      epoch_mins, epoch_secs = epoch_time(start_time, end_time)
+      
+      if valid_loss < best_valid_loss:
+        best_valid_loss = valid_loss
+        torch.save(model.state_dict(), '{}.pt'.format(MODEL_NAME))
+      
+      print(f'Epoch: {epoch+1:02} | Time: {epoch_mins}m {epoch_secs}s')
+      print(f'\tTrain Loss: {train_loss:.3f} | Train PPL: {math.exp(train_loss):7.3f}')
+      print(f'\t Val. Loss: {valid_loss:.3f} |  Val. PPL: {math.exp(valid_loss):7.3f}\n')
+
+  model.load_state_dict(torch.load('{}.pt'.format(MODEL_NAME)))
+  print('=> Testing model\n========')
+  test_loss = evaluate(model, it, criterion)
+  print(f'| Test Loss: {test_loss:.3f} | Test PPL: {math.exp(test_loss):7.3f} |')
+
+if __name__ == "__main__":
+  parser = argparse.ArgumentParser(description='Train/infer with Kakashi')
+  parser.add_argument('label', type=str,
+                      help='Label for the dataset (e.x. Popping)')
+  parser.add_argument('--deterministic', action='store_true',
+                      help='Train/evaluate deterministically')
+  parser.add_argument('--seed', type=int,
+                      help='Seed for deterministic run')
+  parser.add_argument('--skip_training', action='store_true',
+                      help='Skip training phase')
+  parser.add_argument('--model_name', type=str,
+                      help='Extension of audio files to use for feature extraction (default: .wav)')
+  args = parser.parse_args()
+  main(args)

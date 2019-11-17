@@ -33,3 +33,6 @@ Make sure the following environment variables for directory roots are set:
 - KAKASHI
 - VIDEOPOSE
 - DETECTRON
+
+
+need train, validation, and test set
