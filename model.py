@@ -90,7 +90,7 @@ def train(model, iterator, optimizer, criterion, clip):
     optimizer.zero_grad()
    
     print('=> Predicting output...') 
-    output = model(src, trg)
+    output = model(src, trg, 1)
     output = output[1:-1]
     output = output.reshape(output.shape[0], model.decoder.output_dim)
     trg = trg[1:-1]
