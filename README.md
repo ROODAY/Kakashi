@@ -71,3 +71,6 @@ seq2seq short - subsection of song to short section of dance (configurable time 
 per frame - break up song into frames (30 fps) and do frame by frame training
 
 for inference, the first pose should be start of sequence. we can do all 0s or 1 or something, just to kick it off
+for splitting audio, do split by beat first then group by time (number of groups = total length in seconds / length of interval) do numpy split
+another method is split raw data by time step
+another is by frame (do fast frame calculation)
