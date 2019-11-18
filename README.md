@@ -67,3 +67,5 @@ python3 animate.py -d custom -k kakashi -arc 3,3,3,3,3 -c checkpoint --evaluate 
 for splitting audio, do split by beat first then group by time (number of groups = total length in seconds / length of interval) do numpy split
 another method is split raw data by time step
 another is by frame (do fast frame calculation)
+
+figure out how the coordinates are set for videopose and double data by flipping
