@@ -63,3 +63,7 @@ get song length before feature extraction, then stop inference when length is re
 perhaps just need more data, look into flipping
 
 python3 animate.py -d custom -k kakashi -arc 3,3,3,3,3 -c checkpoint --evaluate pretrained_h36m_detectron_coco.bin --render --viz-subject 00001.mp4 --viz-action custom --viz-camera 0 --viz-video /project/dnn-motion/kakashi/Kakashi/data/test/00001/00001.mp4 --viz-output 00001.test.mp4 --viz-size 6
+
+for splitting audio, do split by beat first then group by time (number of groups = total length in seconds / length of interval) do numpy split
+another method is split raw data by time step
+another is by frame (do fast frame calculation)

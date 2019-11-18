@@ -18,7 +18,7 @@ def window(seq, n=2):
     yield result
 
 def main(args):
-  videpose_dataset_name = args.videpose_dataset_name if args.videpose_dataset_name else 'kakashi'
+  videpose_dataset_name = args.videpose_dataset_name
 
   # make sure video directory exists
   download_dir = Path(Path.cwd(), 'data/', args.label)
@@ -59,10 +59,11 @@ def main(args):
       command = 'python3 run.py -d custom -k {} -arc 3,3,3,3,3 -c checkpoint --evaluate pretrained_h36m_detectron_coco.bin --render --viz-subject {} --viz-action custom --viz-camera 0 --viz-video {} --viz-export {} --viz-size 6'.format(videpose_dataset_name, video_path.name, str(video_path), Path(video_path.parent, video_path.stem + '.keypoints.npy'))
       subprocess.call(command, shell=True)
 
-    # delete tmp folders
-    print('=> Deleting tmp folders')
-    shutil.rmtree(tmp_input_dir)
-    shutil.rmtree(tmp_output_dir)
+    if not args.save_tmp:
+      # delete tmp folders
+      print('=> Deleting tmp folders')
+      shutil.rmtree(tmp_input_dir)
+      shutil.rmtree(tmp_output_dir)
 
   # extract audio features
   os.chdir(os.environ['KAKASHI'])
@@ -74,35 +75,58 @@ def main(args):
       command = 'ffmpeg -hide_banner -loglevel panic -y -i {} -ab 160k -ac 2 -ar 44100 -vn {}'.format(video_path, audio_path)
       subprocess.call(command, shell=True)
 
-  audio_ext = args.audio_ext if args.audio_ext else 'wav'
+  audio_ext = args.audio_ext
+  audio_feature = args.audio_feature
   audio_paths = list(Path(download_dir).rglob('*.{}'.format(audio_ext)))
   audio_paths.sort()
   for audio_path in audio_paths:
     print('=> Processing features for {}'.format(audio_path.name))
     audio_data, sample_rate = librosa.load(audio_path, res_type='kaiser_fast')
 
-    print('=> Group audio data by beat')
-    tempo, beat_frames = librosa.beat.beat_track(audio_data, sr=sample_rate)
-    indices = list(window(beat_frames))
-    audio_by_beat = [audio_data[start:stop] for (start, stop) in indices]
+    if audio_feature == 'mfcc-beat':
+      print('=> Group audio data by beat')
+      tempo, beat_frames = librosa.beat.beat_track(audio_data, sr=sample_rate)
+      indices = list(window(beat_frames))
+      grouped_audio = [audio_data[start:stop] for (start, stop) in indices]
+    elif audio_feature == 'mfcc-time':
+      print('=> Group audio data by time')
+      interval = args.time_interval
+      buckets = round(librosa.get_duration(y=audio_data, sr=sample_rate) / interval)
+      grouped_audio = np.array_split(audio_data, buckets)
+    elif audio_feature == 'mfcc-pose':
+      print('=> Group audio data by pose')
+      pose_path = Path(audio_path.parent, '{}.keypoints.npy'.format(audio_path.stem))
+      poses = np.load(pose_path)
+      grouped_audio = np.array_split(audio_data, len(poses))
+    else:
+      raise AssertionError('{} is not valid!'.format(audio_feature))
+      
+    if audio_feature in ['mfcc-beat', 'mfcc-frame', 'mfcc-time']:
+      print('=> Extract MFCC features')
+      features = [np.mean(librosa.feature.mfcc(y=group).T,axis=0) for group in tqdm(grouped_audio)]
+    else:
+      raise AssertionError('{} is not valid!'.format(audio_feature))
 
-    print('=> Get MFCCs per beat')
-    mfccs = [np.mean(librosa.feature.mfcc(y=beat).T,axis=0) for beat in tqdm(audio_by_beat)]
-    np.save(Path(audio_path.parent, '{}.mfcc.npy'.format(audio_path.stem)), mfccs)
+    audio_feature = '{}_{}'.format(audio_feature, interval) if audio_feature == 'mfcc-time' else audio_feature
+    np.save(Path(audio_path.parent, '{}.{}.npy'.format(audio_path.stem, audio_feature)), features)
 
 if __name__ == "__main__":
   parser = argparse.ArgumentParser(description='Generates dataset from video files')
   parser.add_argument('label', type=str,
                       help='Label for the dataset (e.x. Popping)')
-  parser.add_argument('--videpose_dataset_name', type=str,
+  parser.add_argument('--videpose_dataset_name', type=str, default='kakashi',
                       help='Name for VideoPose custom dataset (default: kakashi)')
-  parser.add_argument('--skip_extract', action='store_true',
-                      help='Skip extracting of audio from video files (if audio was downloaded separately)')
-  parser.add_argument('--audio_ext', type=str,
+  parser.add_argument('--audio_ext', type=str, default='wav'
                       help='Extension of audio files to use for feature extraction (default: .wav)')
+  parser.add_argument('--audio_feature', type=str, default='mfcc-beat'
+                      help='Type of audio feature to extract (default: mfcc per beat)')
+  parser.add_argument('--time_interval', type=int, default=5
+                      help='Length of interval in seconds for mfcc-time (default: 5)')
+  parser.add_argument('--save_tmp', action='store_true',
+                      help='Save tmp folders instead of deleting')
   parser.add_argument('--skip_detect_pose', action='store_true',
                       help='Skip running pose detection')
+  parser.add_argument('--skip_extract', action='store_true',
+                      help='Skip extracting of audio from video files (if audio was downloaded separately)')
   args = parser.parse_args()
   main(args)
-
-# keypoints = np.load('keypoints.npz.npy', allow_pickle=True) same for mfcc
