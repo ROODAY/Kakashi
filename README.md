@@ -63,3 +63,11 @@ get song length before feature extraction, then stop inference when length is re
 perhaps just need more data, look into flipping
 
 python3 animate.py -d custom -k kakashi -arc 3,3,3,3,3 -c checkpoint --evaluate pretrained_h36m_detectron_coco.bin --render --viz-subject 00001.mp4 --viz-action custom --viz-camera 0 --viz-video /project/dnn-motion/kakashi/Kakashi/data/test/00001/00001.mp4 --viz-output 00001.test.mp4 --viz-size 6
+
+get freestyle practice videos, ask dancers your know if they can send videos preferably in mp4 format/in bulk. perhaps a thing for next semester, getting funding? if I could set parameters on the dataset it could be a lot better
+
+seq2seq long - whole song to whole dance
+seq2seq short - subsection of song to short section of dance (configurable time interval like 5s 10s 15s etc)
+per frame - break up song into frames (30 fps) and do frame by frame training
+
+for inference, the first pose should be start of sequence. we can do all 0s or 1 or something, just to kick it off
