@@ -70,9 +70,15 @@ seq2seq long - whole song to whole dance
 seq2seq short - subsection of song to short section of dance (configurable time interval like 5s 10s 15s etc)
 per frame - break up song into frames (30 fps) and do frame by frame training
 
-for inference, the first pose should be start of sequence. we can do all 0s or 1 or something, just to kick it off
+for inference, the first pose should be start of sequence. we can do all 0s or 1 or something, just to kick it off. actually, grab a pose from one of the datasets, one of the initial poses. maybe randomly select a start pose.
 for splitting audio, do split by beat first then group by time (number of groups = total length in seconds / length of interval) do numpy split
 another method is split raw data by time step
 another is by frame (do fast frame calculation)
 
 figure out how the coordinates are set for videopose and double data by flipping
+4 layers in LSTM?
+increase hidden dim size to 1024 for final runs
+create config files for the model params, yaml is good (pyyaml)
+remove sos and eos tokens, unnecessary for this
+batch size of 5 for full video, batch size of 50 for intervals. make sure sequences in batch are padded to same shape.
+nlp uses word embedding layers. how can this be generalized to non text data? we don't have discrete units like words, can it be used in regression?
