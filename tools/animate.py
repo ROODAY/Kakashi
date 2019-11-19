@@ -1,3 +1,5 @@
+# cannibalize the functions that are needed from videopose. This file should be a standalone file that can be dropped into videpose root
+
 from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.pyplot as plt
 import numpy as np

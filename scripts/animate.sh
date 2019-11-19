@@ -3,11 +3,11 @@
 #$ -P dnn-motion
 #$ -l gpus=4
 #$ -l gpu_c=3.5
-#$ -N kakashi-generate-dataset
+#$ -N kakashi-animate
 #$ -m ae
 #$ -M rooday@bu.edu
 #$ -j y
-#$ -o generate-dataset-output.txt
+#$ -o animate-output.txt
 #$ -V
 
 echo "=========================================================="
@@ -22,5 +22,5 @@ module load cuda/10.1
 module load pytorch/1.1
 module load geos/3.7.0
 
-cd $KAKASHI
-python3 tools/generate_dataset.py test-cut
+cd $VIDEOPOSE
+python3 tools/cut_videos.py wod
