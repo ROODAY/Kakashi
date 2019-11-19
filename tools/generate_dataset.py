@@ -67,7 +67,6 @@ def main(args):
   # extract audio features
   os.chdir(os.environ['KAKASHI'])
   if not args.skip_extract:
-    print('=> Extracting audio features')
     for video_path in video_paths:
       print('=> Extracting Audio for {}'.format(video_path.name))
       audio_path = Path(video_path.parent, '{}.wav'.format(video_path.stem))
@@ -82,17 +81,18 @@ def main(args):
     print('=> Processing features for {}'.format(audio_path.name))
     audio_data, sample_rate = librosa.load(audio_path, res_type='kaiser_fast')
 
-    if audio_feature == 'mfcc-beat':
+    feature_type, feature_split = audio_feature.split('-')
+    if feature_split == 'beat':
       print('=> Group audio data by beat')
       tempo, beat_frames = librosa.beat.beat_track(audio_data, sr=sample_rate)
       indices = list(window(beat_frames))
       grouped_audio = [audio_data[start:stop] for (start, stop) in indices]
-    elif audio_feature == 'mfcc-time':
+    elif feature_split == 'time':
       print('=> Group audio data by time')
       interval = args.time_interval
       buckets = round(librosa.get_duration(y=audio_data, sr=sample_rate) / interval)
       grouped_audio = np.array_split(audio_data, buckets)
-    elif audio_feature == 'mfcc-pose':
+    elif feature_split == 'pose':
       print('=> Group audio data by pose')
       pose_path = Path(audio_path.parent, '{}.keypoints.npy'.format(audio_path.stem))
       poses = np.load(pose_path)
@@ -100,13 +100,13 @@ def main(args):
     else:
       raise AssertionError('{} is not valid!'.format(audio_feature))
       
-    if audio_feature in ['mfcc-beat', 'mfcc-frame', 'mfcc-time']:
+    if feature_type == 'mfcc':
       print('=> Extract MFCC features')
       features = [np.mean(librosa.feature.mfcc(y=group).T,axis=0) for group in tqdm(grouped_audio)]
     else:
       raise AssertionError('{} is not valid!'.format(audio_feature))
 
-    audio_feature = '{}_{}'.format(audio_feature, interval) if audio_feature == 'mfcc-time' else audio_feature
+    audio_feature = '{}_{}'.format(audio_feature, interval) if feature_split == 'time' else audio_feature
     np.save(Path(audio_path.parent, '{}.{}.npy'.format(audio_path.stem, audio_feature)), features)
 
 if __name__ == "__main__":
