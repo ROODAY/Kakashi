@@ -25,8 +25,7 @@ def main(args):
   if not download_dir.exists():
     raise NotADirectoryError('{} does not exist!'.format(str(download_dir)))
 
-  video_paths = list(Path(download_dir).rglob('*.mp4'))
-  video_paths.sort()
+  video_paths = sorted(list(Path(download_dir).rglob('*.mp4')))
 
   if not args.skip_detect_pose:
     # copy videos to tmp directory for pose estimation
