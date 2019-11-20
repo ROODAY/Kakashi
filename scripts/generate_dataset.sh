@@ -1,6 +1,7 @@
 #!/bin/bash -l
 
 #$ -P dnn-motion
+#$ -l h_rt=160:00:00
 #$ -l gpus=4
 #$ -l gpu_c=3.5
 #$ -N kakashi-generate-dataset

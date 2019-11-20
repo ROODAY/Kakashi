@@ -115,11 +115,11 @@ if __name__ == "__main__":
                       help='Label for the dataset (e.x. Popping)')
   parser.add_argument('--videpose_dataset_name', type=str, default='kakashi',
                       help='Name for VideoPose custom dataset (default: kakashi)')
-  parser.add_argument('--audio_ext', type=str, default='wav'
+  parser.add_argument('--audio_ext', type=str, default='wav',
                       help='Extension of audio files to use for feature extraction (default: .wav)')
-  parser.add_argument('--audio_feature', type=str, default='mfcc-beat'
+  parser.add_argument('--audio_feature', type=str, default='mfcc-beat',
                       help='Type of audio feature to extract (default: mfcc per beat)')
-  parser.add_argument('--time_interval', type=int, default=5
+  parser.add_argument('--time_interval', type=int, default=5,
                       help='Length of interval in seconds for mfcc-time (default: 5)')
   parser.add_argument('--save_tmp', action='store_true',
                       help='Save tmp folders instead of deleting')
