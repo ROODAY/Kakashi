@@ -1,85 +1,49 @@
 # Project Kakashi
+Generate dance choreography (in the form of 3D pose matrices) from arbitrary music samples.
 
-Directed Study project, Fall 2019
+Current setup:
+- Download playlists of dance videos from YouTube
+- Cut videos to remove unnecessary information (intros/outros/etc.)
+- Run 3D pose estimation to get "ground truth" dataset output
+- Extract audio features from videos to serve as dataset input
+- Train a sequence to sequence model to generate pose from music features
 
-Goal: Create a model that generate dance choreography from arbitrary music
-
-Current plan:
-- Find/Create playlist on YouTube or some set of suitable videos
-- Download playlist/set. For each video in set, extract audio and frames (frames may need to be normalized/processed further for the model, also to remove unneccessary frames)
-- For each video, go through frames and estimate pose (save as 3-D coordinates, normalized to the same origin)
-- Now with the training data, try naive solution of recurrent neural network. Each step takes as input: current frame audio features, previous frame audio features, previous frame pose matrix. It will then output a pose matrix for the current frame. The current frame's audio and pose are fed into the next step, etc.
-- After training, it should be able to take a sequence of frames and output a series of pose matrices, which can then be animated.
-
-Segments:
-- [ ] Create training data (download/process/etc.)
-- [ ] Create RNN to guess pose for current audio feature
-- [ ] Improve model to use a GAN (look at C-RNN-GAN etc.)
-- [ ] Animate resultant pose matrices for choreography
+Tasks
+- [x] Create training data (download/process/etc.)
+- [x] Create RNN to guess pose for current audio feature
+- [ ] Improve model architecture (4 layer LSTM, 1024 hidden dim)
+- [ ] Try other RNN architectures
+- [ ] Create config files for different architecture params
+- [ ] Try other loss functions/optimizers
+- [ ] Try other input audio features
+- [ ] Animate results (create standalone file to drop into VideoPose)
 
 
-Stuff to tie together to get training data:
-- Run download.py in process-video to get a bunch of videos
-- Cut them to make sure only dancing is in/1 person in the video
-- get MFCC data for all of them 
-- get poses 
-- make sure len of poses == len of mfcc per video
-
-Possible Changes:
-- Use something other than mfcc as representation of the audio
-- perhaps get multi body working with videpose
-
+## Installation
 Make sure the following environment variables for directory roots are set:
 - KAKASHI
 - VIDEOPOSE
 - DETECTRON
 
-
-need train, validation, and test set
-
-
-figure out why data is converging
-
-get good dataset
-make sure input is differentiable - done
-
-
-try removing dropout - slight improvement, tried putting back in with dropout2d for decoder
-
-possibly due to eos and sos - didn't do much, made loss a bit worse
-
-try removing padding since batch size of 1 - didn't do much, but keep this as it  makes sense
-get rid of gradient clip - didn't do much, put back in
-reverse src - doesn't do much, removed as it doesnt make sense here
-
-mseloss borke? - no
-
-try other loss function - huber
-another optimizer - sgd
-try batching - need more data first
-keep pose in flattenend form - don't think this will do anything
-
-get song length before feature extraction, then stop inference when length is reached (length * 30)
-perhaps just need more data, look into flipping
-
+## Training/Inference
+Animating results:
+```
 python3 animate.py -d custom -k kakashi -arc 3,3,3,3,3 -c checkpoint --evaluate pretrained_h36m_detectron_coco.bin --render --viz-subject 00001.mp4 --viz-action custom --viz-camera 0 --viz-video /project/dnn-motion/kakashi/Kakashi/data/test/00001/00001.mp4 --viz-output 00001.test.mp4 --viz-size 6
+```
 
-get freestyle practice videos, ask dancers your know if they can send videos preferably in mp4 format/in bulk. perhaps a thing for next semester, getting funding? if I could set parameters on the dataset it could be a lot better
+## Experiments
+- [ ] Generate entire song length choreography at a time
+- [ ] Generate a small interval of pose at a time until song is complete (5s, 10s, etc.) (last frame of output is seed for next interval)
+- [ ] Generate a frame of pose at a time until song is complete (output frame is seed for next frame)
+- [ ] Infer by generating frame by frame (total frames is 30 * song_length)
+- [ ] Flip pose data horizontally to double dataset (check how VideoPose renders)
+- [ ] Other datasets (freestyle hip-hop, kpop, etc.)
+- [ ] Find a T-pose to use as seed pose for inference
+- [ ] Use a random first frame pose as seed pose for inference
+- [ ] For intervals/frame, one video is no longer a data point but a batch
 
-seq2seq long - whole song to whole dance
-seq2seq short - subsection of song to short section of dance (configurable time interval like 5s 10s 15s etc)
-per frame - break up song into frames (30 fps) and do frame by frame training
-
-for inference, the first pose should be start of sequence. we can do all 0s or 1 or something, just to kick it off. actually, grab a pose from one of the datasets, one of the initial poses. maybe randomly select a start pose.
-for splitting audio, do split by beat first then group by time (number of groups = total length in seconds / length of interval) do numpy split
-another method is split raw data by time step
-another is by frame (do fast frame calculation)
-
-figure out how the coordinates are set for videopose and double data by flipping
-4 layers in LSTM?
-increase hidden dim size to 1024 for final runs
-create config files for the model params, yaml is good (pyyaml)
-remove sos and eos tokens, unnecessary for this
-batch size of 5 for full video, batch size of 50 for intervals. make sure sequences in batch are padded to same shape.
-nlp uses word embedding layers. how can this be generalized to non text data? we don't have discrete units like words, can it be used in regression?
-use last predicted frame of interval as seed frame for next until song is done
+## Future Work
+- Output multi-body pose
+- Other model archictecures (not sequence to sequence)
+- High quality dataset (record dancers)
+ormat/in bulk. perhaps a thing for next semester, getting funding? if I could set parameters on the dataset it could be a lot better
