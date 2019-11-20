@@ -1,13 +1,11 @@
 #!/bin/bash -l
 
 #$ -P dnn-motion
-#$ -l gpus=4
-#$ -l gpu_c=3.5
-#$ -N kakashi-generate-dataset
+#$ -N kakashi-download-videos
 #$ -m ae
 #$ -M rooday@bu.edu
 #$ -j y
-#$ -o generate-dataset.log
+#$ -o download-videos.log
 #$ -V
 
 echo "=========================================================="
@@ -18,9 +16,6 @@ echo "=========================================================="
 
 module load ffmpeg/4.2.1
 module load python3/3.7.3
-module load cuda/10.1
-module load pytorch/1.1
-module load geos/3.7.0
 
 cd $KAKASHI
-python3 tools/generate_dataset.py wod
+python3 tools/download_playlist.py wod

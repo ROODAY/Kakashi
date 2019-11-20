@@ -1,13 +1,13 @@
 #!/bin/bash -l
 
 #$ -P dnn-motion
-#$ -l gpus=4
+#$ -l gpus=1
 #$ -l gpu_c=3.5
 #$ -N kakashi-cut-videos
 #$ -m ae
 #$ -M rooday@bu.edu
 #$ -j y
-#$ -o cut-videos-output.txt
+#$ -o cut-videos.log
 #$ -V
 
 echo "=========================================================="
@@ -19,8 +19,6 @@ echo "=========================================================="
 module load ffmpeg/4.2.1
 module load python3/3.7.3
 module load cuda/10.1
-module load pytorch/1.1
-module load geos/3.7.0
 
 cd $KAKASHI
 python3 tools/cut_videos.py wod

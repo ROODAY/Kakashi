@@ -126,6 +126,7 @@ dmypy.json
 
 *.mp4
 *.pt
+*.log
 data/
 tmp_in/
 tmp_out/
