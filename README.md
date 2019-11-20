@@ -82,3 +82,4 @@ create config files for the model params, yaml is good (pyyaml)
 remove sos and eos tokens, unnecessary for this
 batch size of 5 for full video, batch size of 50 for intervals. make sure sequences in batch are padded to same shape.
 nlp uses word embedding layers. how can this be generalized to non text data? we don't have discrete units like words, can it be used in regression?
+use last predicted frame of interval as seed frame for next until song is done
