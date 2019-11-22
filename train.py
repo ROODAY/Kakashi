@@ -1,4 +1,4 @@
-from models.seq2seq import Seq2Seq
+from models.lstm import Seq2Seq
 from pathlib import Path
 import torch
 import torch.optim as optim
@@ -82,12 +82,12 @@ def main(args):
   data_dir = Path(Path.cwd(), 'data/', args.label)
 
   INPUT_FEATURE = args.input_feature
-  BATCH_SIZE = 50
-  SEQ_LEN = 100
-  TRAIN_RATIO = 0.8
-  VALID_RATIO = 0.15
-  TEST_RATIO = 0.05
-  assert (TRAIN_RATIO + VALID_RATIO + TEST_RATIO) == 1, "Data splits must add up to 1"
+  BATCH_SIZE = 10
+  SEQ_LEN = 60
+  TRAIN_RATIO = 0.7
+  VALID_RATIO = 0.2
+  TEST_RATIO = 0.1
+  
   inputs = [np.load(path) for path in sorted(list(data_dir.rglob('*.{}.npy'.format(INPUT_FEATURE))))]
   #max_inp_len = max([inp.shape[0] for inp in inputs])
   #inputs = [np.pad(inp, [(max_inp_len-len(inp), 0), (0,0)]) for inp in inputs]
@@ -95,22 +95,44 @@ def main(args):
   keypoints = [np.load(path) for path in sorted(list(data_dir.rglob('*.keypoints.npy')))]
   #max_kp_len = max([kp.shape[0] for kp in keypoints])
   #keypoints = [np.pad(kp, [(max_kp_len-len(kp), 0), (0,0), (0,0)]) for kp in keypoints]
-
+ 
   cut_inputs = []
   cut_keypoints = []
   for inp, kp in zip(inputs, keypoints):
     groups = len(inp) // SEQ_LEN
     for i in range(1, groups+1):
-      cut_inputs.extend(inp[(i-1)*SEQ_LEN:i*SEQ_LEN])
-      cut_keypoints.extend(kp[(i-1)*SEQ_LEN:i*SEQ_LEN])
+      cut_inputs.append(inp[(i-1)*SEQ_LEN:i*SEQ_LEN])
+      cut_keypoints.append(kp[(i-1)*SEQ_LEN:i*SEQ_LEN])
 
-  print(len(cut_inputs), len(cut_keypoints))
-  exit()
+  batched_inputs = []
+  batched_keypoints = []
+  batches = len(cut_inputs) // BATCH_SIZE
+  for i in range(1, batches+1):
+    batched_inputs.append(cut_inputs[(i-1)*BATCH_SIZE:i*BATCH_SIZE])
+    batched_keypoints.append(cut_keypoints[(i-1)*BATCH_SIZE:i*BATCH_SIZE])
+  
+  test_cutoff = round(batches * TEST_RATIO)
+  valid_cutoff = round(batches * VALID_RATIO) + test_cutoff
+ 
+  train_iterator = [{
+    'src': torch.tensor(batched_inputs[i]).float().to(device),
+    'trg': torch.tensor(batched_keypoints[i]).float().to(device)
+  } for i in range(valid_cutoff, batches)]
 
-  it = [{ 
+  valid_iterator = [{
+    'src': torch.tensor(batched_inputs[i]).float().to(device),
+    'trg': torch.tensor(batched_keypoints[i]).float().to(device)
+  } for i in range(test_cutoff, valid_cutoff)]
+  
+  test_iterator = [{
+    'src': torch.tensor(batched_inputs[i]).float().to(device),
+    'trg': torch.tensor(batched_keypoints[i]).float().to(device)
+  } for i in range(0, test_cutoff)]
+
+  '''it = [{ 
     'src': torch.tensor(np.append(np.insert(inp, 0, inp[:1], axis=0), inp[-1:], axis=0), requires_grad=True).float().to(device), 
     'trg': torch.tensor(np.append(np.insert(kp, 0, kp[:1], axis=0), kp[-1:], axis=0)).float().to(device)
-  } for inp, kp in zip(inputs, keypoints)]
+  } for inp, kp in zip(inputs, keypoints)]'''
 
   print('=> Initializing Model')
   INPUT_DIM = 20
