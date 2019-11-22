@@ -1,6 +1,7 @@
-from models.lstm import Seq2Seq
+from models.lstm import Encoder, Decoder, Seq2Seq
 from pathlib import Path
 import torch
+import torch.nn as nn
 import torch.optim as optim
 import numpy as np
 import random
@@ -37,7 +38,7 @@ def train(model, iterator, optimizer, criterion, clip):
     torch.nn.utils.clip_grad_norm_(model.parameters(), clip)
     optimizer.step()
     epoch_loss += loss.item()
-      
+  print(iterator)    
   return epoch_loss / len(iterator)
 
 def evaluate(model, iterator, criterion, output_dir):  
@@ -163,9 +164,9 @@ def main(args):
       start_time = time.time()
       
       print('=> Training epoch {}\n========'.format(epoch+1))
-      train_loss = train(model, it, optimizer, criterion, CLIP)
+      train_loss = train(model, train_iterator, optimizer, criterion, CLIP)
       print('\n=> Evaluating epoch {}\n========'.format(epoch+1))
-      valid_loss = evaluate(model, it, criterion, output_dir)
+      valid_loss = evaluate(model, valid_iterator, criterion, output_dir)
       
       end_time = time.time()
       
@@ -181,7 +182,7 @@ def main(args):
 
   model.load_state_dict(torch.load('{}.pt'.format(MODEL_NAME)))
   print('=> Testing model\n========')
-  test_loss = evaluate(model, it, criterion, output_dir)
+  test_loss = evaluate(model, test_iterator, criterion, output_dir)
   print(f'| Test Loss: {test_loss:.3f} | Test PPL: {math.exp(test_loss):7.3f} |')
 
 if __name__ == "__main__":

@@ -13,8 +13,9 @@ class Encoder(nn.Module):
     self.dropout = nn.Dropout(dropout)
       
   def forward(self, src):
+    #print(src.shape)
     dropped = self.dropout(src)
-    dropped = dropped.view(1, dropped.shape[0], dropped.shape[1])
+    #dropped = dropped.view(1, dropped.shape[0], dropped.shape[1])
     outputs, (hidden, cell) = self.rnn(dropped)
 
     return hidden, cell
@@ -33,6 +34,7 @@ class Decoder(nn.Module):
       
   def forward(self, input, hidden, cell):
     #input = input.unsqueeze(0)
+    print(input.shape)
     dropped = self.dropout(input)
     dropped = dropped.view(-1).view(1,1,51) 
     output, (hidden, cell) = self.rnn(dropped, (hidden, cell))
