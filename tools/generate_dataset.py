@@ -92,8 +92,8 @@ def main(args):
       interval = args.time_interval
       buckets = round(librosa.get_duration(y=audio_data, sr=sample_rate) / interval)
       grouped_audio = np.array_split(audio_data, buckets)
-    elif feature_split == 'pose':
-      print('=> Group audio data by pose')
+    elif feature_split == 'frame':
+      print('=> Group audio data by pose frame')
       pose_path = Path(audio_path.parent, '{}.keypoints.npy'.format(audio_path.stem))
       poses = np.load(pose_path)
       grouped_audio = np.array_split(audio_data, len(poses))

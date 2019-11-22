@@ -82,18 +82,30 @@ def main(args):
   data_dir = Path(Path.cwd(), 'data/', args.label)
 
   INPUT_FEATURE = args.input_feature
+  BATCH_SIZE = 50
+  SEQ_LEN = 100
+  TRAIN_RATIO = 0.8
+  VALID_RATIO = 0.15
+  TEST_RATIO = 0.05
+  assert (TRAIN_RATIO + VALID_RATIO + TEST_RATIO) == 1, "Data splits must add up to 1"
   inputs = [np.load(path) for path in sorted(list(data_dir.rglob('*.{}.npy'.format(INPUT_FEATURE))))]
-  max_inp_len = max([inp.shape[0] for inp in inputs])
+  #max_inp_len = max([inp.shape[0] for inp in inputs])
   #inputs = [np.pad(inp, [(max_inp_len-len(inp), 0), (0,0)]) for inp in inputs]
 
   keypoints = [np.load(path) for path in sorted(list(data_dir.rglob('*.keypoints.npy')))]
-  max_kp_len = max([kp.shape[0] for kp in keypoints])
+  #max_kp_len = max([kp.shape[0] for kp in keypoints])
   #keypoints = [np.pad(kp, [(max_kp_len-len(kp), 0), (0,0), (0,0)]) for kp in keypoints]
 
-  input_sos = np.full((20,), -0.01)
-  input_eos = np.full((1,20), 0.01)
-  output_sos = np.full((1, 17, 3), -0.01)
-  output_eos = np.full((1, 17, 3), 0.01)
+  cut_inputs = []
+  cut_keypoints = []
+  for inp, kp in zip(inputs, keypoints):
+    groups = len(inp) // SEQ_LEN
+    for i in range(1, groups+1):
+      cut_inputs.extend(inp[(i-1)*SEQ_LEN:i*SEQ_LEN])
+      cut_keypoints.extend(kp[(i-1)*SEQ_LEN:i*SEQ_LEN])
+
+  print(len(cut_inputs), len(cut_keypoints))
+  exit()
 
   it = [{ 
     'src': torch.tensor(np.append(np.insert(inp, 0, inp[:1], axis=0), inp[-1:], axis=0), requires_grad=True).float().to(device), 
