@@ -22,16 +22,10 @@ def train(model, iterator, optimizer, criterion, clip):
     trg = batch['trg']
     
     optimizer.zero_grad()
-   
-    print('=> Predicting output...') 
     output = model(src, trg)
     trg = trg.reshape(trg.shape[0], trg.shape[1], model.decoder.output_dim)
-
-    print('=> Calculating loss...')
     loss = criterion(output, trg)
-    print('=> Backpropagating...')
     loss.backward()
-    print('=> Clipping gradients...')
     torch.nn.utils.clip_grad_norm_(model.parameters(), clip)
     optimizer.step()
     epoch_loss += loss.item()
@@ -47,14 +41,15 @@ def evaluate(model, iterator, criterion, output_dir):
       src = batch['src']
       trg = batch['trg']
 
-      print('=> Predicting output...')
       output = model(src, trg, 0)
-      np.save(Path(output_dir, '{}.keypoints.npy'.format(str(i+1).zfill(5))), output.reshape(output.shape[0], output.shape[1], 17, 3).cpu().numpy())
       trg = trg.reshape(trg.shape[0], trg.shape[1], model.decoder.output_dim)
-
-      print('=> Calculating loss...')
       loss = criterion(output, trg)
       epoch_loss += loss.item()
+
+      filename = '{}.keypoints.npy'.format(str(i+1).zfill(5))
+      filepath = Path(output_dir, filename)
+      keypoints = torch.transpose(output.reshape(output.shape[0], output.shape[1], 17, 3), 0, 1).cpu().numpy()
+      np.save(filepath, keypoints)
       
   return epoch_loss / len(iterator)
 
@@ -64,33 +59,14 @@ def epoch_time(start_time, end_time):
   elapsed_secs = int(elapsed_time - (elapsed_mins * 60))
   return elapsed_mins, elapsed_secs
 
-def main(args):
-  if args.deterministic:
-    SEED = args.seed
-    random.seed(SEED)
-    torch.manual_seed(SEED)
-    torch.backends.cudnn.deterministic = True
-
-  device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-
-  print('=> Loading Data')
-  data_dir = Path(Path.cwd(), 'data/', args.label)
-
-  INPUT_FEATURE = args.input_feature
-  BATCH_SIZE = 10
-  SEQ_LEN = 60
-  TRAIN_RATIO = 0.7
-  VALID_RATIO = 0.2
-  TEST_RATIO = 0.1
-  
-  inputs = [np.load(path) for path in sorted(list(data_dir.rglob('*.{}.npy'.format(INPUT_FEATURE))))]
+def generate_data_splits(inputs, keypoints):
+  # for padding batches
   #max_inp_len = max([inp.shape[0] for inp in inputs])
   #inputs = [np.pad(inp, [(max_inp_len-len(inp), 0), (0,0)]) for inp in inputs]
 
-  keypoints = [np.load(path) for path in sorted(list(data_dir.rglob('*.keypoints.npy')))]
   #max_kp_len = max([kp.shape[0] for kp in keypoints])
   #keypoints = [np.pad(kp, [(max_kp_len-len(kp), 0), (0,0), (0,0)]) for kp in keypoints]
- 
+
   cut_inputs = []
   cut_keypoints = []
   for inp, kp in zip(inputs, keypoints):
@@ -124,10 +100,30 @@ def main(args):
     'trg': torch.transpose(torch.tensor(batched_keypoints[i]), 0, 1).float().to(device)
   } for i in range(0, test_cutoff)]
 
-  '''it = [{ 
-    'src': torch.tensor(np.append(np.insert(inp, 0, inp[:1], axis=0), inp[-1:], axis=0), requires_grad=True).float().to(device), 
-    'trg': torch.tensor(np.append(np.insert(kp, 0, kp[:1], axis=0), kp[-1:], axis=0)).float().to(device)
-  } for inp, kp in zip(inputs, keypoints)]'''
+  return (train_iterator, valid_iterator, test_iterator)
+
+def main(args):
+  if args.deterministic:
+    SEED = args.seed
+    random.seed(SEED)
+    torch.manual_seed(SEED)
+    torch.backends.cudnn.deterministic = True
+
+  device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+
+  print('=> Loading Data')
+  data_dir = Path(Path.cwd(), 'data/', args.label)
+
+  INPUT_FEATURE = args.input_feature
+  BATCH_SIZE = 10
+  SEQ_LEN = 60
+  TRAIN_RATIO = 0.7
+  VALID_RATIO = 0.2
+  TEST_RATIO = 0.1
+  
+  inputs = [np.load(path) for path in sorted(list(data_dir.rglob('*.{}.npy'.format(INPUT_FEATURE))))]
+  keypoints = [np.load(path) for path in sorted(list(data_dir.rglob('*.keypoints.npy')))]
+  train_iterator, valid_iterator, test_iterator = generate_data_splits(inputs, keypoints)
 
   print('=> Initializing Model')
   INPUT_DIM = 20
