@@ -48,7 +48,10 @@ def evaluate(model, iterator, criterion, output_dir):
 
       filename = '{}.keypoints.npy'.format(str(i+1).zfill(5))
       filepath = Path(output_dir, filename)
-      keypoints = torch.transpose(output.reshape(output.shape[0], output.shape[1], 17, 3), 0, 1).cpu().numpy()
+      seq_len, batch_size, _ = output.shape
+      unrolled_features = output.reshape(seq_len, batch_size, 17, 3)
+      batch_first = torch.transpose(unrolled_features, 0, 1)
+      keypoints = batch_first.reshape(batch_size * seq_len, 17, 3).cpu().numpy()
       np.save(filepath, keypoints)
       
   return epoch_loss / len(iterator)
@@ -59,7 +62,7 @@ def epoch_time(start_time, end_time):
   elapsed_secs = int(elapsed_time - (elapsed_mins * 60))
   return elapsed_mins, elapsed_secs
 
-def generate_data_splits(inputs, keypoints):
+def generate_data_splits(inputs, keypoints, device):
   BATCH_SIZE = 10
   SEQ_LEN = 60
   TRAIN_RATIO = 0.7
@@ -121,7 +124,7 @@ def main(args):
 
   inputs = [np.load(path) for path in sorted(list(data_dir.rglob('*.{}.npy'.format(args.input_feature))))]
   keypoints = [np.load(path) for path in sorted(list(data_dir.rglob('*.keypoints.npy')))]
-  train_iterator, valid_iterator, test_iterator = generate_data_splits(inputs, keypoints)
+  train_iterator, valid_iterator, test_iterator = generate_data_splits(inputs, keypoints, device)
 
   print('=> Initializing Model')
   INPUT_DIM = 20
@@ -130,7 +133,7 @@ def main(args):
   N_LAYERS = 2
   ENC_DROPOUT = 0.5
   DEC_DROPOUT = 0.5
-  MODEL_NAME = args.model_name
+  MODEL_NAME = 'kakashi-{}'.format(args.label)
 
   enc = Encoder(INPUT_DIM, HID_DIM, N_LAYERS, ENC_DROPOUT)
   dec = Decoder(OUTPUT_DIM, HID_DIM, N_LAYERS, DEC_DROPOUT)
@@ -141,7 +144,7 @@ def main(args):
   optimizer = optim.SGD(model.parameters(), lr=0.01, momentum=0.9)
   criterion = nn.SmoothL1Loss()#MSELoss()
 
-  output_dir = Path(Path.cwd(),'out')
+  output_dir = Path(Path.cwd(),'out/{}'.format(args.label))
   output_dir.mkdir(exist_ok=True)
   run_training = not args.skip_training
   if run_training:
@@ -151,9 +154,9 @@ def main(args):
     for epoch in range(N_EPOCHS):  
       start_time = time.time()
       
-      print('=> Training epoch {}\n========'.format(epoch+1))
+      print('=> Training epoch {}'.format(epoch+1))
       train_loss = train(model, train_iterator, optimizer, criterion, CLIP)
-      print('\n=> Evaluating epoch {}\n========'.format(epoch+1))
+      print('=> Evaluating epoch {}'.format(epoch+1))
       valid_loss = evaluate(model, valid_iterator, criterion, output_dir)
       
       end_time = time.time()
@@ -181,8 +184,6 @@ if __name__ == "__main__":
                       help='Train/evaluate deterministically')
   parser.add_argument('--seed', type=int, default=1234,
                       help='Seed for deterministic run')
-  parser.add_argument('--model_name', type=str, default='kakashi',
-                      help='Name for the saved model file')
   parser.add_argument('--input_feature', type=str, default='mfcc-beat',
                       help='Feature set to use for model input')
   parser.add_argument('--skip_training', action='store_true',
