@@ -59,8 +59,12 @@ def epoch_time(start_time, end_time):
   elapsed_secs = int(elapsed_time - (elapsed_mins * 60))
   return elapsed_mins, elapsed_secs
 
-def generate_data_splits(inputs, keypoints, data_params):
-  locals().update(data_params)
+def generate_data_splits(inputs, keypoints):
+  BATCH_SIZE = 10
+  SEQ_LEN = 60
+  TRAIN_RATIO = 0.7
+  VALID_RATIO = 0.2
+  TEST_RATIO = 0.1
   # for padding batches
   #max_inp_len = max([inp.shape[0] for inp in inputs])
   #inputs = [np.pad(inp, [(max_inp_len-len(inp), 0), (0,0)]) for inp in inputs]
@@ -115,18 +119,9 @@ def main(args):
   print('=> Loading Data')
   data_dir = Path(Path.cwd(), 'data/', args.label)
 
-  data_params = {
-    'INPUT_FEATURE': args.input_feature
-    'BATCH_SIZE': 10
-    'SEQ_LEN': 60
-    'TRAIN_RATIO': 0.7
-    'VALID_RATIO': 0.2
-    'TEST_RATIO': 0.1
-  }
-  
-  inputs = [np.load(path) for path in sorted(list(data_dir.rglob('*.{}.npy'.format(INPUT_FEATURE))))]
+  inputs = [np.load(path) for path in sorted(list(data_dir.rglob('*.{}.npy'.format(args.input_feature))))]
   keypoints = [np.load(path) for path in sorted(list(data_dir.rglob('*.keypoints.npy')))]
-  train_iterator, valid_iterator, test_iterator = generate_data_splits(inputs, keypoints, data_params)
+  train_iterator, valid_iterator, test_iterator = generate_data_splits(inputs, keypoints)
 
   print('=> Initializing Model')
   INPUT_DIM = 20
