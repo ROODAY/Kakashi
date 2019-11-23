@@ -48,3 +48,6 @@ python3 animate.py -d h36m -arc 3,3,3,3,3 -c checkpoint --viz-action custom --vi
 - High quality dataset (record dancers)
 ormat/in bulk. perhaps a thing for next semester, getting funding? if I could set parameters on the dataset it could be a lot better
 - If audio features exist, don't recalculate
+- Make it use a config file
+- Make it use 4 gpus for speed
+- Pad batches and seq len so data isn't lost
