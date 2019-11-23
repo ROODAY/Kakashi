@@ -25,10 +25,7 @@ def train(model, iterator, optimizer, criterion, clip):
    
     print('=> Predicting output...') 
     output = model(src, trg)
-    #output = output[1:-1]
-    output = output.reshape(output.shape[0], model.decoder.output_dim)
-    #trg = trg[1:-1]
-    trg = trg.reshape(trg.shape[0], model.decoder.output_dim)
+    trg = trg.reshape(trg.shape[0], trg.shape[1], model.decoder.output_dim)
 
     print('=> Calculating loss...')
     loss = criterion(output, trg)
@@ -38,7 +35,7 @@ def train(model, iterator, optimizer, criterion, clip):
     torch.nn.utils.clip_grad_norm_(model.parameters(), clip)
     optimizer.step()
     epoch_loss += loss.item()
-  print(iterator)    
+
   return epoch_loss / len(iterator)
 
 def evaluate(model, iterator, criterion, output_dir):  
@@ -52,11 +49,8 @@ def evaluate(model, iterator, criterion, output_dir):
 
       print('=> Predicting output...')
       output = model(src, trg, 0)
-      output = output[1:-1]
-      np.save(Path(output_dir, '{}.keypoints.npy'.format(str(i+1).zfill(5))), output.cpu().numpy())
-      output = output.reshape(output.shape[0], model.decoder.output_dim)
-      trg = trg[1:-1]
-      trg = trg.reshape(trg.shape[0], model.decoder.output_dim)
+      np.save(Path(output_dir, '{}.keypoints.npy'.format(str(i+1).zfill(5))), output.reshape(output.shape[0], output.shape[1], 17, 3).cpu().numpy())
+      trg = trg.reshape(trg.shape[0], trg.shape[1], model.decoder.output_dim)
 
       print('=> Calculating loss...')
       loss = criterion(output, trg)

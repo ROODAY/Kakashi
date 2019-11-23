@@ -33,10 +33,11 @@ class Decoder(nn.Module):
   def forward(self, input, hidden, cell):
     input = input.unsqueeze(0)
     dropped = self.dropout(input)
-    print(dropped.shape)
-    dropped = dropped.view(-1).view(1,1,51) 
+    seq_len = dropped.shape[0]
+    batch_size = dropped.shape[1]
+    dropped = dropped.view(seq_len, batch_size, 51) 
     output, (hidden, cell) = self.rnn(dropped, (hidden, cell))
-    prediction = self.out(output.squeeze(0)).reshape((17,3))
+    prediction = self.out(output.squeeze(0))#.reshape((batch_size, 17, 3))
     
     return prediction, hidden, cell
 
@@ -56,13 +57,12 @@ class Seq2Seq(nn.Module):
   def forward(self, src, trg, teacher_forcing_ratio=0.5, infer=False):
     if infer:
       assert teacher_forcing_ratio == 0, "Must be zero during inference"
-
     batch_size = trg.shape[1]
     seq_len = trg.shape[0]
     trg_feature_size = self.decoder.output_dim
     outputs = torch.zeros(seq_len, batch_size, trg_feature_size).to(self.device)
     hidden, cell = self.encoder(src)
-    input = trg[0:]
+    input = trg[0,:]
     
     for t in range(1, seq_len):
       output, hidden, cell = self.decoder(input, hidden, cell)
