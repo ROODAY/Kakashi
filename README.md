@@ -28,7 +28,7 @@ Make sure the following environment variables for directory roots are set:
 ## Training/Inference
 Animating results:
 ```
-python3 animate.py -d custom -k kakashi -arc 3,3,3,3,3 -c checkpoint --evaluate pretrained_h36m_detectron_coco.bin --render --viz-subject 00001.mp4 --viz-action custom --viz-camera 0 --viz-video /project/dnn-motion/kakashi/Kakashi/data/test/00001/00001.mp4 --viz-output 00001.test.mp4 --viz-size 6
+python3 animate.py -d custom -k kakashi -arc 3,3,3,3,3 -c checkpoint --evaluate pretrained_h36m_detectron_coco.bin --render --viz-subject 00001.mp4 --viz-action custom --viz-camera 0 --viz-video /projectnb/dnn-motion/rooday/Kakashi/data/test/00001/00001.mp4 --viz-output 00001.test.mp4 --viz-size 6
 ```
 
 ## Experiments
