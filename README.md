@@ -28,7 +28,7 @@ Make sure the following environment variables for directory roots are set:
 ## Training/Inference
 Animating results:
 ```
-python3 animate.py -d custom -k kakashi -arc 3,3,3,3,3 -c checkpoint --viz-subject 00001.mp4 --viz-action custom --viz-camera 0 --viz-output 00001.test.mp4 --viz-size 6
+python3 animate.py -d h36m -arc 3,3,3,3,3 -c checkpoint --viz-action custom --viz-camera 0 --viz-output new-test.mp4 --viz-size 6
 ```
 
 ## Experiments
@@ -47,3 +47,4 @@ python3 animate.py -d custom -k kakashi -arc 3,3,3,3,3 -c checkpoint --viz-subje
 - Other model archictecures (not sequence to sequence)
 - High quality dataset (record dancers)
 ormat/in bulk. perhaps a thing for next semester, getting funding? if I could set parameters on the dataset it could be a lot better
+- If audio features exist, don't recalculate
