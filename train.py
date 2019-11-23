@@ -1,5 +1,6 @@
 from models.lstm import Encoder, Decoder, Seq2Seq
 from pathlib import Path
+from tqdm import tqdm
 import torch
 import torch.nn as nn
 import torch.optim as optim
@@ -17,7 +18,7 @@ def train(model, iterator, optimizer, criterion, clip):
   model.train()
   
   epoch_loss = 0
-  for i, batch in enumerate(iterator):
+  for i, batch in enumerate(tqdm(iterator, desc='Training')):
     src = batch['src']
     trg = batch['trg']
     
@@ -37,7 +38,7 @@ def evaluate(model, iterator, criterion, output_dir):
   
   epoch_loss = 0
   with torch.no_grad():  
-    for i, batch in enumerate(iterator):
+    for i, batch in enumerate(tqdm(iterator, desc='Evaluating')):
       src = batch['src']
       trg = batch['trg']
 
@@ -48,7 +49,10 @@ def evaluate(model, iterator, criterion, output_dir):
 
       filename = '{}.keypoints.npy'.format(str(i+1).zfill(5))
       filepath = Path(output_dir, filename)
-      keypoints = torch.transpose(output.reshape(output.shape[0], output.shape[1], 17, 3), 0, 1).cpu().numpy()
+      seq_len, batch_size, _ = output.shape
+      unrolled_features = output.reshape(seq_len, batch_size, 17, 3)
+      batch_first = torch.transpose(unrolled_features, 0, 1)
+      keypoints = batch_first.reshape(batch_size * seq_len, 17, 3).cpu().numpy()
       np.save(filepath, keypoints)
       
   return epoch_loss / len(iterator)
@@ -59,7 +63,7 @@ def epoch_time(start_time, end_time):
   elapsed_secs = int(elapsed_time - (elapsed_mins * 60))
   return elapsed_mins, elapsed_secs
 
-def generate_data_splits(inputs, keypoints):
+def generate_data_splits(inputs, keypoints, device):
   BATCH_SIZE = 10
   SEQ_LEN = 60
   TRAIN_RATIO = 0.7
@@ -72,6 +76,7 @@ def generate_data_splits(inputs, keypoints):
   #max_kp_len = max([kp.shape[0] for kp in keypoints])
   #keypoints = [np.pad(kp, [(max_kp_len-len(kp), 0), (0,0), (0,0)]) for kp in keypoints]
 
+  print('=> Cutting data to SEQ_LEN: {}'.format(SEQ_LEN))
   cut_inputs = []
   cut_keypoints = []
   for inp, kp in zip(inputs, keypoints):
@@ -80,6 +85,7 @@ def generate_data_splits(inputs, keypoints):
       cut_inputs.append(inp[(i-1)*SEQ_LEN:i*SEQ_LEN])
       cut_keypoints.append(kp[(i-1)*SEQ_LEN:i*SEQ_LEN])
 
+  print('=> Batching cuts to BATCH_SIZE: {}'.format(BATCH_SIZE))
   batched_inputs = []
   batched_keypoints = []
   batches = len(cut_inputs) // BATCH_SIZE
@@ -90,6 +96,7 @@ def generate_data_splits(inputs, keypoints):
   test_cutoff = round(batches * TEST_RATIO)
   valid_cutoff = round(batches * VALID_RATIO) + test_cutoff
  
+  print('=> Creating iterators...')
   train_iterator = [{
     'src': torch.transpose(torch.tensor(batched_inputs[i]), 0, 1).float().to(device),
     'trg': torch.transpose(torch.tensor(batched_keypoints[i]), 0, 1).float().to(device)
@@ -119,9 +126,11 @@ def main(args):
   print('=> Loading Data')
   data_dir = Path(Path.cwd(), 'data/', args.label)
 
-  inputs = [np.load(path) for path in sorted(list(data_dir.rglob('*.{}.npy'.format(args.input_feature))))]
-  keypoints = [np.load(path) for path in sorted(list(data_dir.rglob('*.keypoints.npy')))]
-  train_iterator, valid_iterator, test_iterator = generate_data_splits(inputs, keypoints)
+  input_paths = sorted(list(data_dir.rglob('*.{}.npy'.format(args.input_feature))))
+  kp_paths = sorted(list(data_dir.rglob('*.keypoints.npy')))
+  inputs = [np.load(path) for path in tqdm(input_paths, desc='Loading inputs')]
+  keypoints = [np.load(path) for path in tqdm(kp_paths, desc='Loading keypoints')]
+  train_iterator, valid_iterator, test_iterator = generate_data_splits(inputs, keypoints, device)
 
   print('=> Initializing Model')
   INPUT_DIM = 20
@@ -130,7 +139,7 @@ def main(args):
   N_LAYERS = 2
   ENC_DROPOUT = 0.5
   DEC_DROPOUT = 0.5
-  MODEL_NAME = args.model_name
+  MODEL_NAME = 'kakashi-{}'.format(args.label)
 
   enc = Encoder(INPUT_DIM, HID_DIM, N_LAYERS, ENC_DROPOUT)
   dec = Decoder(OUTPUT_DIM, HID_DIM, N_LAYERS, DEC_DROPOUT)
@@ -141,8 +150,8 @@ def main(args):
   optimizer = optim.SGD(model.parameters(), lr=0.01, momentum=0.9)
   criterion = nn.SmoothL1Loss()#MSELoss()
 
-  output_dir = Path(Path.cwd(),'out')
-  output_dir.mkdir(exist_ok=True)
+  output_dir = Path(Path.cwd(),'out/{}'.format(args.label))
+  output_dir.mkdir(exist_ok=True, parents=True)
   run_training = not args.skip_training
   if run_training:
     N_EPOCHS = 10
@@ -151,9 +160,9 @@ def main(args):
     for epoch in range(N_EPOCHS):  
       start_time = time.time()
       
-      print('=> Training epoch {}\n========'.format(epoch+1))
+      print('=> Training epoch {}'.format(epoch+1))
       train_loss = train(model, train_iterator, optimizer, criterion, CLIP)
-      print('\n=> Evaluating epoch {}\n========'.format(epoch+1))
+      print('=> Evaluating epoch {}'.format(epoch+1))
       valid_loss = evaluate(model, valid_iterator, criterion, output_dir)
       
       end_time = time.time()
@@ -181,8 +190,6 @@ if __name__ == "__main__":
                       help='Train/evaluate deterministically')
   parser.add_argument('--seed', type=int, default=1234,
                       help='Seed for deterministic run')
-  parser.add_argument('--model_name', type=str, default='kakashi',
-                      help='Name for the saved model file')
   parser.add_argument('--input_feature', type=str, default='mfcc-beat',
                       help='Feature set to use for model input')
   parser.add_argument('--skip_training', action='store_true',
