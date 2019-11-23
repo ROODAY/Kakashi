@@ -1,5 +1,6 @@
 from models.lstm import Encoder, Decoder, Seq2Seq
 from pathlib import Path
+from tqdm import tqdm
 import torch
 import torch.nn as nn
 import torch.optim as optim
@@ -17,7 +18,7 @@ def train(model, iterator, optimizer, criterion, clip):
   model.train()
   
   epoch_loss = 0
-  for i, batch in enumerate(iterator):
+  for i, batch in enumerate(tqdm(iterator, desc='Training')):
     src = batch['src']
     trg = batch['trg']
     
@@ -37,7 +38,7 @@ def evaluate(model, iterator, criterion, output_dir):
   
   epoch_loss = 0
   with torch.no_grad():  
-    for i, batch in enumerate(iterator):
+    for i, batch in enumerate(tqdm(iterator, desc='Evaluating')):
       src = batch['src']
       trg = batch['trg']
 
@@ -75,6 +76,7 @@ def generate_data_splits(inputs, keypoints, device):
   #max_kp_len = max([kp.shape[0] for kp in keypoints])
   #keypoints = [np.pad(kp, [(max_kp_len-len(kp), 0), (0,0), (0,0)]) for kp in keypoints]
 
+  print('=> Cutting data to SEQ_LEN: {}'.format(SEQ_LEN))
   cut_inputs = []
   cut_keypoints = []
   for inp, kp in zip(inputs, keypoints):
@@ -83,6 +85,7 @@ def generate_data_splits(inputs, keypoints, device):
       cut_inputs.append(inp[(i-1)*SEQ_LEN:i*SEQ_LEN])
       cut_keypoints.append(kp[(i-1)*SEQ_LEN:i*SEQ_LEN])
 
+  print('=> Batching cuts to BATCH_SIZE: {}'.format(BATCH_SIZE))
   batched_inputs = []
   batched_keypoints = []
   batches = len(cut_inputs) // BATCH_SIZE
@@ -93,6 +96,7 @@ def generate_data_splits(inputs, keypoints, device):
   test_cutoff = round(batches * TEST_RATIO)
   valid_cutoff = round(batches * VALID_RATIO) + test_cutoff
  
+  print('=> Creating iterators...')
   train_iterator = [{
     'src': torch.transpose(torch.tensor(batched_inputs[i]), 0, 1).float().to(device),
     'trg': torch.transpose(torch.tensor(batched_keypoints[i]), 0, 1).float().to(device)
@@ -122,8 +126,10 @@ def main(args):
   print('=> Loading Data')
   data_dir = Path(Path.cwd(), 'data/', args.label)
 
-  inputs = [np.load(path) for path in sorted(list(data_dir.rglob('*.{}.npy'.format(args.input_feature))))]
-  keypoints = [np.load(path) for path in sorted(list(data_dir.rglob('*.keypoints.npy')))]
+  input_paths = sorted(list(data_dir.rglob('*.{}.npy'.format(args.input_feature))))
+  kp_paths = sorted(list(data_dir.rglob('*.keypoints.npy')))
+  inputs = [np.load(path) for path in tqdm(input_paths, desc='Loading inputs')]
+  keypoints = [np.load(path) for path in tqdm(kp_paths, desc='Loading keypoints')]
   train_iterator, valid_iterator, test_iterator = generate_data_splits(inputs, keypoints, device)
 
   print('=> Initializing Model')
@@ -145,7 +151,7 @@ def main(args):
   criterion = nn.SmoothL1Loss()#MSELoss()
 
   output_dir = Path(Path.cwd(),'out/{}'.format(args.label))
-  output_dir.mkdir(exist_ok=True)
+  output_dir.mkdir(exist_ok=True, parents=True)
   run_training = not args.skip_training
   if run_training:
     N_EPOCHS = 10
