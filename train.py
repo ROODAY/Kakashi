@@ -24,10 +24,10 @@ def train(model, iterator, optimizer, criterion, clip):
     optimizer.zero_grad()
    
     print('=> Predicting output...') 
-    output = model(src, trg, 1)
-    output = output[1:-1]
+    output = model(src, trg)
+    #output = output[1:-1]
     output = output.reshape(output.shape[0], model.decoder.output_dim)
-    trg = trg[1:-1]
+    #trg = trg[1:-1]
     trg = trg.reshape(trg.shape[0], model.decoder.output_dim)
 
     print('=> Calculating loss...')
@@ -116,18 +116,18 @@ def main(args):
   valid_cutoff = round(batches * VALID_RATIO) + test_cutoff
  
   train_iterator = [{
-    'src': torch.tensor(batched_inputs[i]).float().to(device),
-    'trg': torch.tensor(batched_keypoints[i]).float().to(device)
+    'src': torch.transpose(torch.tensor(batched_inputs[i]), 0, 1).float().to(device),
+    'trg': torch.transpose(torch.tensor(batched_keypoints[i]), 0, 1).float().to(device)
   } for i in range(valid_cutoff, batches)]
 
   valid_iterator = [{
-    'src': torch.tensor(batched_inputs[i]).float().to(device),
-    'trg': torch.tensor(batched_keypoints[i]).float().to(device)
+    'src': torch.transpose(torch.tensor(batched_inputs[i]), 0, 1).float().to(device),
+    'trg': torch.transpose(torch.tensor(batched_keypoints[i]), 0, 1).float().to(device)
   } for i in range(test_cutoff, valid_cutoff)]
   
   test_iterator = [{
-    'src': torch.tensor(batched_inputs[i]).float().to(device),
-    'trg': torch.tensor(batched_keypoints[i]).float().to(device)
+    'src': torch.transpose(torch.tensor(batched_inputs[i]), 0, 1).float().to(device),
+    'trg': torch.transpose(torch.tensor(batched_keypoints[i]), 0, 1).float().to(device)
   } for i in range(0, test_cutoff)]
 
   '''it = [{ 
