@@ -1,7 +1,10 @@
 import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
 import subprocess as sp
+import os
+import errno
 
 from common.arguments import parse_args
 from common.camera import *
@@ -116,7 +119,6 @@ def render_animation(poses, skeleton, fps, bitrate, azim, output, viewport,
         raise ValueError('Unsupported output format (only .mp4 and .gif are supported)')
     plt.close()
 
-matplotlib.use('Agg')
 args = parse_args()
 print(args)
 
@@ -129,17 +131,8 @@ except OSError as e:
 
 print('Loading dataset...')
 dataset_path = 'data/data_3d_' + args.dataset + '.npz'
-if args.dataset == 'h36m':
-    from common.h36m_dataset import Human36mDataset
-    dataset = Human36mDataset(dataset_path)
-elif args.dataset.startswith('humaneva'):
-    from common.humaneva_dataset import HumanEvaDataset
-    dataset = HumanEvaDataset(dataset_path)
-elif args.dataset.startswith('custom'):
-    from common.custom_dataset import CustomDataset
-    dataset = CustomDataset('data/data_2d_' + args.dataset + '_' + args.keypoints + '.npz')
-else:
-    raise KeyError('Invalid dataset')
+from common.h36m_dataset import Human36mDataset
+dataset = Human36mDataset(dataset_path)
 
 print('Preparing data...')
 for subject in dataset.subjects():
@@ -157,10 +150,12 @@ for subject in dataset.subjects():
 print('Rendering...')
 ground_truth = None
 print('INFO: this action is unlabeled. Ground truth will not be rendered.')
+#kp_path = input('Keypoints Path for animation: ')
 prediction = np.load('/projectnb/dnn-motion/rooday/Kakashi/out/00001.keypoints.npy')
     
 # Invert camera transformation
-cam = dataset.cameras()[args.viz_subject][args.viz_camera]
+sub = list(dataset.cameras().keys())[0]
+cam = dataset.cameras()[sub][args.viz_camera]
 # If the ground truth is not available, take the camera extrinsic params from a random subject.
 # They are almost the same, and anyway, we only need this for visualization purposes.
 for subject in dataset.cameras():
