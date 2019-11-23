@@ -24,7 +24,5 @@ module load pytorch/1.1
 module load geos/3.7.0
 
 cd $KAKASHI
-python3 tools/generate_dataset.py test --skip_detect_pose --skip_extract
+python3 tools/generate_dataset.py test --videpose_dataset_name kakashi-test
 python3 tools/generate_dataset.py test --skip_detect_pose --skip_extract --audio_feature mfcc-frame
-python3 tools/generate_dataset.py test-cut --videpose_dataset_name kakashi-test-cut
-python3 tools/generate_dataset.py test-cut --skip_detect_pose --skip_extract --audio_feature mfcc-frame
