@@ -5,23 +5,19 @@ import numpy as np
 import subprocess as sp
 import os
 import errno
+import argparse
 
-from common.arguments import parse_args
 from common.camera import *
-from common.model import *
-from common.loss import *
-from common.visualization import render_animation
 from matplotlib.animation import FuncAnimation, writers
 from mpl_toolkits.mplot3d import Axes3D
-
-import argparse
+from common.arguments import parse_args
 
 def downsample_tensor(X, factor):
     length = X.shape[0]//factor * factor
     return np.mean(X[:length].reshape(-1, factor, *X.shape[1:]), axis=1)
 
 def render_animation(poses, skeleton, fps, bitrate, azim, output, viewport,
-                     limit=-1, downsample=1, size=6, input_video_path=None, input_video_skip=0):
+                     limit=-1, downsample=1, size=6):
     plt.ioff()
     fig = plt.figure(figsize=(size*(1 + len(poses)), size))
 
@@ -109,8 +105,11 @@ def render_animation(poses, skeleton, fps, bitrate, azim, output, viewport,
         raise ValueError('Unsupported output format (only .mp4 and .gif are supported)')
     plt.close()
 
-args = parse_args()
-#print(args)
+#parser = argparse.ArgumentParser(description='Generate Animation')
+#parser.add_argument('--viz-input', type=str, metavar='PATH', help='input file path')
+#parser.add_argument('--viz-output', type=str, metavar='PATH', help='output file name (.gif or .mp4)')
+args = parse_args()#parser.parse_args()
+#assert args.viz_input is not None and args.viz_output is not None, "Input and output must be given!"
 
 try:
     # Create checkpoint directory if it does not exist
@@ -138,24 +137,19 @@ for subject in dataset.subjects():
             anim['positions_3d'] = positions_3d
 
 print('Rendering...')
-ground_truth = None
-print('INFO: this action is unlabeled. Ground truth will not be rendered.')
 kp_path = input('Keypoints Path for animation: ')
 prediction = np.load(kp_path)
     
 # Invert camera transformation
 sub = list(dataset.cameras().keys())[0]
 cam = dataset.cameras()[sub][args.viz_camera]
-# If the ground truth is not available, take the camera extrinsic params from a random subject.
-# They are almost the same, and anyway, we only need this for visualization purposes.
-for subject in dataset.cameras():
-    if 'orientation' in dataset.cameras()[subject][args.viz_camera]:
-        rot = dataset.cameras()[subject][args.viz_camera]['orientation']
-        break
+rot = np.array([0.14070565, -0.15007018, -0.7552408, 0.62232804], dtype=np.float32) # Example value taken from h36m
 prediction = camera_to_world(prediction, R=rot, t=0)
 # We don't have the trajectory, but at least we can rebase the height
 prediction[:, :, 2] -= np.min(prediction[:, :, 2])
 
 anim_output = {'Inference': prediction}
-render_animation(anim_output, dataset.skeleton(), dataset.fps(), args.viz_bitrate, cam['azimuth'], args.viz_output,
-                 limit=args.viz_limit, downsample=args.viz_downsample, size=args.viz_size, viewport=(cam['res_w'], cam['res_h']))
+x = dataset.skeleton()
+print(x)
+print(type(x))
+render_animation(anim_output, dataset.skeleton(), 24, 3000, 70.0, args.viz_output, viewport=(1000, 1002))
