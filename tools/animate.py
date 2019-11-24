@@ -14,6 +14,8 @@ from common.visualization import render_animation
 from matplotlib.animation import FuncAnimation, writers
 from mpl_toolkits.mplot3d import Axes3D
 
+import argparse
+
 def downsample_tensor(X, factor):
     length = X.shape[0]//factor * factor
     return np.mean(X[:length].reshape(-1, factor, *X.shape[1:]), axis=1)
@@ -22,18 +24,13 @@ def render_animation(poses, skeleton, fps, bitrate, azim, output, viewport,
                      limit=-1, downsample=1, size=6, input_video_path=None, input_video_skip=0):
     plt.ioff()
     fig = plt.figure(figsize=(size*(1 + len(poses)), size))
-    ax_in = fig.add_subplot(1, 1 + len(poses), 1)
-    ax_in.get_xaxis().set_visible(False)
-    ax_in.get_yaxis().set_visible(False)
-    ax_in.set_axis_off()
-    ax_in.set_title('Input')
 
     ax_3d = []
     lines_3d = []
     trajectories = []
     radius = 1.7
     for index, (title, data) in enumerate(poses.items()):
-        ax = fig.add_subplot(1, 1 + len(poses), index+2, projection='3d')
+        ax = fig.add_subplot(1, 1 + len(poses), index+1, projection='3d')
         ax.view_init(elev=15., azim=azim)
         ax.set_xlim3d([-radius/2, radius/2])
         ax.set_zlim3d([0, radius])
@@ -60,9 +57,6 @@ def render_animation(poses, skeleton, fps, bitrate, azim, output, viewport,
         fps /= downsample
 
     initialized = False
-    image = None
-    lines = []
-    points = None
     
     if limit < 1:
         limit = len(all_frames)
@@ -71,15 +65,13 @@ def render_animation(poses, skeleton, fps, bitrate, azim, output, viewport,
 
     parents = skeleton.parents()
     def update_video(i):
-        nonlocal initialized, image, lines, points
+        nonlocal initialized
 
         for n, ax in enumerate(ax_3d):
             ax.set_xlim3d([-radius/2 + trajectories[n][i, 0], radius/2 + trajectories[n][i, 0]])
             ax.set_ylim3d([-radius/2 + trajectories[n][i, 1], radius/2 + trajectories[n][i, 1]])
 
         if not initialized:
-            image = ax_in.imshow(all_frames[i], aspect='equal')
-            
             for j, j_parent in enumerate(parents):
                 if j_parent == -1:
                     continue
@@ -93,8 +85,6 @@ def render_animation(poses, skeleton, fps, bitrate, azim, output, viewport,
 
             initialized = True
         else:
-            image.set_data(all_frames[i])
-
             for j, j_parent in enumerate(parents):
                 if j_parent == -1:
                     continue
@@ -166,6 +156,6 @@ prediction = camera_to_world(prediction, R=rot, t=0)
 # We don't have the trajectory, but at least we can rebase the height
 prediction[:, :, 2] -= np.min(prediction[:, :, 2])
 
-anim_output = {'Reconstruction': prediction}
+anim_output = {'Inference': prediction}
 render_animation(anim_output, dataset.skeleton(), dataset.fps(), args.viz_bitrate, cam['azimuth'], args.viz_output,
                  limit=args.viz_limit, downsample=args.viz_downsample, size=args.viz_size, viewport=(cam['res_w'], cam['res_h']))
