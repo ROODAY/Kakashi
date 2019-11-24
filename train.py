@@ -52,7 +52,7 @@ def evaluate(model, iterator, criterion, output_dir):
       seq_len, batch_size, _ = output.shape
       unrolled_features = output.reshape(seq_len, batch_size, 17, 3)
       batch_first = torch.transpose(unrolled_features, 0, 1)
-      keypoints = batch_first.reshape(batch_size * seq_len, 17, 3).cpu().numpy()
+      keypoints = batch_first.cpu().numpy()#batch_first.reshape(batch_size * seq_len, 17, 3).cpu().numpy()
       np.save(filepath, keypoints)
       
   return epoch_loss / len(iterator)
@@ -76,10 +76,12 @@ def generate_data_splits(inputs, keypoints, device):
   #max_kp_len = max([kp.shape[0] for kp in keypoints])
   #keypoints = [np.pad(kp, [(max_kp_len-len(kp), 0), (0,0), (0,0)]) for kp in keypoints]
 
+  zipped = list(zip(inputs, keypoints))
+  np.random.shuffle(zipped)
   print('=> Cutting data to SEQ_LEN: {}'.format(SEQ_LEN))
   cut_inputs = []
   cut_keypoints = []
-  for inp, kp in zip(inputs, keypoints):
+  for inp, kp in zipped:
     groups = len(inp) // SEQ_LEN
     for i in range(1, groups+1):
       cut_inputs.append(inp[(i-1)*SEQ_LEN:i*SEQ_LEN])

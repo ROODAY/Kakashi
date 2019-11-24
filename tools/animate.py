@@ -38,7 +38,7 @@ def render_animation(poses, skeleton, fps, bitrate, azim, output, viewport,
         ax.set_xlim3d([-radius/2, radius/2])
         ax.set_zlim3d([0, radius])
         ax.set_ylim3d([-radius/2, radius/2])
-        ax.set_aspect('equal')
+        #ax.set_aspect('equal')
         ax.set_xticklabels([])
         ax.set_yticklabels([])
         ax.set_zticklabels([])
@@ -50,7 +50,7 @@ def render_animation(poses, skeleton, fps, bitrate, azim, output, viewport,
     poses = list(poses.values())
 
     # Black background
-    all_frames = np.zeros((poses['Reconstruction'].shape[0], viewport[1], viewport[0]), dtype='uint8')
+    all_frames = np.zeros((np.squeeze(np.array(poses), axis=0).shape[0], viewport[1], viewport[0]), dtype='uint8')
     
     if downsample > 1:
         all_frames = downsample_tensor(np.array(all_frames), downsample).astype('uint8')
@@ -120,7 +120,7 @@ def render_animation(poses, skeleton, fps, bitrate, azim, output, viewport,
     plt.close()
 
 args = parse_args()
-print(args)
+#print(args)
 
 try:
     # Create checkpoint directory if it does not exist
@@ -150,8 +150,8 @@ for subject in dataset.subjects():
 print('Rendering...')
 ground_truth = None
 print('INFO: this action is unlabeled. Ground truth will not be rendered.')
-#kp_path = input('Keypoints Path for animation: ')
-prediction = np.load('/projectnb/dnn-motion/rooday/Kakashi/out/00001.keypoints.npy')
+kp_path = input('Keypoints Path for animation: ')
+prediction = np.load(kp_path)
     
 # Invert camera transformation
 sub = list(dataset.cameras().keys())[0]
