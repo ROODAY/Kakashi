@@ -50,4 +50,6 @@ ormat/in bulk. perhaps a thing for next semester, getting funding? if I could se
 - If audio features exist, don't recalculate
 - Make it use a config file
 - Make it use 4 gpus for speed
-- Pad batches and seq len so data isn't lost
+- Pad batches and seq len so data isn't lost. modulo for seq len, find samples from other batches to fill up last batch
+- Finish inference and test render, try removing as many args as possible
+- Try inference, and then do by frame estimation
