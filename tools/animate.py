@@ -118,8 +118,13 @@ prediction = camera_to_world(prediction, R=rot, t=0) # Invert camera transformat
 prediction[:, :, 2] -= np.min(prediction[:, :, 2]) # We don't have the trajectory, but at least we can rebase the height
 
 anim_output = {'Inference': prediction}
+
 skeleton = Skeleton(parents=[-1,  0,  1,  2,  3,  4,  0,  6,  7,  8,  9,  0, 11, 12, 13, 14, 12,
        16, 17, 18, 19, 20, 19, 22, 12, 24, 25, 26, 27, 28, 27, 30],
        joints_left=[6, 7, 8, 9, 10, 16, 17, 18, 19, 20, 21, 22, 23],
        joints_right=[1, 2, 3, 4, 5, 24, 25, 26, 27, 28, 29, 30, 31])
+skeleton.remove_joints([4, 5, 9, 10, 11, 16, 20, 21, 22, 23, 24, 28, 29, 30, 31])
+skeleton._parents[11] = 8
+skeleton._parents[14] = 8
+
 render_animation(anim_output, skeleton, 24, 3000, 70.0, args.viz_output, viewport=(1000, 1002))
