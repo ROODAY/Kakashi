@@ -28,7 +28,7 @@ Make sure the following environment variables for directory roots are set:
 ## Training/Inference
 Animating results:
 ```
-python3 animate.py -d h36m -arc 3,3,3,3,3 -c checkpoint --viz-action custom --viz-camera 0 --viz-output new-test.mp4 --viz-size 6
+python3 animate.py --viz-input /projectnb/dnn-motion/rooday/Kakashi/out/test/0.keypoints.npy --viz-output new-test.mp4
 ```
 
 ## Experiments

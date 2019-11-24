@@ -10,7 +10,7 @@ import argparse
 from common.camera import *
 from matplotlib.animation import FuncAnimation, writers
 from mpl_toolkits.mplot3d import Axes3D
-from common.arguments import parse_args
+from common.skeleton import Skeleton
 
 def downsample_tensor(X, factor):
     length = X.shape[0]//factor * factor
@@ -105,51 +105,21 @@ def render_animation(poses, skeleton, fps, bitrate, azim, output, viewport,
         raise ValueError('Unsupported output format (only .mp4 and .gif are supported)')
     plt.close()
 
-#parser = argparse.ArgumentParser(description='Generate Animation')
-#parser.add_argument('--viz-input', type=str, metavar='PATH', help='input file path')
-#parser.add_argument('--viz-output', type=str, metavar='PATH', help='output file name (.gif or .mp4)')
-args = parse_args()#parser.parse_args()
-#assert args.viz_input is not None and args.viz_output is not None, "Input and output must be given!"
+parser = argparse.ArgumentParser(description='Generate Animation')
+parser.add_argument('--viz-input', type=str, metavar='PATH', help='input file path')
+parser.add_argument('--viz-output', type=str, metavar='PATH', help='output file name (.gif or .mp4)')
+args = parser.parse_args()
+assert args.viz_input is not None and args.viz_output is not None, "Input and output must be given!"
 
-try:
-    # Create checkpoint directory if it does not exist
-    os.makedirs(args.checkpoint)
-except OSError as e:
-    if e.errno != errno.EEXIST:
-        raise RuntimeError('Unable to create checkpoint directory:', args.checkpoint)
-
-print('Loading dataset...')
-dataset_path = 'data/data_3d_' + args.dataset + '.npz'
-from common.h36m_dataset import Human36mDataset
-dataset = Human36mDataset(dataset_path)
-
-print('Preparing data...')
-for subject in dataset.subjects():
-    for action in dataset[subject].keys():
-        anim = dataset[subject][action]
-        
-        if 'positions' in anim:
-            positions_3d = []
-            for cam in anim['cameras']:
-                pos_3d = world_to_camera(anim['positions'], R=cam['orientation'], t=cam['translation'])
-                pos_3d[:, 1:] -= pos_3d[:, :1] # Remove global offset, but keep trajectory in first position
-                positions_3d.append(pos_3d)
-            anim['positions_3d'] = positions_3d
-
-print('Rendering...')
-kp_path = input('Keypoints Path for animation: ')
-prediction = np.load(kp_path)
-    
-# Invert camera transformation
-sub = list(dataset.cameras().keys())[0]
-cam = dataset.cameras()[sub][args.viz_camera]
+print('=> Rendering...')
+prediction = np.load(args.viz_input)
 rot = np.array([0.14070565, -0.15007018, -0.7552408, 0.62232804], dtype=np.float32) # Example value taken from h36m
-prediction = camera_to_world(prediction, R=rot, t=0)
-# We don't have the trajectory, but at least we can rebase the height
-prediction[:, :, 2] -= np.min(prediction[:, :, 2])
+prediction = camera_to_world(prediction, R=rot, t=0) # Invert camera transformation
+prediction[:, :, 2] -= np.min(prediction[:, :, 2]) # We don't have the trajectory, but at least we can rebase the height
 
 anim_output = {'Inference': prediction}
-x = dataset.skeleton()
-print(x)
-print(type(x))
-render_animation(anim_output, dataset.skeleton(), 24, 3000, 70.0, args.viz_output, viewport=(1000, 1002))
+skeleton = Skeleton(parents=[-1,  0,  1,  2,  3,  4,  0,  6,  7,  8,  9,  0, 11, 12, 13, 14, 12,
+       16, 17, 18, 19, 20, 19, 22, 12, 24, 25, 26, 27, 28, 27, 30],
+       joints_left=[6, 7, 8, 9, 10, 16, 17, 18, 19, 20, 21, 22, 23],
+       joints_right=[1, 2, 3, 4, 5, 24, 25, 26, 27, 28, 29, 30, 31])
+render_animation(anim_output, skeleton, 24, 3000, 70.0, args.viz_output, viewport=(1000, 1002))
