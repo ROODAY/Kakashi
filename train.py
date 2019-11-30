@@ -185,7 +185,7 @@ def main(args):
   print(f'| Test Loss: {test_loss:.3f} | Test PPL: {math.exp(test_loss):7.3f} |')
 
 if __name__ == "__main__":
-  parser = argparse.ArgumentParser(description='Train/infer with Kakashi')
+  parser = argparse.ArgumentParser(description='Train Kakashi model')
   parser.add_argument('label', type=str,
                       help='Label for the dataset (e.x. Popping)')
   parser.add_argument('--deterministic', action='store_true',

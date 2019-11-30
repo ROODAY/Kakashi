@@ -57,8 +57,11 @@ class Seq2Seq(nn.Module):
   def forward(self, src, trg, teacher_forcing_ratio=0.5, infer=False):
     if infer:
       assert teacher_forcing_ratio == 0, "Must be zero during inference"
-    batch_size = trg.shape[1]
-    seq_len = trg.shape[0]
+      batch_size = 1
+      seq_len = src.shape[0]
+    else:
+      batch_size = trg.shape[1]
+      seq_len = trg.shape[0]
     trg_feature_size = self.decoder.output_dim
     outputs = torch.zeros(seq_len, batch_size, trg_feature_size).to(self.device)
     hidden, cell = self.encoder(src)
