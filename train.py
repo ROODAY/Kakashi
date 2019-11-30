@@ -21,6 +21,12 @@ def MSE_Diff(output, target):
   diff_loss = 1 / diff_loss if diff_loss < 1 else diff_loss
   return diff_loss + torch.mean((output - target)**2) 
 
+def MAPELoss(output, target):
+  return torch.mean((target - output) / target) * 100
+
+def RPDLoss(output, target):
+  return torch.mean((target - output) / ((torch.abs(target) + torch.abs(output)) / 2)) * 100
+
 def train(model, iterator, optimizer, criterion, clip):
   model.train()
   
