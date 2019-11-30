@@ -23,10 +23,10 @@ def MSE_Diff(output, target):
   return diff_loss + torch.mean((output - target)**2) 
 
 def MAPELoss(output, target):
-  return torch.mean(torch.abs((target - output) / target)) * 100
+  return torch.mean(torch.abs((target - output) / target))
 
 def RPDLoss(output, target):
-  return torch.mean(torch.abs(target - output) / ((torch.abs(target) + torch.abs(output)) / 2)) * 100
+  return torch.mean(torch.abs(target - output) / ((torch.abs(target) + torch.abs(output)) / 2))
 
 def train(model, iterator, optimizer, criterion, clip):
   model.train()
@@ -66,7 +66,7 @@ def evaluate(model, iterator, criterion, output_dir):
       seq_len, batch_size, _ = output.shape
       unrolled_features = output.reshape(seq_len, batch_size, 17, 3)
       batch_first = torch.transpose(unrolled_features, 0, 1)
-      keypoints = batch_first.cpu().numpy()#batch_first.reshape(batch_size * seq_len, 17, 3).cpu().numpy()
+      keypoints = batch_first.cpu().numpy()
       np.save(filepath, keypoints)
       
   return epoch_loss / len(iterator)
@@ -166,7 +166,7 @@ def main(args):
   model.apply(init_weights)
 
   optimizer = optim.SGD(model.parameters(), lr=0.01, momentum=0.9)
-  criterion = RPDLoss#MSE_Diff#nn.SmoothL1Loss()#MSELoss()
+  criterion = RPDLoss
 
   output_dir = Path(Path.cwd(),'out/{}'.format(args.label))
   if output_dir.exists():
@@ -176,6 +176,7 @@ def main(args):
   if run_training:
     N_EPOCHS = 10
     CLIP = 1
+    THRESHOLD = 0.01
     best_valid_loss = float('inf')
     for epoch in range(N_EPOCHS):  
       start_time = time.time()
@@ -196,6 +197,9 @@ def main(args):
       print(f'Epoch: {epoch+1:02} | Time: {epoch_mins}m {epoch_secs}s')
       print(f'\tTrain Loss: {train_loss:.3f} | Train PPL: {np.exp(train_loss):7.3f}')
       print(f'\t Val. Loss: {valid_loss:.3f} |  Val. PPL: {np.exp(valid_loss):7.3f}\n')
+
+      if valid_loss < THRESHOLD:
+        break
 
   model.load_state_dict(torch.load('{}.pt'.format(MODEL_NAME)))
   print('=> Testing model\n========')

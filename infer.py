@@ -4,6 +4,7 @@ import torch
 import numpy as np
 import argparse
 import librosa
+import random
 
 def main(args):
   device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -31,6 +32,10 @@ def main(args):
   features = features.reshape(features.shape[0], 1, features.shape[1])
   inp = torch.tensor(features).float().to(device)
 
+  print('=> Selecting Seed Pose')
+  all_poses = list(Path(Path.cwd(), 'data/{}'.format(args.seed_label)).rglob('*.keypoints.npy'))
+  seed_pose = np.load(random.choice(all_poses))[:1]
+
   with torch.no_grad():
     print('=> Running Model')
     output = model(inp, None, 0, True)
@@ -50,5 +55,7 @@ if __name__ == "__main__":
                       help='Path of model file to use')
   parser.add_argument('input_path', type=str,
                       help='Path of input file to use')
+  parser.add_argument('--seed_label', type=str, default='wod',
+                      help='Dataset label to grab seed frame from')
   args = parser.parse_args()
   main(args)

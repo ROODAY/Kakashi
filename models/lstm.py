@@ -54,13 +54,13 @@ class Seq2Seq(nn.Module):
     assert encoder.n_layers == decoder.n_layers, \
       "Encoder and decoder must have equal number of layers!"
       
-  def forward(self, src, trg, teacher_forcing_ratio=0.5, infer=False):
+  def forward(self, src, trg, teacher_forcing_ratio=0.5, infer=False, seed_pose=torch.zeros(1, 17, 3)):
     trg_feature_size = self.decoder.output_dim
     if infer:
       assert teacher_forcing_ratio == 0, "Must be zero during inference"
       batch_size = 1
       seq_len = src.shape[0]
-      input = torch.zeros(1, 17, 3).to(self.device)
+      input = seed_pose.to(self.device)
     else:
       batch_size = trg.shape[1]
       seq_len = trg.shape[0]
