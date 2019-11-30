@@ -9,6 +9,7 @@ import random
 import math
 import time
 import argparse
+import shutil
 
 def init_weights(m):
   for name, param in m.named_parameters():
@@ -22,10 +23,10 @@ def MSE_Diff(output, target):
   return diff_loss + torch.mean((output - target)**2) 
 
 def MAPELoss(output, target):
-  return torch.mean((target - output) / target) * 100
+  return torch.mean(torch.abs((target - output) / target)) * 100
 
 def RPDLoss(output, target):
-  return torch.mean((target - output) / ((torch.abs(target) + torch.abs(output)) / 2)) * 100
+  return torch.mean(torch.abs(target - output) / ((torch.abs(target) + torch.abs(output)) / 2)) * 100
 
 def train(model, iterator, optimizer, criterion, clip):
   model.train()
@@ -78,7 +79,7 @@ def epoch_time(start_time, end_time):
 
 def generate_data_splits(inputs, keypoints, device):
   BATCH_SIZE = 10
-  SEQ_LEN = 60
+  SEQ_LEN = 720
   TRAIN_RATIO = 0.7
   VALID_RATIO = 0.2
   TEST_RATIO = 0.1
@@ -163,9 +164,11 @@ def main(args):
   model.apply(init_weights)
 
   optimizer = optim.SGD(model.parameters(), lr=0.01, momentum=0.9)
-  criterion = MSE_Diff#nn.SmoothL1Loss()#MSELoss()
+  criterion = MAPELoss#MSE_Diff#nn.SmoothL1Loss()#MSELoss()
 
   output_dir = Path(Path.cwd(),'out/{}'.format(args.label))
+  if output_dir.exists():
+    shutil.rmtree(output_dir)
   output_dir.mkdir(exist_ok=True, parents=True)
   run_training = not args.skip_training
   if run_training:
@@ -189,13 +192,13 @@ def main(args):
         torch.save(model.state_dict(), '{}.pt'.format(MODEL_NAME))
       
       print(f'Epoch: {epoch+1:02} | Time: {epoch_mins}m {epoch_secs}s')
-      print(f'\tTrain Loss: {train_loss:.3f} | Train PPL: {math.exp(train_loss):7.3f}')
-      print(f'\t Val. Loss: {valid_loss:.3f} |  Val. PPL: {math.exp(valid_loss):7.3f}\n')
+      print(f'\tTrain Loss: {train_loss:.3f} | Train PPL: {np.exp(train_loss):7.3f}')
+      print(f'\t Val. Loss: {valid_loss:.3f} |  Val. PPL: {np.exp(valid_loss):7.3f}\n')
 
   model.load_state_dict(torch.load('{}.pt'.format(MODEL_NAME)))
   print('=> Testing model\n========')
   test_loss = evaluate(model, test_iterator, criterion, output_dir)
-  print(f'| Test Loss: {test_loss:.3f} | Test PPL: {math.exp(test_loss):7.3f} |')
+  print(f'| Test Loss: {test_loss:.3f} | Test PPL: {np.exp(test_loss):7.3f} |')
 
 if __name__ == "__main__":
   parser = argparse.ArgumentParser(description='Train Kakashi model')
