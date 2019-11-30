@@ -14,6 +14,11 @@ def init_weights(m):
   for name, param in m.named_parameters():
     nn.init.uniform_(param.data, -0.08, 0.08)
 
+def MSE_Diff(output, target):
+  output_diff = output[1:] - output[:-1]
+  target_diff = target[1:] - target[:-1]
+  return = torch.mean((output_diff - target_diff)**2)
+
 def train(model, iterator, optimizer, criterion, clip):
   model.train()
   
@@ -150,7 +155,7 @@ def main(args):
   model.apply(init_weights)
 
   optimizer = optim.SGD(model.parameters(), lr=0.01, momentum=0.9)
-  criterion = nn.SmoothL1Loss()#MSELoss()
+  criterion = MSE_Diff#nn.SmoothL1Loss()#MSELoss()
 
   output_dir = Path(Path.cwd(),'out/{}'.format(args.label))
   output_dir.mkdir(exist_ok=True, parents=True)
