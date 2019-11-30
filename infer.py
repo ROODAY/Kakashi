@@ -43,7 +43,7 @@ def main(args):
     output = None
     for inp in inps:
       out = model(inp, None, 0, True, seed_pose)
-      if output:
+      if torch.is_tensor(output):
         output = torch.cat((output, out), 0)
       else:
         output = out
