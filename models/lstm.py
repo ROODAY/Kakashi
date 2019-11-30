@@ -55,17 +55,18 @@ class Seq2Seq(nn.Module):
       "Encoder and decoder must have equal number of layers!"
       
   def forward(self, src, trg, teacher_forcing_ratio=0.5, infer=False):
+    trg_feature_size = self.decoder.output_dim
     if infer:
       assert teacher_forcing_ratio == 0, "Must be zero during inference"
       batch_size = 1
       seq_len = src.shape[0]
+      input = torch.zeros(1, 17, 3).to(self.device)
     else:
       batch_size = trg.shape[1]
       seq_len = trg.shape[0]
-    trg_feature_size = self.decoder.output_dim
+      input = trg[0,:]
     outputs = torch.zeros(seq_len, batch_size, trg_feature_size).to(self.device)
     hidden, cell = self.encoder(src)
-    input = trg[0,:]
     
     for t in range(1, seq_len):
       output, hidden, cell = self.decoder(input, hidden, cell)
