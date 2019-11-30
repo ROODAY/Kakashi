@@ -16,6 +16,8 @@ def main(args):
   N_LAYERS = 2
   ENC_DROPOUT = 0.5
   DEC_DROPOUT = 0.5
+  FRAME_RATE = 24
+  SEQ_LEN = 72
 
   enc = Encoder(INPUT_DIM, HID_DIM, N_LAYERS, ENC_DROPOUT)
   dec = Decoder(OUTPUT_DIM, HID_DIM, N_LAYERS, DEC_DROPOUT)
@@ -26,11 +28,11 @@ def main(args):
   print('=> Processing Input')
   input_path = Path(args.input_path)
   audio_data, sample_rate = librosa.load(input_path, res_type='kaiser_fast')
-  frames = round(librosa.get_duration(y=audio_data, sr=sample_rate) * 24)
+  frames = round(librosa.get_duration(y=audio_data, sr=sample_rate) * FRAME_RATE)
   grouped_audio = np.array_split(audio_data, frames)
-  features = np.array([np.mean(librosa.feature.mfcc(y=group).T,axis=0) for group in grouped_audio])
-  features = features.reshape(features.shape[0], 1, features.shape[1])
-  inp = torch.tensor(features).float().to(device)
+  features = [np.mean(librosa.feature.mfcc(y=group).T,axis=0) for group in grouped_audio]
+  seq_split = np.array_split(features, frames / SEQ_LEN)
+  inps = [torch.tensor(features.reshape(features.shape[0], 1, features.shape[1])).float().to(device) for features in seq_split]
 
   print('=> Selecting Seed Pose')
   all_poses = list(Path(Path.cwd(), 'data/{}'.format(args.seed_label)).rglob('*.keypoints.npy'))
@@ -38,8 +40,15 @@ def main(args):
 
   with torch.no_grad():
     print('=> Running Model')
-    
-    output = model(inp, None, 0, True, seed_pose)
+    output = None
+    for inp in inps:
+      out = model(inp, None, 0, True, seed_pose)
+      if output:
+        output = torch.cat((output, out), 0)
+      else:
+        output = out
+      seed_pose = output[-1:]
+
     output_dir = Path(Path.cwd(), 'out/infer')
     output_dir.mkdir(exist_ok=True, parents=True)
     output_path = Path(output_dir, '{}.keypoints.npy'.format(input_path.stem))
