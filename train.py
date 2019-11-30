@@ -17,7 +17,9 @@ def init_weights(m):
 def MSE_Diff(output, target):
   output_diff = output[1:] - output[:-1]
   target_diff = target[1:] - target[:-1]
-  return = torch.mean((output_diff - target_diff)**2)
+  diff_loss = torch.mean((output_diff - target_diff)**2)
+  diff_loss = 1 / diff_loss if diff_loss < 1 else diff_loss
+  return diff_loss + torch.mean((output - target)**2) 
 
 def train(model, iterator, optimizer, criterion, clip):
   model.train()
