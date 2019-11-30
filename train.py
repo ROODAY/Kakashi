@@ -137,7 +137,7 @@ def main(args):
     torch.manual_seed(SEED)
     torch.backends.cudnn.deterministic = True
 
-  device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+  device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 
   print('=> Loading Data')
   data_dir = Path(Path.cwd(), 'data/', args.label)
@@ -159,8 +159,10 @@ def main(args):
 
   enc = Encoder(INPUT_DIM, HID_DIM, N_LAYERS, ENC_DROPOUT)
   dec = Decoder(OUTPUT_DIM, HID_DIM, N_LAYERS, DEC_DROPOUT)
-  model = Seq2Seq(enc, dec, device).to(device)
-          
+  model = Seq2Seq(enc, dec, device)
+  if torch.cuda.device_count() > 1:
+    model = nn.DataParallel(model)
+  model.to(device)
   model.apply(init_weights)
 
   optimizer = optim.SGD(model.parameters(), lr=0.01, momentum=0.9)
