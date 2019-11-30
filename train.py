@@ -15,13 +15,6 @@ def init_weights(m):
   for name, param in m.named_parameters():
     nn.init.uniform_(param.data, -0.08, 0.08)
 
-def MSE_Diff(output, target):
-  output_diff = output[1:] - output[:-1]
-  target_diff = target[1:] - target[:-1]
-  diff_loss = torch.mean((output_diff - target_diff)**2)
-  diff_loss = 1 / diff_loss if diff_loss < 1 else diff_loss
-  return diff_loss + torch.mean((output - target)**2) 
-
 def MAPELoss(output, target):
   return torch.mean(torch.abs((target - output) / target))
 
@@ -39,6 +32,8 @@ def train(model, iterator, optimizer, criterion, clip):
     optimizer.zero_grad()
     output = model(src, trg)
     trg = trg.reshape(trg.shape[0], trg.shape[1], model.decoder.output_dim)
+    output_diff = output[1:] - output[:-1]
+    target_diff = trg[1:] - trg[:-1]
     loss = criterion(output, trg)
     loss.backward()
     torch.nn.utils.clip_grad_norm_(model.parameters(), clip)
@@ -79,7 +74,7 @@ def epoch_time(start_time, end_time):
 
 def generate_data_splits(inputs, keypoints, device):
   BATCH_SIZE = 10
-  SEQ_LEN = 720
+  SEQ_LEN = 72
   TRAIN_RATIO = 0.7
   VALID_RATIO = 0.2
   TEST_RATIO = 0.1
@@ -174,7 +169,7 @@ def main(args):
   output_dir.mkdir(exist_ok=True, parents=True)
   run_training = not args.skip_training
   if run_training:
-    N_EPOCHS = 10
+    N_EPOCHS = 100
     CLIP = 1
     THRESHOLD = 0.01
     best_valid_loss = float('inf')
@@ -214,7 +209,7 @@ if __name__ == "__main__":
                       help='Train/evaluate deterministically')
   parser.add_argument('--seed', type=int, default=1234,
                       help='Seed for deterministic run')
-  parser.add_argument('--input_feature', type=str, default='mfcc-beat',
+  parser.add_argument('--input_feature', type=str, default='mfcc-frame',
                       help='Feature set to use for model input')
   parser.add_argument('--skip_training', action='store_true',
                       help='Skip training phase')

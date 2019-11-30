@@ -34,11 +34,12 @@ def main(args):
 
   print('=> Selecting Seed Pose')
   all_poses = list(Path(Path.cwd(), 'data/{}'.format(args.seed_label)).rglob('*.keypoints.npy'))
-  seed_pose = np.load(random.choice(all_poses))[:1]
+  seed_pose = torch.tensor(np.load(random.choice(all_poses))[:1])
 
   with torch.no_grad():
     print('=> Running Model')
-    output = model(inp, None, 0, True)
+    
+    output = model(inp, None, 0, True, seed_pose)
     output_dir = Path(Path.cwd(), 'out/infer')
     output_dir.mkdir(exist_ok=True, parents=True)
     output_path = Path(output_dir, '{}.keypoints.npy'.format(input_path.stem))
