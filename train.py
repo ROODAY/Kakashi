@@ -186,12 +186,15 @@ def main(args):
       
       print(f'Epoch: {epoch+1:02} | Time: {epoch_mins}m {epoch_secs}s')
       print(f'\tTrain Loss: {train_loss:.3f} | Train PPL: {np.exp(train_loss):7.3f}')
-      print(f'\t Val. Loss: {valid_loss:.3f} |  Val. PPL: {np.exp(valid_loss):7.3f}\n')
-
       if valid_loss < best_valid_loss:
+        print(f'\tVal. Loss: {valid_loss:.3f} |  Val. PPL: {np.exp(valid_loss):7.3f}')
         print(f'\t New Best Val. Loss\n')
         best_valid_loss = valid_loss
         torch.save(model.state_dict(), '{}.pt'.format(MODEL_NAME))
+      else:
+        print(f'\tVal. Loss: {valid_loss:.3f} |  Val. PPL: {np.exp(valid_loss):7.3f}\n')
+
+      
 
       if valid_loss < THRESHOLD:
         break
