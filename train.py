@@ -15,6 +15,15 @@ def init_weights(m):
   for name, param in m.named_parameters():
     nn.init.uniform_(param.data, -0.08, 0.08)
 
+def TestLoss(output, target):
+  print('pre cut', output)
+  output = output[1:] - output[:-1]
+  print('post cut', output)
+  if torch.isnan(output).any():
+    exit()
+  target = target[1:] - target[:-1]
+  return torch.mean(torch.abs((target - output) / target))
+
 def MAPELoss(output, target):
   return torch.mean(torch.abs((target - output) / target))
 
@@ -32,8 +41,6 @@ def train(model, iterator, optimizer, criterion, clip, hide_tqdm=False):
     optimizer.zero_grad()
     output = model(src, trg)
     trg = trg.reshape(trg.shape[0], trg.shape[1], model.decoder.output_dim)
-    output_diff = output[1:] - output[:-1]
-    target_diff = trg[1:] - trg[:-1]
     loss = criterion(output, trg)
     loss.backward()
     torch.nn.utils.clip_grad_norm_(model.parameters(), clip)
@@ -161,7 +168,7 @@ def main(args):
   model.apply(init_weights)
 
   optimizer = optim.SGD(model.parameters(), lr=0.01, momentum=0.9)
-  criterion = RPDLoss
+  criterion = TestLoss
 
   output_dir = Path(Path.cwd(),'out/{}'.format(args.label))
   if output_dir.exists():
@@ -169,7 +176,7 @@ def main(args):
   output_dir.mkdir(exist_ok=True, parents=True)
   run_training = not args.skip_training
   if run_training:
-    N_EPOCHS = 100
+    N_EPOCHS = 10
     CLIP = 1
     THRESHOLD = 0.01
     best_valid_loss = float('inf')
