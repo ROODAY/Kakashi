@@ -75,6 +75,8 @@ def main(args):
     subprocess.call(command, shell=True)
     tmp_path.replace(video_path)
 
+    print('=> Final output stored at {}'.format(video_path))
+
 if __name__ == "__main__":
   parser = argparse.ArgumentParser(description='Infer choreography from audio file')
   parser.add_argument('model_path', type=str,
