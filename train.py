@@ -21,11 +21,11 @@ def MAPELoss(output, target):
 def RPDLoss(output, target):
   return torch.mean(torch.abs(target - output) / ((torch.abs(target) + torch.abs(output)) / 2))
 
-def train(model, iterator, optimizer, criterion, clip):
+def train(model, iterator, optimizer, criterion, clip, hide_tqdm=False):
   model.train()
   
   epoch_loss = 0
-  for i, batch in enumerate(tqdm(iterator, desc='Training')):
+  for i, batch in enumerate(tqdm(iterator, desc='Training', disable=hide_tqdm)):
     src = batch['src']
     trg = batch['trg']
     
@@ -42,12 +42,12 @@ def train(model, iterator, optimizer, criterion, clip):
 
   return epoch_loss / len(iterator)
 
-def evaluate(model, iterator, criterion, output_dir):  
+def evaluate(model, iterator, criterion, output_dir, hide_tqdm=False):  
   model.eval()
   
   epoch_loss = 0
   with torch.no_grad():  
-    for i, batch in enumerate(tqdm(iterator, desc='Evaluating')):
+    for i, batch in enumerate(tqdm(iterator, desc='Evaluating', disable=hide_tqdm)):
       src = batch['src']
       trg = batch['trg']
 
@@ -72,7 +72,7 @@ def epoch_time(start_time, end_time):
   elapsed_secs = int(elapsed_time - (elapsed_mins * 60))
   return elapsed_mins, elapsed_secs
 
-def generate_data_splits(inputs, keypoints, device):
+def generate_data_splits(inputs, keypoints, device, hide_tqdm=False):
   BATCH_SIZE = 10
   SEQ_LEN = 72
   TRAIN_RATIO = 0.7
@@ -111,17 +111,17 @@ def generate_data_splits(inputs, keypoints, device):
   train_iterator = [{
     'src': torch.transpose(torch.tensor(batched_inputs[i]), 0, 1).float().to(device),
     'trg': torch.transpose(torch.tensor(batched_keypoints[i]), 0, 1).float().to(device)
-  } for i in range(valid_cutoff, batches)]
+  } for i in tqdm(range(valid_cutoff, batches), desc='Training Iterators', disable=hide_tqdm)]
 
   valid_iterator = [{
     'src': torch.transpose(torch.tensor(batched_inputs[i]), 0, 1).float().to(device),
     'trg': torch.transpose(torch.tensor(batched_keypoints[i]), 0, 1).float().to(device)
-  } for i in range(test_cutoff, valid_cutoff)]
+  } for i in tqdm(range(test_cutoff, valid_cutoff), desc='Validation Iterators', disable=hide_tqdm)]
   
   test_iterator = [{
     'src': torch.transpose(torch.tensor(batched_inputs[i]), 0, 1).float().to(device),
     'trg': torch.transpose(torch.tensor(batched_keypoints[i]), 0, 1).float().to(device)
-  } for i in range(0, test_cutoff)]
+  } for i in tqdm(range(0, test_cutoff), desc='Testing Iterators', disable=hide_tqdm)]
 
   return (train_iterator, valid_iterator, test_iterator)
 
@@ -141,7 +141,7 @@ def main(args):
   kp_paths = sorted(list(data_dir.rglob('*.keypoints.npy')))
   inputs = [np.load(path) for path in tqdm(input_paths, desc='Loading inputs')]
   keypoints = [np.load(path) for path in tqdm(kp_paths, desc='Loading keypoints')]
-  train_iterator, valid_iterator, test_iterator = generate_data_splits(inputs, keypoints, device)
+  train_iterator, valid_iterator, test_iterator = generate_data_splits(inputs, keypoints, device, args.hide_tqdm)
 
   print('=> Initializing Model')
   INPUT_DIM = 20
@@ -177,28 +177,28 @@ def main(args):
       start_time = time.time()
       
       print('=> Training epoch {}'.format(epoch+1))
-      train_loss = train(model, train_iterator, optimizer, criterion, CLIP)
+      train_loss = train(model, train_iterator, optimizer, criterion, CLIP, args.hide_tqdm)
       print('=> Evaluating epoch {}'.format(epoch+1))
-      valid_loss = evaluate(model, valid_iterator, criterion, output_dir)
+      valid_loss = evaluate(model, valid_iterator, criterion, output_dir, args.hide_tqdm)
       
       end_time = time.time()
-      
       epoch_mins, epoch_secs = epoch_time(start_time, end_time)
-      
-      if valid_loss < best_valid_loss:
-        best_valid_loss = valid_loss
-        torch.save(model.state_dict(), '{}.pt'.format(MODEL_NAME))
       
       print(f'Epoch: {epoch+1:02} | Time: {epoch_mins}m {epoch_secs}s')
       print(f'\tTrain Loss: {train_loss:.3f} | Train PPL: {np.exp(train_loss):7.3f}')
       print(f'\t Val. Loss: {valid_loss:.3f} |  Val. PPL: {np.exp(valid_loss):7.3f}\n')
+
+      if valid_loss < best_valid_loss:
+        print(f'\t New Best Val. Loss\n')
+        best_valid_loss = valid_loss
+        torch.save(model.state_dict(), '{}.pt'.format(MODEL_NAME))
 
       if valid_loss < THRESHOLD:
         break
 
   model.load_state_dict(torch.load('{}.pt'.format(MODEL_NAME)))
   print('=> Testing model\n========')
-  test_loss = evaluate(model, test_iterator, criterion, output_dir)
+  test_loss = evaluate(model, test_iterator, criterion, output_dir, args.hide_tqdm)
   print(f'| Test Loss: {test_loss:.3f} | Test PPL: {np.exp(test_loss):7.3f} |')
 
 if __name__ == "__main__":
@@ -213,5 +213,7 @@ if __name__ == "__main__":
                       help='Feature set to use for model input')
   parser.add_argument('--skip_training', action='store_true',
                       help='Skip training phase')
+  parser.add_argument('--hide_tqdm', action='store_true',
+                      help='Hide tqdm output')
   args = parser.parse_args()
   main(args)
