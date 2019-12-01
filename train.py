@@ -139,8 +139,8 @@ def main(args):
 
   input_paths = sorted(list(data_dir.rglob('*.{}.npy'.format(args.input_feature))))
   kp_paths = sorted(list(data_dir.rglob('*.keypoints.npy')))
-  inputs = [np.load(path) for path in tqdm(input_paths, desc='Loading inputs')]
-  keypoints = [np.load(path) for path in tqdm(kp_paths, desc='Loading keypoints')]
+  inputs = [np.load(path) for path in tqdm(input_paths, desc='Loading inputs', disable=args.hide_tqdm)]
+  keypoints = [np.load(path) for path in tqdm(kp_paths, desc='Loading keypoints', disable=args.hide_tqdm)]
   train_iterator, valid_iterator, test_iterator = generate_data_splits(inputs, keypoints, device, args.hide_tqdm)
 
   print('=> Initializing Model')
