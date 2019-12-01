@@ -1,6 +1,7 @@
 from models.lstm import Encoder, Decoder, Seq2Seq
 from pathlib import Path
 from tqdm import tqdm
+from torch import autograd
 import torch
 import torch.nn as nn
 import torch.optim as optim
@@ -15,19 +16,20 @@ def init_weights(m):
   for name, param in m.named_parameters():
     nn.init.uniform_(param.data, -0.08, 0.08)
 
-def TestLoss(output, target):
-  print('pre cut', output)
-  output = output[1:] - output[:-1]
-  print('post cut', output)
-  if torch.isnan(output).any():
-    exit()
-  target = target[1:] - target[:-1]
-  return torch.mean(torch.abs((target - output) / target))
-
 def MAPELoss(output, target):
   return torch.mean(torch.abs((target - output) / target))
 
 def RPDLoss(output, target):
+  return torch.mean(torch.abs(target - output) / ((torch.abs(target) + torch.abs(output)) / 2))
+
+def MAPELoss_Diff(output, target):
+  output = output[1:] - output[:-1]
+  target = target[1:] - target[:-1]
+  return torch.mean(torch.abs((target - output) / target))
+
+def RPDLoss_Diff(output, target):
+  output = output[1:] - output[:-1]
+  target = target[1:] - target[:-1]
   return torch.mean(torch.abs(target - output) / ((torch.abs(target) + torch.abs(output)) / 2))
 
 def train(model, iterator, optimizer, criterion, clip, hide_tqdm=False):
@@ -35,17 +37,18 @@ def train(model, iterator, optimizer, criterion, clip, hide_tqdm=False):
   
   epoch_loss = 0
   for i, batch in enumerate(tqdm(iterator, desc='Training', disable=hide_tqdm)):
-    src = batch['src']
-    trg = batch['trg']
-    
-    optimizer.zero_grad()
-    output = model(src, trg)
-    trg = trg.reshape(trg.shape[0], trg.shape[1], model.decoder.output_dim)
-    loss = criterion(output, trg)
-    loss.backward()
-    torch.nn.utils.clip_grad_norm_(model.parameters(), clip)
-    optimizer.step()
-    epoch_loss += loss.item()
+    with autograd.detect_anomaly():
+      src = batch['src']
+      trg = batch['trg']
+      
+      optimizer.zero_grad()
+      output = model(src, trg)
+      target = trg.reshape(trg.shape[0], trg.shape[1], model.decoder.output_dim)
+      loss = criterion(output, target)
+      loss.backward()
+      torch.nn.utils.clip_grad_norm_(model.parameters(), clip)
+      optimizer.step()
+      epoch_loss += loss.item()
 
   return epoch_loss / len(iterator)
 
@@ -59,8 +62,8 @@ def evaluate(model, iterator, criterion, output_dir, hide_tqdm=False):
       trg = batch['trg']
 
       output = model(src, trg, 0)
-      trg = trg.reshape(trg.shape[0], trg.shape[1], model.decoder.output_dim)
-      loss = criterion(output, trg)
+      target = trg.reshape(trg.shape[0], trg.shape[1], model.decoder.output_dim)
+      loss = criterion(output, target)
       epoch_loss += loss.item()
 
       filename = '{}.keypoints.npy'.format(str(i+1).zfill(5))
@@ -168,7 +171,7 @@ def main(args):
   model.apply(init_weights)
 
   optimizer = optim.SGD(model.parameters(), lr=0.01, momentum=0.9)
-  criterion = TestLoss
+  criterion = RPDLoss_Diff
 
   output_dir = Path(Path.cwd(),'out/{}'.format(args.label))
   if output_dir.exists():
