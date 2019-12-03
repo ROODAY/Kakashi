@@ -75,9 +75,7 @@ def evaluate(model, iterator, criterion, output_dir, hide_tqdm=False):
 
       filename = '{}.keypoints.npy'.format(str(i+1).zfill(5))
       filepath = Path(output_dir, filename)
-      seq_len, batch_size, _ = output.shape
-      unrolled_features = output.reshape(seq_len, batch_size, 17, 3)
-      batch_first = torch.transpose(unrolled_features, 0, 1)
+      batch_first = torch.transpose(output, 0, 1)
       keypoints = batch_first.cpu().numpy()
       np.save(filepath, keypoints)
       
