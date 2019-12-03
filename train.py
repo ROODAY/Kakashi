@@ -95,25 +95,21 @@ def generate_data_splits(inputs, keypoints, device, hide_tqdm=False):
   TRAIN_RATIO = 0.7
   VALID_RATIO = 0.2
   TEST_RATIO = 0.1
-  # for padding batches
-  #max_inp_len = max([inp.shape[0] for inp in inputs])
-  #inputs = [np.pad(inp, [(max_inp_len-len(inp), 0), (0,0)]) for inp in inputs]
 
-  #max_kp_len = max([kp.shape[0] for kp in keypoints])
-  #keypoints = [np.pad(kp, [(max_kp_len-len(kp), 0), (0,0), (0,0)]) for kp in keypoints]
-
-  zipped = list(zip(inputs, keypoints))
-  np.random.shuffle(zipped)
   print('=> Cutting data to SEQ_LEN: {}'.format(SEQ_LEN))
   cut_inputs = []
   cut_keypoints = []
-  for inp, kp in zipped:
+  for inp, kp in zip(inputs, keypoints):
     groups = len(inp) // SEQ_LEN
     for i in range(1, groups+1):
       cut_inputs.append(inp[(i-1)*SEQ_LEN:i*SEQ_LEN])
       cut_keypoints.append(kp[(i-1)*SEQ_LEN:i*SEQ_LEN])
 
   print('=> Batching cuts to BATCH_SIZE: {}'.format(BATCH_SIZE))
+  zipped = list(zip(cut_inputs, cut_keypoints))
+  np.random.shuffle(zipped)
+  cut_inputs, cut_keypoints = zip(*zipped)
+
   batched_inputs = []
   batched_keypoints = []
   batches = len(cut_inputs) // BATCH_SIZE
