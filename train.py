@@ -32,6 +32,17 @@ def RPDLoss_Diff(output, target):
   target = target[1:] - target[:-1]
   return torch.mean(torch.abs(target - output) / ((torch.abs(target) + torch.abs(output)) / 2))
 
+def Euclidean_Distance(output, target):
+  loss = 0
+  seq_len, batch_size, num_coords, _ = output.shape
+  for i in range(seq_len):
+    for j in range(batch_size):
+      for k in range(num_coords):
+        x_o, y_o, z_o = output[i][j][k]
+        x_t, y_t, z_t = target[i][j][k]
+        loss += torch.sqrt((x_t - x_o)**2 + (y_t - y_o)**2 + (z_t - z_o)**2)
+  return loss
+
 def train(model, iterator, optimizer, criterion, clip, hide_tqdm=False):
   model.train()
   
@@ -43,9 +54,10 @@ def train(model, iterator, optimizer, criterion, clip, hide_tqdm=False):
       
     optimizer.zero_grad()
     output = model(src, trg)
-    target = trg.reshape(trg.shape[0], trg.shape[1], model.decoder.output_dim)
-    #loss = criterion(output, target)
-    loss = RPDLoss(output, target) + RPDLoss_Diff(output, target)
+    output = output.reshape(trg.shape[0], trg.shape[1], 17, 3)
+    #target = trg.reshape(trg.shape[0], trg.shape[1], model.decoder.output_dim)
+    loss = criterion(output, target)
+    #loss = RPDLoss(output, target) + RPDLoss_Diff(output, target)
     loss.backward()
     torch.nn.utils.clip_grad_norm_(model.parameters(), clip)
     optimizer.step()
@@ -63,9 +75,10 @@ def evaluate(model, iterator, criterion, output_dir, hide_tqdm=False):
       trg = batch['trg']
 
       output = model(src, trg, 0)
-      target = trg.reshape(trg.shape[0], trg.shape[1], model.decoder.output_dim)
-      #loss = criterion(output, target)
-      loss = RPDLoss(output, target) + RPDLoss_Diff(output, target)
+      output = output.reshape(trg.shape[0], trg.shape[1], 17, 3)
+      #target = trg.reshape(trg.shape[0], trg.shape[1], model.decoder.output_dim)
+      loss = criterion(output, target)
+      #loss = RPDLoss(output, target) + RPDLoss_Diff(output, target)
       epoch_loss += loss.item()
 
       filename = '{}.keypoints.npy'.format(str(i+1).zfill(5))
@@ -173,7 +186,7 @@ def main(args):
   model.apply(init_weights)
 
   optimizer = optim.SGD(model.parameters(), lr=0.01, momentum=0.9)
-  criterion = RPDLoss_Diff
+  criterion = Euclidean_Distance
 
   output_dir = Path(Path.cwd(),'out/{}'.format(args.label))
   if output_dir.exists():
