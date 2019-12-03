@@ -207,8 +207,6 @@ def main(args):
       else:
         print(f'\tVal. Loss: {valid_loss:.3f} |  Val. PPL: {np.exp(valid_loss):7.3f}\n')
 
-      
-
       if valid_loss < THRESHOLD:
         break
 

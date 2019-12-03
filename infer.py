@@ -42,14 +42,15 @@ def main(args):
 
   with torch.no_grad():
     print('=> Running Model')
-    output = None
+    '''output = None
     for inp in inps:
       out = model(inp, None, 0, True, seed_pose)
       if torch.is_tensor(output):
         output = torch.cat((output, out), 0)
       else:
         output = out
-      seed_pose = output[-1:]
+      seed_pose = output[-1:]'''
+    output = model(features, None, 0, True, seed_pose)
 
     output_dir = Path(Path.cwd(), 'out/infer')
     output_dir.mkdir(exist_ok=True, parents=True)
