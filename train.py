@@ -56,7 +56,7 @@ def train(model, iterator, optimizer, criterion, clip, hide_tqdm=False):
     output = model(src, trg)
     output = output.reshape(trg.shape[0], trg.shape[1], 17, 3)
     #target = trg.reshape(trg.shape[0], trg.shape[1], model.decoder.output_dim)
-    loss = criterion(output, target)
+    loss = criterion(output, trg)
     #loss = RPDLoss(output, target) + RPDLoss_Diff(output, target)
     loss.backward()
     torch.nn.utils.clip_grad_norm_(model.parameters(), clip)
@@ -77,7 +77,7 @@ def evaluate(model, iterator, criterion, output_dir, hide_tqdm=False):
       output = model(src, trg, 0)
       output = output.reshape(trg.shape[0], trg.shape[1], 17, 3)
       #target = trg.reshape(trg.shape[0], trg.shape[1], model.decoder.output_dim)
-      loss = criterion(output, target)
+      loss = criterion(output, trg)
       #loss = RPDLoss(output, target) + RPDLoss_Diff(output, target)
       epoch_loss += loss.item()
 
