@@ -33,15 +33,7 @@ def RPDLoss_Diff(output, target):
   return torch.mean(torch.abs(target - output) / ((torch.abs(target) + torch.abs(output)) / 2))
 
 def Euclidean_Distance(output, target):
-  loss = 0
-  seq_len, batch_size, num_coords, _ = output.shape
-  for i in range(seq_len):
-    for j in range(batch_size):
-      for k in range(num_coords):
-        x_o, y_o, z_o = output[i][j][k]
-        x_t, y_t, z_t = target[i][j][k]
-        loss += torch.sqrt((x_t - x_o)**2 + (y_t - y_o)**2 + (z_t - z_o)**2)
-  return loss
+  return torch.sum(torch.sqrt(torch.sum((target-output)**2, dim=3)))
 
 def train(model, iterator, optimizer, criterion, clip, hide_tqdm=False):
   model.train()
