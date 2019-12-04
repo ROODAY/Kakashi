@@ -199,6 +199,7 @@ def main(args):
     train_iterator, valid_iterator, test_iterator = generate_data_splits(inputs, keypoints, device, config['data-split'], args.hide_tqdm)
 
     # Save iterators for later use
+    Path(args.save_iterators).parent.mkdir(exist_ok=True, parents=True)
     with open(args.save_iterators, 'wb') as f:
       pickle.dump([train_iterator, valid_iterator, test_iterator], f)    
 
@@ -281,12 +282,18 @@ def main(args):
         print(f'\t New Best Val. Loss\n')
         best_valid_loss = valid_loss
         model_path = Path(Path.cwd(), 'pre/{}.pt'.format(args.model_name))
+        model_path.parent.mkdir(exist_ok=True, parents=True)
         torch.save(model.state_dict(), model_path)
       else:
         print(f'\t Val. Loss: {valid_loss:.3f}\n')
 
       if valid_loss < THRESHOLD:
         break
+
+    # Save fully trained model to compare with best valid loss model
+    model_path = Path(Path.cwd(), 'pre/{}.trained.pt'.format(args.model_name))
+    model_path.parent.mkdir(exist_ok=True, parents=True)
+    torch.save(model.state_dict(), model_path)
 
     # Save plot of training vs validation loss
     plot_path = Path(Path.cwd(), 'experiments/{}.png'.format(args.model_name))
