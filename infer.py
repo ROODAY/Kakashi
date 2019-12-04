@@ -32,9 +32,9 @@ def main(args):
   audio_data, sample_rate = librosa.load(input_path, res_type='kaiser_fast')
   frames = round(librosa.get_duration(y=audio_data, sr=sample_rate) * FRAME_RATE)
   grouped_audio = np.array_split(audio_data, frames)
-  features = [np.mean(librosa.feature.mfcc(y=group).T,axis=0) for group in grouped_audio]
-  seq_split = np.array_split(features, frames / SEQ_LEN)
-  inps = [torch.tensor(features.reshape(features.shape[0], 1, features.shape[1])).float().to(device) for features in seq_split]
+  features = torch.tensor([np.mean(librosa.feature.mfcc(y=group).T,axis=0) for group in grouped_audio]).to(device)
+  #seq_split = np.array_split(features, frames / SEQ_LEN)
+  #inps = [torch.tensor(features.reshape(features.shape[0], 1, features.shape[1])).float().to(device) for features in seq_split]
 
   print('=> Selecting Seed Pose')
   all_poses = list(Path(Path.cwd(), 'data/{}'.format(args.seed_label)).rglob('*.keypoints.npy'))
@@ -50,7 +50,7 @@ def main(args):
       else:
         output = out
       seed_pose = output[-1:]'''
-    output = model(features, None, 0, True, seed_pose)
+    output = model(features.reshape(features.shape[0], 1, features.shape[1]).float(), None, 0, True, seed_pose)
 
     output_dir = Path(Path.cwd(), 'out/infer')
     output_dir.mkdir(exist_ok=True, parents=True)
