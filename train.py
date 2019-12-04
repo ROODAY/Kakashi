@@ -206,22 +206,22 @@ def main(args):
       epoch_mins, epoch_secs = epoch_time(start_time, end_time)
       
       print(f'Epoch: {epoch+1:02} | Time: {epoch_mins}m {epoch_secs}s')
-      print(f'\tTrain Loss: {train_loss:.3f} | Train PPL: {np.exp(train_loss):7.3f}')
+      print(f'\tTrain Loss: {train_loss:.3f}')
       if valid_loss < best_valid_loss:
-        print(f'\tVal. Loss: {valid_loss:.3f} |  Val. PPL: {np.exp(valid_loss):7.3f}')
+        print(f'\t Val. Loss: {valid_loss:.3f}')
         print(f'\t New Best Val. Loss\n')
         best_valid_loss = valid_loss
         torch.save(model.state_dict(), '{}.pt'.format(MODEL_NAME))
       else:
-        print(f'\tVal. Loss: {valid_loss:.3f} |  Val. PPL: {np.exp(valid_loss):7.3f}\n')
+        print(f'\t Val. Loss: {valid_loss:.3f}\n')
 
       if valid_loss < THRESHOLD:
         break
 
   model.load_state_dict(torch.load('{}.pt'.format(MODEL_NAME)))
-  print('=> Testing model\n========')
+  print('=> Testing model')
   test_loss = evaluate(model, test_iterator, criterion, output_dir, args.hide_tqdm)
-  print(f'| Test Loss: {test_loss:.3f} | Test PPL: {np.exp(test_loss):7.3f} |')
+  print(f'| Test Loss: {test_loss:.3f} |')
 
 if __name__ == "__main__":
   parser = argparse.ArgumentParser(description='Train Kakashi model')
