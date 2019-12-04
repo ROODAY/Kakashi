@@ -182,7 +182,7 @@ def main(args):
   model.apply(init_weights)
 
   optimizer = optim.SGD(model.parameters(), lr=0.01, momentum=0.9)
-  criterion = Velocity_Loss
+  criterion = Ensemble_Loss
 
   output_dir = Path(Path.cwd(),'out/{}'.format(args.label))
   if output_dir.exists():
