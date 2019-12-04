@@ -38,6 +38,7 @@ def Euclidean_Distance(output, target):
 def Velocity_Loss(output, target):
   output = torch.sqrt(torch.sum((output[1:] - output[:-1])**2, dim=3))
   target = torch.sqrt(torch.sum((target[1:] - target[:-1])**2, dim=3))
+  print(target[40][3][3] - output[40][3][3])
   return torch.mean((target-output)**2)
 
 def Ensemble_Loss(output, target):
