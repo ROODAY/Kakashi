@@ -1,7 +1,6 @@
 from models.lstm import Encoder, Decoder, Seq2Seq
 from pathlib import Path
 from tqdm import tqdm
-from torch import autograd
 import torch
 import torch.nn as nn
 import torch.optim as optim
@@ -11,6 +10,7 @@ import math
 import time
 import argparse
 import shutil
+import yaml
 
 def init_weights(m):
   for name, param in m.named_parameters():
@@ -35,21 +35,26 @@ def RPDLoss_Diff(output, target):
 def Euclidean_Distance(output, target):
   return torch.sum(torch.sqrt(torch.sum((target-output)**2, dim=3)))
 
+def Velocity_Loss(output, target):
+  output = torch.sqrt(torch.sum((output[1:] - output[:-1])**2, dim=3))
+  target = torch.sqrt(torch.sum((target[1:] - target[:-1])**2, dim=3))
+  return torch.mean((target-output)**2)
+
+def Ensemble_Loss(output, target):
+  return Euclidean_Distance(output, target) + Velocity_Loss(output, target)
+
 def train(model, iterator, optimizer, criterion, clip, hide_tqdm=False):
   model.train()
   
   epoch_loss = 0
   for i, batch in enumerate(tqdm(iterator, desc='Training', disable=hide_tqdm)):
-    #with autograd.detect_anomaly():
     src = batch['src']
     trg = batch['trg']
       
     optimizer.zero_grad()
     output = model(src, trg)
     output = output.reshape(trg.shape[0], trg.shape[1], 17, 3)
-    #target = trg.reshape(trg.shape[0], trg.shape[1], model.decoder.output_dim)
     loss = criterion(output, trg)
-    #loss = RPDLoss(output, target) + RPDLoss_Diff(output, target)
     loss.backward()
     torch.nn.utils.clip_grad_norm_(model.parameters(), clip)
     optimizer.step()
@@ -68,9 +73,7 @@ def evaluate(model, iterator, criterion, output_dir, hide_tqdm=False):
 
       output = model(src, trg, 0)
       output = output.reshape(trg.shape[0], trg.shape[1], 17, 3)
-      #target = trg.reshape(trg.shape[0], trg.shape[1], model.decoder.output_dim)
       loss = criterion(output, trg)
-      #loss = RPDLoss(output, target) + RPDLoss_Diff(output, target)
       epoch_loss += loss.item()
 
       filename = '{}.keypoints.npy'.format(str(i+1).zfill(5))
@@ -172,7 +175,7 @@ def main(args):
   model.apply(init_weights)
 
   optimizer = optim.SGD(model.parameters(), lr=0.01, momentum=0.9)
-  criterion = Euclidean_Distance
+  criterion = Velocity_Loss
 
   output_dir = Path(Path.cwd(),'out/{}'.format(args.label))
   if output_dir.exists():
