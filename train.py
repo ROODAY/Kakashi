@@ -11,6 +11,7 @@ import time
 import argparse
 import shutil
 import yaml
+import pickle
 
 def init_weights(m):
   for name, param in m.named_parameters():
@@ -150,13 +151,19 @@ def main(args):
   device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 
   print('=> Loading Data')
-  data_dir = Path(Path.cwd(), 'data/', args.label)
+  if args.iterators is not None:
+    with open('objs.pkl', 'rb') as f:
+        train_iterator, valid_iterator, test_iterator = pickle.load(f)
+  else:
+    data_dir = Path(Path.cwd(), 'data/', args.label)
+    input_paths = sorted(list(data_dir.rglob('*.{}.npy'.format(args.input_feature))))
+    kp_paths = sorted(list(data_dir.rglob('*.keypoints.npy')))
+    inputs = [np.load(path) for path in tqdm(input_paths, desc='Loading inputs', disable=args.hide_tqdm)]
+    keypoints = [np.load(path) for path in tqdm(kp_paths, desc='Loading keypoints', disable=args.hide_tqdm)]
+    train_iterator, valid_iterator, test_iterator = generate_data_splits(inputs, keypoints, device, args.hide_tqdm)
 
-  input_paths = sorted(list(data_dir.rglob('*.{}.npy'.format(args.input_feature))))
-  kp_paths = sorted(list(data_dir.rglob('*.keypoints.npy')))
-  inputs = [np.load(path) for path in tqdm(input_paths, desc='Loading inputs', disable=args.hide_tqdm)]
-  keypoints = [np.load(path) for path in tqdm(kp_paths, desc='Loading keypoints', disable=args.hide_tqdm)]
-  train_iterator, valid_iterator, test_iterator = generate_data_splits(inputs, keypoints, device, args.hide_tqdm)
+    with open('checkpoint.pkl', 'wb') as f:
+      pickle.dump([train_iterator, valid_iterator, test_iterator], f)    
 
   print('=> Initializing Model')
   INPUT_DIM = 20
@@ -227,6 +234,8 @@ if __name__ == "__main__":
                       help='Seed for deterministic run')
   parser.add_argument('--input_feature', type=str, default='mfcc-frame',
                       help='Feature set to use for model input')
+  parser.add_argument('--iterators', type=str,
+                      help='Load iterators directly from file instead of generating')
   parser.add_argument('--skip_training', action='store_true',
                       help='Skip training phase')
   parser.add_argument('--hide_tqdm', action='store_true',

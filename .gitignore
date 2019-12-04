@@ -129,6 +129,7 @@ dmypy.json
 *.log
 *.zip
 *.wav
+checkpoint.pkl
 data/
 tmp_in/
 tmp_out/
