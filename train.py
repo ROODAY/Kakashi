@@ -184,7 +184,7 @@ def main(args):
   model.to(device)
   model.apply(init_weights)
 
-  optimizer = optim.SGD(model.parameters(), lr=0.01, momentum=0.9)
+  optimizer = optim.SGD(model.parameters(), lr=0.005, momentum=0.9)
   criterion = Ensemble_Loss
 
   output_dir = Path(Path.cwd(),'out/{}'.format(args.label))

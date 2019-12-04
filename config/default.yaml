@@ -10,8 +10,8 @@ training:
   CLIP: 1
   THRESHOLD: 0.01
 data-split:
-  BATCH_SIZE: 10
-  SEQ_LEN: 72
+  BATCH_SIZE: 5
+  SEQ_LEN: 720
   TRAIN_RATIO: 0.7
   VALID_RATIO: 0.2
   TEST_RATIO: 0.1
