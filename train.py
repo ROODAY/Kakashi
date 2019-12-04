@@ -91,12 +91,12 @@ def epoch_time(start_time, end_time):
   elapsed_secs = int(elapsed_time - (elapsed_mins * 60))
   return elapsed_mins, elapsed_secs
 
-def generate_data_splits(inputs, keypoints, device, hide_tqdm=False):
-  BATCH_SIZE = 10
-  SEQ_LEN = 72
-  TRAIN_RATIO = 0.7
-  VALID_RATIO = 0.2
-  TEST_RATIO = 0.1
+def generate_data_splits(inputs, keypoints, device, config, hide_tqdm=False):
+  BATCH_SIZE = config['BATCH_SIZE']
+  SEQ_LEN = config['SEQ_LEN']
+  TRAIN_RATIO = config['TRAIN_RATIO']
+  VALID_RATIO = config['VALID_RATIO']
+  TEST_RATIO = config['TEST_RATIO']
 
   print('=> Cutting data to SEQ_LEN: {}'.format(SEQ_LEN))
   cut_inputs = []
@@ -141,6 +141,9 @@ def generate_data_splits(inputs, keypoints, device, hide_tqdm=False):
   return (train_iterator, valid_iterator, test_iterator)
 
 def main(args):
+  with open(args.config) as f:
+    config = yaml.full_load(f)
+
   if args.deterministic:
     SEED = args.seed
     random.seed(SEED)
@@ -159,18 +162,18 @@ def main(args):
     kp_paths = sorted(list(data_dir.rglob('*.keypoints.npy')))
     inputs = [np.load(path) for path in tqdm(input_paths, desc='Loading inputs', disable=args.hide_tqdm)]
     keypoints = [np.load(path) for path in tqdm(kp_paths, desc='Loading keypoints', disable=args.hide_tqdm)]
-    train_iterator, valid_iterator, test_iterator = generate_data_splits(inputs, keypoints, device, args.hide_tqdm)
+    train_iterator, valid_iterator, test_iterator = generate_data_splits(inputs, keypoints, device, config['data-split'], args.hide_tqdm)
 
     with open(args.save_iterators, 'wb') as f:
       pickle.dump([train_iterator, valid_iterator, test_iterator], f)    
 
   print('=> Initializing Model')
-  INPUT_DIM = 20
-  OUTPUT_DIM = 51
-  HID_DIM = 512
-  N_LAYERS = 2
-  ENC_DROPOUT = 0.5
-  DEC_DROPOUT = 0.5
+  INPUT_DIM = config['model']['INPUT_DIM']
+  OUTPUT_DIM = config['model']['OUTPUT_DIM']
+  HID_DIM = config['model']['HID_DIM']
+  N_LAYERS = config['model']['N_LAYERS']
+  ENC_DROPOUT = config['model']['ENC_DROPOUT']
+  DEC_DROPOUT = config['model']['DEC_DROPOUT']
   MODEL_NAME = 'kakashi-{}'.format(args.label)
 
   enc = Encoder(INPUT_DIM, HID_DIM, N_LAYERS, ENC_DROPOUT)
@@ -188,12 +191,14 @@ def main(args):
   if output_dir.exists():
     shutil.rmtree(output_dir)
   output_dir.mkdir(exist_ok=True, parents=True)
+
   run_training = not args.skip_training
   if run_training:
-    N_EPOCHS = 10
-    CLIP = 1
-    THRESHOLD = 0.01
+    N_EPOCHS = config['training']['N_EPOCHS']
+    CLIP = config['training']['CLIP']
+    THRESHOLD = config['training']['THRESHOLD']
     best_valid_loss = float('inf')
+
     for epoch in range(N_EPOCHS):  
       start_time = time.time()
       
@@ -231,6 +236,8 @@ if __name__ == "__main__":
                       help='Train/evaluate deterministically')
   parser.add_argument('--seed', type=int, default=1234,
                       help='Seed for deterministic run')
+  parser.add_argument('--config', type=str, default='config/default.yaml',
+                      help='Config file to load')
   parser.add_argument('--input_feature', type=str, default='mfcc-frame',
                       help='Feature set to use for model input')
   parser.add_argument('--load_iterators', type=str,
