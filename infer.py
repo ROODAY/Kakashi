@@ -7,19 +7,23 @@ import librosa
 import random
 import os
 import subprocess
+import yaml
 
 def main(args):
+  with open(args.config) as f:
+    config = yaml.full_load(f)
+
   device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
   print('=> Initializing Model')
-  INPUT_DIM = 20
-  OUTPUT_DIM = 51
-  HID_DIM = 512
-  N_LAYERS = 2
-  ENC_DROPOUT = 0.5
-  DEC_DROPOUT = 0.5
-  FRAME_RATE = 24
-  SEQ_LEN = 72
+  INPUT_DIM = config['model']['INPUT_DIM']
+  OUTPUT_DIM = config['model']['OUTPUT_DIM']
+  HID_DIM = config['model']['HID_DIM']
+  N_LAYERS = config['model']['N_LAYERS']
+  ENC_DROPOUT = config['model']['ENC_DROPOUT']
+  DEC_DROPOUT = config['model']['DEC_DROPOUT']
+  FRAME_RATE = config['inference']['FRAME_RATE']
+  SEQ_LEN = config['inference']['SEQ_LEN']
 
   enc = Encoder(INPUT_DIM, HID_DIM, N_LAYERS, ENC_DROPOUT)
   dec = Decoder(OUTPUT_DIM, HID_DIM, N_LAYERS, DEC_DROPOUT)
@@ -32,9 +36,8 @@ def main(args):
   audio_data, sample_rate = librosa.load(input_path, res_type='kaiser_fast')
   frames = round(librosa.get_duration(y=audio_data, sr=sample_rate) * FRAME_RATE)
   grouped_audio = np.array_split(audio_data, frames)
-  features = torch.tensor([np.mean(librosa.feature.mfcc(y=group).T,axis=0) for group in grouped_audio]).to(device)
-  #seq_split = np.array_split(features, frames / SEQ_LEN)
-  #inps = [torch.tensor(features.reshape(features.shape[0], 1, features.shape[1])).float().to(device) for features in seq_split]
+  features = [np.mean(librosa.feature.mfcc(y=group).T,axis=0) for group in grouped_audio]
+  features = torch.tensor(features).float().reshape(features.shape[0], 1, features.shape[1]).to(device)
 
   print('=> Selecting Seed Pose')
   all_poses = list(Path(Path.cwd(), 'data/{}'.format(args.seed_label)).rglob('*.keypoints.npy'))
@@ -42,15 +45,7 @@ def main(args):
 
   with torch.no_grad():
     print('=> Running Model')
-    '''output = None
-    for inp in inps:
-      out = model(inp, None, 0, True, seed_pose)
-      if torch.is_tensor(output):
-        output = torch.cat((output, out), 0)
-      else:
-        output = out
-      seed_pose = output[-1:]'''
-    output = model(features.reshape(features.shape[0], 1, features.shape[1]).float(), None, 0, True, seed_pose)
+    output = model(features, None, 0, True, seed_pose)
 
     output_dir = Path(Path.cwd(), 'out/infer')
     output_dir.mkdir(exist_ok=True, parents=True)
@@ -84,6 +79,8 @@ if __name__ == "__main__":
                       help='Path of model file to use')
   parser.add_argument('input_path', type=str,
                       help='Path of input file to use')
+  parser.add_argument('--config', type=str, default='config/default.yaml',
+                      help='Config file to load')
   parser.add_argument('--seed_label', type=str, default='wod',
                       help='Dataset label to grab seed frame from')
   parser.add_argument('--render', action='store_true',

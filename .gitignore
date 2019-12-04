@@ -124,13 +124,10 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-*.mp4
-*.pt
 *.log
-*.zip
-*.wav
-checkpoint.pkl
 data/
 tmp_in/
 tmp_out/
 out/
+pre/
+its/
