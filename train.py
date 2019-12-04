@@ -39,7 +39,7 @@ def Euclidean_Distance(output, target):
 def Velocity_Loss(output, target):
   output = torch.sqrt(torch.sum((output[1:] - output[:-1])**2, dim=3))
   target = torch.sqrt(torch.sum((target[1:] - target[:-1])**2, dim=3))
-  return torch.sum((target-output)**2)
+  return torch.sum(torch.sqrt((target-output)**2))
 
 def Ensemble_Loss(output, target):
   return Euclidean_Distance(output, target) + Velocity_Loss(output, target)
@@ -150,8 +150,8 @@ def main(args):
   device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 
   print('=> Loading Data')
-  if args.iterators is not None:
-    with open('objs.pkl', 'rb') as f:
+  if args.load_iterators is not None:
+    with open(args.load_iterators, 'rb') as f:
         train_iterator, valid_iterator, test_iterator = pickle.load(f)
   else:
     data_dir = Path(Path.cwd(), 'data/', args.label)
@@ -161,7 +161,7 @@ def main(args):
     keypoints = [np.load(path) for path in tqdm(kp_paths, desc='Loading keypoints', disable=args.hide_tqdm)]
     train_iterator, valid_iterator, test_iterator = generate_data_splits(inputs, keypoints, device, args.hide_tqdm)
 
-    with open('checkpoint.pkl', 'wb') as f:
+    with open(args.save_iterators, 'wb') as f:
       pickle.dump([train_iterator, valid_iterator, test_iterator], f)    
 
   print('=> Initializing Model')
@@ -233,8 +233,10 @@ if __name__ == "__main__":
                       help='Seed for deterministic run')
   parser.add_argument('--input_feature', type=str, default='mfcc-frame',
                       help='Feature set to use for model input')
-  parser.add_argument('--iterators', type=str,
+  parser.add_argument('--load_iterators', type=str,
                       help='Load iterators directly from file instead of generating')
+  parser.add_argument('--save_iterators', type=str, default='checkpoint.pkl',
+                      help='Save iterators into file')
   parser.add_argument('--skip_training', action='store_true',
                       help='Skip training phase')
   parser.add_argument('--hide_tqdm', action='store_true',
