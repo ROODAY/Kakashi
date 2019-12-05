@@ -37,7 +37,8 @@ def main(args):
   frames = round(librosa.get_duration(y=audio_data, sr=sample_rate) * FRAME_RATE)
   grouped_audio = np.array_split(audio_data, frames)
   features = [np.mean(librosa.feature.mfcc(y=group).T,axis=0) for group in grouped_audio]
-  features = torch.tensor(features).float().reshape(features.shape[0], 1, features.shape[1]).to(device)
+  features = torch.tensor(features).float()
+  features = features.reshape(features.shape[0], 1, features.shape[1]).to(device)
 
   print('=> Selecting Seed Pose')
   all_poses = list(Path(Path.cwd(), 'data/{}'.format(args.seed_label)).rglob('*.keypoints.npy'))
