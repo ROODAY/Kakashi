@@ -3,11 +3,11 @@
 #$ -P dnn-motion
 #$ -l gpus=1
 #$ -l gpu_c=3.5
-#$ -N kakashi-experiment-1
+#$ -N kakashi-experiment-2
 #$ -m ae
 #$ -M rooday@bu.edu
 #$ -j y
-#$ -o experiment-1.log
+#$ -o experiment-2.log
 #$ -V
 
 echo "=========================================================="
@@ -22,4 +22,4 @@ module load pytorch/1.1
 module load geos/3.7.0
 
 cd $KAKASHI
-python3 train.py wod --deterministic --hide_tqdm --model_name exp1 --config config/exp1.yaml --load_iterators its/checkpoint.pkl
+python3 train.py wod --deterministic --hide_tqdm --model_name exp2 --config config/exp2.yaml --load_iterators its/checkpoint.pkl

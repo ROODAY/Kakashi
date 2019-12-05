@@ -281,13 +281,14 @@ def main(args):
         print(f'\t Val. Loss: {valid_loss:.3f}')
         print(f'\t New Best Val. Loss\n')
         best_valid_loss = valid_loss
-        model_path = Path(Path.cwd(), 'pre/{}.pt'.format(args.model_name))
+        model_path = Path(Path.cwd(), 'pre/{}.best_valid.pt'.format(args.model_name))
         model_path.parent.mkdir(exist_ok=True, parents=True)
         torch.save(model.state_dict(), model_path)
       else:
         print(f'\t Val. Loss: {valid_loss:.3f}\n')
 
       if valid_loss < THRESHOLD:
+        print('=> Valid Loss under THRESHOLD: {}'.format(THRESHOLD))
         break
 
     # Save fully trained model to compare with best valid loss model
