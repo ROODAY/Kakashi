@@ -35,16 +35,18 @@ def main(args):
   # Load input, and if necessary extract features
   input_path = Path(args.input_path)
   if args.raw_features:
-    features = np.load(input_path)
+    # Load features, pick first batch
+    features = np.load(input_path)[:, :1]
+    features = torch.tensor(features).float().to(device)
   else:
     audio_data, sample_rate = librosa.load(input_path, res_type='kaiser_fast')
     frames = round(librosa.get_duration(y=audio_data, sr=sample_rate) * FRAME_RATE)
     grouped_audio = np.array_split(audio_data, frames)
     features = [np.mean(librosa.feature.mfcc(y=group).T,axis=0) for group in grouped_audio]
 
-  # Convert features to float tensor, reshape to (seq_len, batch_size=1, feature_len), and push to device
-  features = torch.tensor(features).float()
-  features = features.reshape(features.shape[0], 1, features.shape[1]).to(device)
+    # Convert features to float tensor, reshape to (seq_len, batch_size=1, feature_len), and push to device
+    features = torch.tensor(features).float()
+    features = features.reshape(features.shape[0], 1, features.shape[1]).to(device)
 
   print('=> Selecting Seed Pose')
   # Pick a pose to start the dance
