@@ -43,15 +43,15 @@ def RPDLoss_Velocity(output, target):
   target = torch.sqrt(torch.sum((target[1:] - target[:-1])**2, dim=3))
   return torch.mean(torch.abs(target - output) / ((torch.abs(target) + torch.abs(output)) / 2))
 
-# SSE on the pose velocities
-def SSE_Velocity(output, target):
+# SRSE on the pose velocities
+def SRSE_Velocity(output, target):
   output = torch.sqrt(torch.sum((output[1:] - output[:-1])**2, dim=3))
   target = torch.sqrt(torch.sum((target[1:] - target[:-1])**2, dim=3))
   return torch.sum(torch.sqrt((target-output)**2))
 
 # Attempt to train on both pose coordinates and velocities
 def Ensemble_Loss(output, target):
-  return Euclidean_Distance(output, target) + SSE_Velocity(output, target)
+  return Euclidean_Distance(output, target) + SRSE_Velocity(output, target)
 
 def train(model, iterator, optimizer, criterion, clip, hide_tqdm=False):
   model.train()
@@ -229,8 +229,8 @@ def main(args):
     criterion = RPDLoss_Velocity
   elif config['model']['LOSS_FUNCTION'] == 'Euclidean_Distance':
     criterion = Euclidean_Distance
-  elif config['model']['LOSS_FUNCTION'] == 'SSE_Velocity':
-    criterion = SSE_Velocity
+  elif config['model']['LOSS_FUNCTION'] == 'SRSE_Velocity':
+    criterion = SRSE_Velocity
   elif config['model']['LOSS_FUNCTION'] == 'Ensemble_Loss':
     criterion = Ensemble_Loss
   elif config['model']['LOSS_FUNCTION'] == 'L1Loss':

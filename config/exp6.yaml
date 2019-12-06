@@ -5,7 +5,7 @@ model:
   N_LAYERS: 2
   ENC_DROPOUT: 0.5
   DEC_DROPOUT: 0.5
-  LOSS_FUNCTION: 'SSE_Velocity'
+  LOSS_FUNCTION: 'SRSE_Velocity'
   LEARNING_RATE: 0.005
   MOMENTUM: 0.9
 training:
