@@ -51,7 +51,7 @@ def SSE_Velocity(output, target):
 
 # Attempt to train on both pose coordinates and velocities
 def Ensemble_Loss(output, target):
-  return Euclidean_Distance(output, target) + Velocity_Loss(output, target)
+  return Euclidean_Distance(output, target) + SSE_Velocity(output, target)
 
 def train(model, iterator, optimizer, criterion, clip, hide_tqdm=False):
   model.train()
