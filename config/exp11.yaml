@@ -1,0 +1,23 @@
+model:
+  INPUT_DIM: 20
+  OUTPUT_DIM: 51
+  HID_DIM: 1024
+  N_LAYERS: 4
+  ENC_DROPOUT: 0.5
+  DEC_DROPOUT: 0.5
+  LOSS_FUNCTION: 'Euclidean_Distance'
+  LEARNING_RATE: 0.005
+  MOMENTUM: 0.9
+training:
+  N_EPOCHS: 500
+  CLIP: 1
+  THRESHOLD: 5
+inference:
+  FRAME_RATE: 24
+  SEQ_LEN: 72
+data-split:
+  BATCH_SIZE: 5
+  SEQ_LEN: 720
+  TRAIN_RATIO: 0.7
+  VALID_RATIO: 0.2
+  TEST_RATIO: 0.1
