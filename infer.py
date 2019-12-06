@@ -69,8 +69,8 @@ def main(args):
   if args.render:
     print('=> Calling Renderer')
     # Use custom VideoPose script to render keypoints
+    render_dir = Path(Path.cwd())
     os.chdir(os.environ['VIDEOPOSE'])
-    render_dir = Path(Path.cwd(), 'render')
     if args.render_name is not None:
       video_path = Path(render_dir, args.render_name)
     else:
