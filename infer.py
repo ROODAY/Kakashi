@@ -70,10 +70,11 @@ def main(args):
     print('=> Calling Renderer')
     # Use custom VideoPose script to render keypoints
     os.chdir(os.environ['VIDEOPOSE'])
+    render_dir = Path(Path.cwd(), 'render')
     if args.render_name is not None:
-      video_path = Path(output_dir, args.render_name)
+      video_path = Path(render_dir, args.render_name)
     else:
-      video_path = Path(output_dir, '{}.mp4'.format(input_path.stem))
+      video_path = Path(render_dir, '{}.mp4'.format(input_path.stem))
     command = 'python3 animate.py --viz-input {} --viz-output {}'.format(output_path, video_path)
     subprocess.call(command, shell=True)
 
@@ -81,7 +82,7 @@ def main(args):
       print('=> Muxing')
       # Mux rendered video with original audio
       os.chdir(os.environ['KAKASHI'])
-      tmp_path = Path(output_dir, '{}.tmp.mp4'.format(video_path.stem))
+      tmp_path = Path(render_dir, '{}.tmp.mp4'.format(video_path.stem))
       command = 'ffmpeg -i {} -i {} -c:v copy -c:a aac -strict experimental {}'.format(video_path, input_path, tmp_path)
       subprocess.call(command, shell=True)
       tmp_path.replace(video_path)
