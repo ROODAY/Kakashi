@@ -3,11 +3,11 @@
 #$ -P dnn-motion
 #$ -l gpus=1
 #$ -l gpu_c=3.5
-#$ -N kakashi-experiment-5
+#$ -N kakashi-experiment-11
 #$ -m ae
 #$ -M rooday@bu.edu
 #$ -j y
-#$ -o experiment-5.log
+#$ -o experiment-11.log
 #$ -V
 
 echo "=========================================================="
