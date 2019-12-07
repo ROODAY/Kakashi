@@ -13,7 +13,7 @@ librosa==0.7.1
 llvmlite==0.30.0
 matplotlib==3.1.1
 moviepy==1.0.1
-nltk==3.4
+nltk==3.4.5
 numba==0.46.0
 numpy==1.17.3
 opencv-python==4.1.1.26
