@@ -1,55 +1,23 @@
-# Project Kakashi
-Generate dance choreography (in the form of 3D pose matrices) from arbitrary music samples.
+# Kakashi
+An LSTM RNN model to generate dance choreography (in the form of 3D pose matrices) from arbitrary music samples. Directed study project for Fall 2019 and Spring 2020, under Professor Margrit Betke at Boston University. Currently in progress.
 
-Current setup:
-- Download playlists of dance videos from YouTube
-- Cut videos to remove unnecessary information (intros/outros/etc.)
-- Run 3D pose estimation to get "ground truth" dataset output
-- Extract audio features from videos to serve as dataset input
-- Train a sequence to sequence model to generate pose from music features
+## Installation/Setup
+Kakashi requires Pytorch >= 1.1 and Python >= 3.7.3. Python dependencies can be installed with `pip install -r requirements.txt`. 
 
-Tasks
-- [x] Create training data (download/process/etc.)
-- [x] Create RNN to guess pose for current audio feature
-- [ ] Improve model architecture (4 layer LSTM, 1024 hidden dim)
-- [ ] Try other RNN architectures
-- [ ] Create config files for different architecture params
-- [ ] Try other loss functions/optimizers
-- [ ] Try other input audio features
-- [ ] Animate results (create standalone file to drop into VideoPose)
+### Dataset Generation
+To generate your own dataset, follow these instructions. If you'd like to use the Kakashi WOD dataset, it can be downloaded [here](https://tinyurl.com/kakashi-dataset) and these instructions can be ignored.
 
-
-## Installation
-Make sure the following environment variables for directory roots are set:
-- KAKASHI
-- VIDEOPOSE
-- DETECTRON
-
-## Training/Inference
-Animating results:
+To generate the dataset, you'll need FFmpeg on your machine, as well as [VideoPose3D](https://github.com/facebookresearch/VideoPose3D) setup (follow its instructions for inference, which include setting up [Detectron](https://github.com/facebookresearch/Detectron)). Once these projects are setup, set the following environment variables:
 ```
-python3 animate.py --viz-input /projectnb/dnn-motion/rooday/Kakashi/out/test/0.keypoints.npy --viz-output new-test.mp4
+$KAKASHI=/path/to/Kakashi/root
+$VIDEOPOSE=/path/to/VideoPose3D/root
+$DETECTRON=/path/to/Detectron/root
 ```
 
-## Experiments
-- [ ] Generate entire song length choreography at a time
-- [ ] Generate a small interval of pose at a time until song is complete (5s, 10s, etc.) (last frame of output is seed for next interval)
-- [ ] Generate a frame of pose at a time until song is complete (output frame is seed for next frame)
-- [ ] Infer by generating frame by frame (total frames is 30 * song_length)
-- [ ] Flip pose data horizontally to double dataset (check how VideoPose renders)
-- [ ] Other datasets (freestyle hip-hop, kpop, etc.)
-- [ ] Find a T-pose to use as seed pose for inference
-- [ ] Use a random first frame pose as seed pose for inference
-- [ ] For intervals/frame, one video is no longer a data point but a batch
+Then download a playlist of YouTube videos to use as ground truth using `python tools/download_playlist.py <DATASET_LABEL> --playlist_url <URL>`. If the videos need to be trimmed, create a file in the `cuts/` folder, named `<DATASET_LABEL>.txt`. Then run `python tools/cut_videos.py <DATASET_LABEL>`. Now, you can run the dataset generation script with `python tools/generate_dataset.py <DATASET_LABEL>`. This script will use VideoPose3D and Detectron to extract 3D pose keypoints from the videos, as well as use LibROSA to extract audio features. Be sure to check out the actual script as it has a variety of command line arguments. After this, the dataset is generated and ready to use!
 
-## Future Work
-- Output multi-body pose
-- Other model archictecures (not sequence to sequence)
-- High quality dataset (record dancers)
-ormat/in bulk. perhaps a thing for next semester, getting funding? if I could set parameters on the dataset it could be a lot better
-- If audio features exist, don't recalculate
-- Make it use a config file
-- Make it use 4 gpus for speed
-- Pad batches and seq len so data isn't lost. modulo for seq len, find samples from other batches to fill up last batch
-- Finish inference and test render, try removing as many args as possible
-- Try inference, and then do by frame estimation
+## Training
+After your dataset is generated, you can run the model simply with `python train.py <DATASET_LABEL>`. This file also takes a variety of arguments, including running deterministically, loading presaved iterators to save time, and using a config file for model paramters (check out the `config/` folder). This file will save the training, valid, and test iterators in the `its/` folder, as well as pretrained models in the `pre/` folder to save time in later runs.
+
+##Inference
+Once pretrained models are generated, you can infer output using `python infer.py path/to/model path/to/audio/file`. If you'd like to render the output of the inference, copy `tools/animate.py` to the `$VIDEOPOSE` folder, then run inference with the `--render` flag. You can also specify a path to save the rendered video with `--render_name`.
